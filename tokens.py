@@ -1,6 +1,0 @@
-def get_recently_token():
-  return 'BQATqTM_FDMUk-eprD65ycod1KjaRsKUPRAJEZeQm2t3unQHjuZ8HLJKPsWpE_absa4ogBxzXzEiNK3sLKJh4SMhA0yhpBu_dymg09BWaT8i2lCZrnEXLIm9xJxUIAc2T3b4x0EixSvBcPrH62g5iv4'
-
-
-def get_top_token():
-  return 'BQAKgQTH4kx10oi3jrDvvaYDJ-i6nuwM7N1qEhKCreA6Mf_jL0oZWNInaP7eA70SzZ6ubh1nuCnFYsTyTUsdOuIaj_8XU7-6D0QgQPgd5owi76P-R0uzwLHoq4efo2dSTBn9MhkpScrYlyDLym41Kps'
