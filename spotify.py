@@ -3,19 +3,19 @@ import dateutil.parser
 import plotly.graph_objs as go
 from collections import defaultdict
 from datetime import timedelta
-from data_requests import make_recently_request
-from data_requests import make_top_artists_request
-from data_requests import make_top_songs_request
+from data_requests import Spotify
+
+spotify = Spotify()
 
 
-def get_recent_tracks():
-  response = make_recently_request()
+def get_recently():
+  response = spotify.recently()
   return json.dumps(extract_songs_artists_images(response.json()))
 
 
 def get_dates():
-  response = make_recently_request()
-  return extract_dates(response.json())
+  response = spotify.recently()
+  return extract_dates(response)
 
 
 def extract_songs_artists_images(tracks):
@@ -80,16 +80,17 @@ def show_graph():
   fig.show()
 
 
-def get_all_top_artists_data():
+def top_artists():
   response = make_top_artists_request()
   return response.json()
 
 
-def get_all_top_songs_data():
+def top_songs():
   response = make_top_songs_request()
   return response.json()
 
 
+show_graph()
 ##################### UNUSED CODE #####################
 """
 # All data

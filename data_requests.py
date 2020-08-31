@@ -1,5 +1,4 @@
 import requests
-from tokens import get_token
 
 
 class Spotify():
@@ -9,7 +8,7 @@ class Spotify():
   API_URL = 'https://api.spotify.com/v1/me/'
 
   def __init__(self):
-    self.token = get_token()
+    self.token = self.TOKEN
 
     self.headers = {
         'Accept': 'application/json',
@@ -19,7 +18,7 @@ class Spotify():
 
     self.params = {'limit': '50'}
 
-  def make_recently_request():
+  def recently(self):
 
     response = requests.get(
         self.API_URL + 'player/recently-played',
