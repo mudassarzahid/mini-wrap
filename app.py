@@ -18,5 +18,15 @@ def graph():
   return show_graph()
 
 
+@app.route('/top/artist')
+def get_top_artists():
+  pass
+
+
+@app.route('/top/song')
+def get_top_songs():
+  pass
+
+
 if __name__ == '__main__':
   app.run(debug=True)
