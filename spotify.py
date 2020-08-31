@@ -9,12 +9,14 @@ from scipy import special
 import pandas as pd
 from datetime import datetime
 from datetime import timedelta
+from collections import defaultdict
+import chart_studio as cs
 
-#plotly.tools.set_credentials_file(username='Mudi99', api_key='ttM0yUXO9HVbNqjKTqEn')
+# plotly.tools.set_credentials_file(username='Mudi99', api_key='ttM0yUXO9HVbNqjKTqEn')
 
 
 def make_recently_played_request():
-  token = 'BQAwCWrsKhQCUrhXUHydd25XiQTNgfPQ4Gub1RjnHgtMX_qhsx2_lRvjD3BgAR-kyzwzfRuupT_svougsTllfBKEfqKvm4C0i3XfZ8W-TnM3QCA2JXffCvpc3TNTPxS3xelcTWIChJgNyN_v26jNPks'
+  token = 'BQDeysP6KIAQ6OIVtDNShOaql6CQOtH9M23VsIzruBVL9oljtJxKReinTb1G8hB9eoV0TZqtwGG_500ur7uJlxvxRsALgjVU1dLonUm-bXvHKNjezAeqIcNvv4HbrI4oXvv2AjDQRFqcs4p8_jPcv9k'
 
   headers = {'Authorization': "Bearer {}".format(token)}
 
@@ -72,25 +74,93 @@ def extract_date(data):
 
 
 def show_graph():
-  sorted_list = get_dates()
+  # py.offline.init_notebook_mode(connected=True)
+  # cs.tools.set_credentials_file(username='Mudi99', api_key='ttM0yUXO9HVbNqjKTqEn')
 
-  fig = px.line(sorted_list, x='date', y=[3, 5, 6, 5, 6, 7, 8, 8, 8, 88, 8, 8, 8, 8, 4, 3, 3, 1, 3, 4, 5, 6, 7, 4])
+  sorted_list = get_dates()  # date, ms played, time plus ms
+
+  count = defaultdict(int)   # anzahl songs
+
+  # hours = []               # 00-23
+  # for i in range(24):
+  #   hour = "{0:0=2d}".format(i)
+  #   hours.append({'hour': hour})
+
+  hours_liste = []
+  for i in sorted_list:
+    hours_liste.append(i['date'][0:13])
+  for i in hours_liste:
+    count[i] += 1
+
+  keys = []
+  for key, value in count.items():
+    keys.append(key)
+
+  values = []
+  for key, value in count.items():
+    values.append(value)
+
+  # für line graph, ist aber hässlich
+  # smoothTrace = {'type': 'scatter', 'mode': 'lines', 'x': keys, 'y': values, 'line': {'shape': 'spline'}}
+  # py.offline.iplot([smoothTrace])
+
+  fig = go.Figure(data=[go.Bar(x=keys, y=values, marker_color=['lightslategray', ] * 24)])
+  fig.update_layout(
+      title="Songs Listened to per Hour",
+      xaxis_title="Time",
+      yaxis_title="# of Songs",
+      font=dict(
+          family="Lucida Sans, monospace",
+          size=18,
+          color="#663399")
+  )
   fig.show()
 
 
-def dddddd():
+def top_artists_request():
 
-  data = get_all_data()
-  date = []
-  ms_played = []
-  for i in data['items']:
-    date.append(i['played_at'])
-    ms_played.append((i['track']['duration_ms']) / 60000)
+  token = 'BQBAColf6WNDL1FoyLjAVkORT1MuKsVTT8SO7a37a8cJODIzIYNNUMUJYDJwesw4KnnA_pKLM9-kLwZgBb0_j88sF7yACdmq42eHVKtWp7Wo6zpnvuCOQwEPj1V04DTilw__VWN_4M9dHd3f7L1h660'
 
-  smoothTrace = {'type': 'scatter', 'mode': 'lines',
-                 'x': date, 'y': ms_played, 'line': {'shape': 'spline'}}
+  headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': "Bearer {}".format(token)
+  }
 
-  py.offline.iplot([smoothTrace])
+  params = (('limit', '50'),)
+
+  response = requests.get('https://api.spotify.com/v1/me/top/artists', headers=headers, params=params)
+
+  return response
 
 
-dddddd()
+def top_songs_request():
+
+  token = 'BQAKgQTH4kx10oi3jrDvvaYDJ-i6nuwM7N1qEhKCreA6Mf_jL0oZWNInaP7eA70SzZ6ubh1nuCnFYsTyTUsdOuIaj_8XU7-6D0QgQPgd5owi76P-R0uzwLHoq4efo2dSTBn9MhkpScrYlyDLym41Kps'
+
+  headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': "Bearer {}".format(token)
+  }
+
+  params = (
+      ('limit', '50'),
+  )
+
+  response = requests.get('https://api.spotify.com/v1/me/top/songs', headers=headers, params=params)
+
+  return response
+
+
+def get_all_top_artists_data():
+  response = top_artists_request()
+  return response.json()
+
+
+def get_all_top_songs_data():
+  response = top_songs_request()
+  return response.json()
+
+
+show_graph()
