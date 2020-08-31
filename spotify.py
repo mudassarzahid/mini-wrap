@@ -1,8 +1,8 @@
 import json
 import dateutil.parser
 import plotly.graph_objs as go
-from datetime import timedelta
 from collections import defaultdict
+from datetime import timedelta
 from data_requests import make_recently_request
 from data_requests import make_top_artists_request
 from data_requests import make_top_songs_request
@@ -88,9 +88,6 @@ def get_all_top_artists_data():
 def get_all_top_songs_data():
   response = make_top_songs_request()
   return response.json()
-
-
-show_graph()
 
 
 ##################### UNUSED CODE #####################
