@@ -1,45 +1,21 @@
 import json
-import requests
-import plotly.express as px
 import dateutil.parser
-import plotly as py
 import plotly.graph_objs as go
-import ipywidgets as widgets
-from scipy import special
-import pandas as pd
-from datetime import datetime
 from datetime import timedelta
 from collections import defaultdict
-import chart_studio as cs
-
-# plotly.tools.set_credentials_file(username='Mudi99', api_key='ttM0yUXO9HVbNqjKTqEn')
-
-
-def make_recently_played_request():
-  token = 'BQDeysP6KIAQ6OIVtDNShOaql6CQOtH9M23VsIzruBVL9oljtJxKReinTb1G8hB9eoV0TZqtwGG_500ur7uJlxvxRsALgjVU1dLonUm-bXvHKNjezAeqIcNvv4HbrI4oXvv2AjDQRFqcs4p8_jPcv9k'
-
-  headers = {'Authorization': "Bearer {}".format(token)}
-
-  params = (('limit', '50'),)
-
-  response = requests.get('https://api.spotify.com/v1/me/player/recently-played', headers=headers, params=params)
-
-  return response
-
-
-def get_all_data():
-  response = make_recently_played_request()
-  return response.json()
+from data_requests import make_recently_request
+from data_requests import make_top_artists_request
+from data_requests import make_top_songs_request
 
 
 def get_recent_tracks():
-  response = make_recently_played_request()
+  response = make_recently_request()
   return json.dumps(extract_songs_artists_images(response.json()))
 
 
 def get_dates():
-  response = make_recently_played_request()
-  return extract_date(response.json())
+  response = make_recently_request()
+  return extract_dates(response.json())
 
 
 def extract_songs_artists_images(tracks):
@@ -59,7 +35,7 @@ def extract_songs_artists_images(tracks):
   return sorted_list
 
 
-def extract_date(data):
+def extract_dates(data):
   sorted_list = []
   for i in data['items']:
     date = i['played_at']
@@ -74,17 +50,8 @@ def extract_date(data):
 
 
 def show_graph():
-  # py.offline.init_notebook_mode(connected=True)
-  # cs.tools.set_credentials_file(username='Mudi99', api_key='ttM0yUXO9HVbNqjKTqEn')
-
-  sorted_list = get_dates()  # date, ms played, time plus ms
-
-  count = defaultdict(int)   # anzahl songs
-
-  # hours = []               # 00-23
-  # for i in range(24):
-  #   hour = "{0:0=2d}".format(i)
-  #   hours.append({'hour': hour})
+  sorted_list = get_dates()
+  count = defaultdict(int)
 
   hours_liste = []
   for i in sorted_list:
@@ -100,11 +67,7 @@ def show_graph():
   for key, value in count.items():
     values.append(value)
 
-  # für line graph, ist aber hässlich
-  # smoothTrace = {'type': 'scatter', 'mode': 'lines', 'x': keys, 'y': values, 'line': {'shape': 'spline'}}
-  # py.offline.iplot([smoothTrace])
-
-  fig = go.Figure(data=[go.Bar(x=keys, y=values, marker_color=['lightslategray', ] * 24)])
+  fig = go.Figure(data=[go.Bar(x=keys, y=values, marker_color=['lightslategray'] * 24)])
   fig.update_layout(
       title="Songs Listened to per Hour",
       xaxis_title="Time",
@@ -117,50 +80,41 @@ def show_graph():
   fig.show()
 
 
-def top_artists_request():
-
-  token = 'BQBAColf6WNDL1FoyLjAVkORT1MuKsVTT8SO7a37a8cJODIzIYNNUMUJYDJwesw4KnnA_pKLM9-kLwZgBb0_j88sF7yACdmq42eHVKtWp7Wo6zpnvuCOQwEPj1V04DTilw__VWN_4M9dHd3f7L1h660'
-
-  headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': "Bearer {}".format(token)
-  }
-
-  params = (('limit', '50'),)
-
-  response = requests.get('https://api.spotify.com/v1/me/top/artists', headers=headers, params=params)
-
-  return response
-
-
-def top_songs_request():
-
-  token = 'BQAKgQTH4kx10oi3jrDvvaYDJ-i6nuwM7N1qEhKCreA6Mf_jL0oZWNInaP7eA70SzZ6ubh1nuCnFYsTyTUsdOuIaj_8XU7-6D0QgQPgd5owi76P-R0uzwLHoq4efo2dSTBn9MhkpScrYlyDLym41Kps'
-
-  headers = {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': "Bearer {}".format(token)
-  }
-
-  params = (
-      ('limit', '50'),
-  )
-
-  response = requests.get('https://api.spotify.com/v1/me/top/songs', headers=headers, params=params)
-
-  return response
-
-
 def get_all_top_artists_data():
-  response = top_artists_request()
+  response = make_top_artists_request()
   return response.json()
 
 
 def get_all_top_songs_data():
-  response = top_songs_request()
+  response = make_top_songs_request()
   return response.json()
 
 
 show_graph()
+
+
+##################### UNUSED CODE #####################
+"""
+# All data
+def get_all_recently_data():
+  response = make_recently_request()
+  return response.json()
+
+# Line graph:
+import plotly as py
+smoothTrace = {'type': 'scatter', 'mode': 'lines', 'x': keys, 'y': values, 'line': {'shape': 'spline'}}
+py.offline.iplot([smoothTrace])
+
+# What is this:
+import chart_studio as cs
+import plotly as py
+py.offline.init_notebook_mode(connected=True)
+cs.tools.set_credentials_file(username='Mudi99', api_key='ttM0yUXO9HVbNqjKTqEn') #oder py.tools...
+
+# List of all hours (00-23):
+hours = []
+for i in range(24):
+  hour = "{0:0=2d}".format(i)
+  hours.append({'hour': hour})
+
+"""
