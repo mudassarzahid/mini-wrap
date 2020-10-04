@@ -1,15 +1,18 @@
 from flask import Flask
-from spotify import get_recent_tracks
-from spotify import show_graph
-from spotify import get_dates
+from process_data import get_recently
+from process_data import show_graph
+from process_data import get_dates
+from data_requests import Spotify
+from token_refresh import index
 
 app = Flask(__name__)
+spotify = Spotify()
 
 
 @app.route('/recently_played')
 def recently_played():
 
-  return get_recent_tracks()
+  return spotify.recently()
 
 
 @app.route('/graph')
