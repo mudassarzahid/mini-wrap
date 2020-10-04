@@ -1,9 +1,10 @@
 import requests
+import spotipy
 
 
 class Spotify():
 
-  TOKEN = 'BQDKsbbwBnLd2_Qz3yHMtIVNnP8bx-ZUPMF2ivLxbt1K44HVKpolfQmq86CX63LJ2TAFg5C5VHQFhD4vP24nABvL9JGt5_NNsN19XZ7u64NMSiB28vVTKUVQeVIocK1o6jifNv4zffJFpQDAdTvoK3FrL-eVlBmP5mY_vF-23cbX1K6f7G1ItfXBWMHRcPVabL24F6u9SpsCLzA0HKTBbedtS_yz6DAgVX8LxJpbUWXQRCa2B7mjLrmWWRrlJWYyL5-_WPIsRJk'
+  TOKEN = 'BQDiKhUVTfaenxZ5Mz1XCF00gTRk-NWVwGvOY5-QIY4-vQPha52DHMA0KCzK8z6EAtbSpnK3ks8IAxjz4O9DjB5rMZDx_FkmPwQzVLqC4zB7i3D8SLk7YK6UYeSyIH0qHvECEgqkjCVZGUaNayLh62DHfKOR-JelLADXEmDUp8moeMGWw5tT7SW4eZN0E-FyKaCORmcnygbIyFs1sGH-i6dnOZinU-dDNTiFX7k9bs8WmLHoOG9DXonXbsHwH_HgBgSCrdoqTyA'
 
   API_URL = 'https://api.spotify.com/v1/me/'
 
@@ -16,25 +17,30 @@ class Spotify():
         'Authorization': "Bearer {}".format(self.token)
     }
 
-    self.params = {'limit': '50'}
+  def recently(self, limit=50):
 
-  def recently(self):
+    if limit > 50 or limit <= 0:
+      raise Exception('Limit must be between 0 and 50.')
 
     response = requests.get(
         self.API_URL + 'player/recently-played',
         headers=self.headers,
-        params=self.params
+        params={'limit': limit}
     )
 
     if response.status_code == 200:
       return response.json()
     return None
 
-  def top_songs(self):
+  def top_songs(self, limit=10):
+
+    if limit > 50 or limit <= 0:
+      raise Exception('Limit must be between 0 and 50.')
+
     response = requests.get(
         self.API_URL + 'top/songs',
         headers=self.headers,
-        params=self.params
+        params={'limit': limit}
     )
 
     if response.status_code == 200:
@@ -43,11 +49,15 @@ class Spotify():
 
     return response
 
-  def top_artists(self):
+  def top_artists(self, limit=10):
+
+    if limit > 50 or limit <= 0:
+      raise Exception('Limit must be between 0 and 50.')
+
     response = requests.get(
         self.API_URL + 'top/artists',
         headers=self.headers,
-        params=self.params
+        params={'limit': limit}
     )
 
     if response.status_code == 200:
