@@ -76,30 +76,3 @@ def show_graph():
           color="#663399")
   )
   fig.show()
-
-
-##################### UNUSED CODE #####################
-"""
-# All data
-def get_all_recently_data():
-  response = make_recently_request()
-  return response.json()
-
-# Line graph:
-import plotly as py
-smoothTrace = {'type': 'scatter', 'mode': 'lines', 'x': keys, 'y': values, 'line': {'shape': 'spline'}}
-py.offline.iplot([smoothTrace])
-
-# What is this:
-import chart_studio as cs
-import plotly as py
-py.offline.init_notebook_mode(connected=True)
-cs.tools.set_credentials_file(username='Mudi99', api_key='ttM0yUXO9HVbNqjKTqEn') #oder py.tools...
-
-# List of all hours (00-23):
-hours = []
-for i in range(24):
-  hour = "{0:0=2d}".format(i)
-  hours.append({'hour': hour})
-
-"""
