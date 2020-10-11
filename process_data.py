@@ -1,14 +1,11 @@
-import json
 import dateutil.parser
 import plotly.graph_objs as go
 from collections import defaultdict
 from datetime import timedelta
 from spotify import Spotify
 
-spotify = Spotify('')
 
-
-def get_recently():
+def get_recently(spotify):
 
   tracks = spotify.recently()
 
@@ -26,10 +23,10 @@ def get_recently():
                         "artists": artists,
                         "image": image})
 
-  return json.dumps(sorted_list)
+  return sorted_list
 
 
-def get_dates():
+def get_dates(spotify):
 
   data = spotify.recently()
 
@@ -47,8 +44,8 @@ def get_dates():
   return sorted_list
 
 
-def show_graph():
-  sorted_list = get_dates()
+def show_graph(spotify):
+  sorted_list = get_dates(spotify)
   count = defaultdict(int)
 
   hours_liste = []

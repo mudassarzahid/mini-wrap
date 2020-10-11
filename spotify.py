@@ -29,12 +29,12 @@ class Spotify():
 
     return response.json()
 
-  def top_songs(self, limit=10):
+  def top_tracks(self, limit=10):
 
     check_limit(limit)
 
     response = requests.get(
-        self.API_URL + 'top/songs',
+        self.API_URL + 'top/tracks',
         headers=self.headers,
         params={'limit': limit}
     )

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    @font-face { font-family: MergeOne-Regular; src: url('MergeOne-Regular.TTF'); }
+    </style>
+  </head>
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <link rel="stylesheet" href="{{url_for('static', filename = 'bubbles.css')}}" >
+      <link rel="stylesheet" href="{{url_for('static', filename = 'buttons.css')}}" >
+    </head>
+    <body>
+      <div id="wrapper">
+        <div class="container">
+          <h1>My App</h1>
+          <div class="top-artists-button button">
+            <span>top artists</span>
+          </div>
+          <div class="top-tracks-button button">
+            <span>top tracks</span>
+          </div>
+          <div>
+            {% for i in range(10) %}
+              <div class="ranking">{{i+1}}</div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="background">
+          {% for i in range(20) %}
+            <div class="bubbles">i</div>
+          {% endfor %}
+        </div>
+      </div>
+      <script type="text/javascript" src="{{url_for('static', filename = 'bubbles.js')}}"></script>
+    </body>
+  </html>

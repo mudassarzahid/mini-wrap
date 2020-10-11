@@ -1,14 +1,14 @@
-from flask import Flask, redirect, request
+from flask import Flask, redirect, request, make_response, url_for, render_template
 from process_data import get_recently, show_graph, get_dates
 from urllib.parse import quote
 import requests
 import json
 from spotify import Spotify
-from werkzeug.exceptions import HTTPException
+import datetime
 
 app = Flask(__name__)
 
-#  Client Keys
+# Client Keys
 CLIENT_ID = "0ab0f042b3e44b3086e978dacb7cee47"
 CLIENT_SECRET = "ec29fc804051470297355cb8dc37ebfc"
 
@@ -23,7 +23,7 @@ SPOTIFY_API_URL = "{}/{}".format(SPOTIFY_API_BASE_URL, API_VERSION)
 CLIENT_SIDE_URL = "http://localhost"
 PORT = 3000
 REDIRECT_URI = "{}:{}/callback".format(CLIENT_SIDE_URL, PORT)
-SCOPE = "user-read-recently-played"
+SCOPE = "user-read-recently-played user-top-read"
 STATE = ""
 SHOW_DIALOG_bool = True
 SHOW_DIALOG_str = str(SHOW_DIALOG_bool).lower()
@@ -51,7 +51,8 @@ def login():
 
 @app.route('/callback')
 def callback():
-  # Auth Step 4: Requests refresh and access tokens
+
+  # Requests refresh and access tokens
   auth_token = request.args['code']
   code_payload = {
       "grant_type": "authorization_code",
@@ -62,26 +63,46 @@ def callback():
   }
   post_request = requests.post(SPOTIFY_TOKEN_URL, data=code_payload)
 
-  # Auth Step 5: Tokens are Returned to Application
+  # Tokens are Returned to Application
   response_data = json.loads(post_request.text)
   access_token = response_data["access_token"]
   refresh_token = response_data["refresh_token"]
   token_type = response_data["token_type"]
   expires_in = response_data["expires_in"]
 
-  # Auth Step 6: Use the access token to access Spotify API
-  authorization_header = {"Authorization": "Bearer {}".format(access_token)}
+  response = make_response('')
+  expire_date = datetime.datetime.now()
+  expire_date = expire_date + datetime.timedelta(minutes=30)
+  response.set_cookie('spotify_token', access_token, expires=expire_date)
+  return response
 
-  spotify = Spotify(access_token)
 
-  recently = spotify.recently(60)
-  return json.dumps(recently, indent=2)
+@app.route('/htmltest')
+def mytest():
+  return render_template("top.html")
+
+
+@app.route('/htmltest2')
+def mytest2():
+  cookie = request.cookies.get('spotify_token')
+
+  if cookie:
+    spotify = Spotify(cookie)
+    return jsonify(get_recently(spotify))
+  else:
+    return redirect('/login')
 
 
 @app.route('/recently_played')
 def recently_played():
 
-  return spotify.recently()
+  cookie = request.cookies.get('spotify_token')
+
+  if cookie:
+    spotify = Spotify(cookie)
+    return jsonify(get_recently(spotify))
+  else:
+    return redirect('/login')
 
 
 @app.route('/graph')
@@ -90,14 +111,28 @@ def graph():
   return show_graph()
 
 
-@app.route('/top/artist')
+@app.route('/top/artists')
 def get_top_artists():
-  pass
+
+  cookie = request.cookies.get('spotify_token')
+
+  if cookie:
+    spotify = Spotify(cookie)
+    return jsonify(spotify.top_artists())
+  else:
+    return redirect('/login')
 
 
-@app.route('/top/song')
-def get_top_songs():
-  pass
+@app.route('/top/tracks')
+def get_top_tracks():
+
+  cookie = request.cookies.get('spotify_token')
+
+  if cookie:
+    spotify = Spotify(cookie)
+    return jsonify(spotify.top_tracks())
+  else:
+    return redirect('/login')
 
 
 @app.route('/exception')
@@ -111,6 +146,14 @@ def handle_exception(e):
   return json.dumps({
       "description": str(e),
   }), 400
+
+
+def jsonify(data):
+  return app.response_class(
+      response=json.dumps(data, indent=2),
+      status=200,
+      mimetype='application/json'
+  )
 
 
 if __name__ == '__main__':
