@@ -1,0 +1,66 @@
+.button {
+  background-color: mediumseagreen;
+  border-radius:8px;
+  display:inline-block;
+  cursor:pointer;
+  color:#ffffff;
+  font-family:"MergeOne-Regular", "Arial", sans-serif;
+  font-size:20px;
+  padding:13px 32px;
+}
+.button:hover {
+  background-color:#43a34e;
+}
+.button:active {
+  position:relative;
+  top:1px;
+}
+
+.artists-name span {
+  background-color: #78c281;
+}
+
+.ranking {
+  text-transform: lowercase;
+  text-align: left;
+  height: 60px;
+  border-radius:8px;
+  color:#ffffff;
+  -webkit-font-smoothing: antialiased;
+  font-family:"MergeOne-Regular", "Arial", sans-serif;
+  font-weight:bold;
+  padding:13px 10px;
+  background-position: center !important;
+  background-size: cover !important;
+  margin-bottom: 16px;
+  margin-top: 16px;
+}
+
+.ranking span {
+  background-color: mediumseagreen;
+}
+
+.container {
+  width: 400px;
+  position: relative;
+  text-align: -webkit-center;
+}
+
+
+#wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -100;
+}
+
+.artists-name {
+  text-align: right;
+  padding: 20px 0px;
+}

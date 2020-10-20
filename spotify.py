@@ -29,29 +29,35 @@ class Spotify():
 
     return response.json()
 
-  def top_tracks(self, limit=10):
+  def top_tracks(self, limit=50, time_range='medium_term', offset=0):
 
     check_limit(limit)
 
     response = requests.get(
         self.API_URL + 'top/tracks',
         headers=self.headers,
-        params={'limit': limit}
-    )
+        params=(
+            ('time_range', time_range),
+            ('limit', limit),
+            ('offset', offset),
+        ))
 
     check_status(response)
 
     return response.json()
 
-  def top_artists(self, limit=10):
+  def top_artists(self, limit=50, time_range='medium_term', offset=0):
 
     check_limit(limit)
 
     response = requests.get(
         self.API_URL + 'top/artists',
         headers=self.headers,
-        params={'limit': limit}
-    )
+        params=(
+            ('time_range', time_range),
+            ('limit', limit),
+            ('offset', offset),
+        ))
 
     check_status(response)
 

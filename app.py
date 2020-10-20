@@ -15,14 +15,10 @@ CLIENT_SECRET = "ec29fc804051470297355cb8dc37ebfc"
 # Spotify URLS
 SPOTIFY_AUTH_URL = "https://accounts.spotify.com/authorize"
 SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token"
-SPOTIFY_API_BASE_URL = "https://api.spotify.com"
-API_VERSION = "v1"
-SPOTIFY_API_URL = "{}/{}".format(SPOTIFY_API_BASE_URL, API_VERSION)
+SPOTIFY_API_URL = "https://api.spotify.com/v1"
 
 # Server-side Parameters
-CLIENT_SIDE_URL = "http://localhost"
-PORT = 3000
-REDIRECT_URI = "{}:{}/callback".format(CLIENT_SIDE_URL, PORT)
+REDIRECT_URI = "http://localhost:3000/callback"
 SCOPE = "user-read-recently-played user-top-read"
 STATE = ""
 SHOW_DIALOG_bool = True
@@ -77,20 +73,21 @@ def callback():
   return response
 
 
-@app.route('/htmltest')
-def mytest():
-  return render_template("top.html")
-
-
-@app.route('/htmltest2')
-def mytest2():
+@app.route('/top')
+def top_artists_top_tracks():
   cookie = request.cookies.get('spotify_token')
 
   if cookie:
     spotify = Spotify(cookie)
-    return jsonify(get_recently(spotify))
+    return render_template(
+        "top.html",
+        tracks_data=spotify.top_tracks(50, 'long_term', 0),
+        artists_data=spotify.top_artists(50, 'long_term', 0)
+    )
   else:
     return redirect('/login')
+
+    # long_term (several years), medium_term (last 6 months), short_term (last 4 weeks)
 
 
 @app.route('/recently_played')
@@ -108,44 +105,21 @@ def recently_played():
 @app.route('/graph')
 def graph():
 
-  return show_graph()
-
-
-@app.route('/top/artists')
-def get_top_artists():
-
   cookie = request.cookies.get('spotify_token')
 
   if cookie:
     spotify = Spotify(cookie)
-    return jsonify(spotify.top_artists())
+    return show_graph(spotify)
   else:
     return redirect('/login')
 
 
-@app.route('/top/tracks')
-def get_top_tracks():
+# @app.errorhandler(Exception)
+# def handle_exception(e):
 
-  cookie = request.cookies.get('spotify_token')
-
-  if cookie:
-    spotify = Spotify(cookie)
-    return jsonify(spotify.top_tracks())
-  else:
-    return redirect('/login')
-
-
-@app.route('/exception')
-def ex():
-  raise Exception("YOOO")
-
-
-@app.errorhandler(Exception)
-def handle_exception(e):
-
-  return json.dumps({
-      "description": str(e),
-  }), 400
+#   return json.dumps({
+#       "description": str(e),
+#   }), 400
 
 
 def jsonify(data):

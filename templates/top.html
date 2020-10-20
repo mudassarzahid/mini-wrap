@@ -1,38 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <meta charset='UTF-8'/>
   <head>
-    <style>
-    @font-face { font-family: MergeOne-Regular; src: url('MergeOne-Regular.TTF'); }
-    </style>
+    <title>top artists / top tracks</title>
+    <link rel="stylesheet" href="{{url_for('static', filename = 'bubbles.css')}}" >
+    <link rel="stylesheet" href="{{url_for('static', filename = 'stylesheet.css')}}" >
   </head>
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <link rel="stylesheet" href="{{url_for('static', filename = 'bubbles.css')}}" >
-      <link rel="stylesheet" href="{{url_for('static', filename = 'buttons.css')}}" >
-    </head>
-    <body>
-      <div id="wrapper">
-        <div class="container">
-          <h1>My App</h1>
-          <div class="top-artists-button button">
-            <span>top artists</span>
-          </div>
-          <div class="top-tracks-button button">
-            <span>top tracks</span>
-          </div>
-          <div>
-            {% for i in range(10) %}
-              <div class="ranking">{{i+1}}</div>
-            {% endfor %}
-          </div>
+  <body>
+    <div id="wrapper">
+      <div class="container">
+        <h1>My App</h1>
+        <div class="top-artists-button button" onclick="buttonClick(1)">
+          <span>top artists</span>
         </div>
-        <div class="background">
-          {% for i in range(20) %}
-            <div class="bubbles">i</div>
+        <div class="top-tracks-button button" onclick="buttonClick(2)">
+          <span>top tracks</span>
+        </div>
+        <div id="tracks-ranking-content" class="ranking-content" style="display: none">
+          {% for i in range(10) %}
+            {% set items = tracks_data['items'][i] %}
+            {% if items['album']['images']|length > 0 %}
+              {% set background_image = items['album']['images'][0]['url'] %}
+            {% endif %}
+            <div class="tracks-ranking ranking" style="background: url({{background_image}});">
+              <span>
+                {{ i+1 }}.
+                {{ items['name'] }}
+              </span>
+              <div class="artists-name">
+                <span>
+                  {% set count = namespace(value=0) %}
+                  {% for j in items['artists'] %}
+                    {% if count.value > 0 or items['artists']|length == 1 %}
+                      <span>{{ j['name'] }}</span>
+                    {% else %}
+                      <span>{{ j['name'] }},</span>
+                    {% endif %}
+                    {% set count.value = count.value + 1 %}
+                  {% endfor %}
+                </span>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <div id="artists-ranking-content" class="ranking-content" style="display: none">
+          {% for i in range(10) %}
+            {% set items = artists_data['items'][i] %}
+            {% if items['images']|length > 0 %}
+              {% set background_image = items['images'][0]['url'] %}
+            {% endif %}
+            <div class="artists-ranking ranking" style="background: url({{background_image}});">
+              <span>
+                {{ i+1 }}.
+                {{ items['name'] }}
+              </span>
+              <div class="followers">
+                {{ '{:,}'.format(items['followers']['total']) }}
+                followers
+              </div>
+              <div class="genres">
+                genres:
+                {% set genres = items['genres'] %}
+                {% set seperator = ', ' %}
+                {{ seperator.join(genres) }}
+              </div>
+            </div>
           {% endfor %}
         </div>
       </div>
-      <script type="text/javascript" src="{{url_for('static', filename = 'bubbles.js')}}"></script>
-    </body>
-  </html>
+      <div class="background">
+        {% for i in range(0) %}
+          <div class="bubbles">i</div>
+        {% endfor %}
+      </div>
+    </div>
+    <script type="text/javascript" src="{{url_for('static', filename = 'bubbles.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename = 'buttons.js')}}"></script>
+  </body>
+</html>

@@ -4,7 +4,7 @@ const windowW = window.innerWidth;
 
 class Bubble {
   constructor(id) {
-    this.size = this.randInt(2, 15);
+    this.size = this.randInt(20, 25);
     this.x = this.randInt(this.size, windowW - this.size - 3);
     this.y = this.randInt(this.size, windowH - this.size - 3);
     this.id = id;
@@ -54,7 +54,7 @@ class Bubble {
   }
 }
 
-let divs = document.querySelectorAll("div");
+let divs = document.querySelectorAll(".bubbles");
 let bubbles = [];
 
 // Setup
