@@ -79,10 +79,11 @@ def top_artists_top_tracks():
 
   if cookie:
     spotify = Spotify(cookie)
+
     return render_template(
         "top.html",
-        tracks_data=spotify.top_tracks(50, 'long_term', 0),
-        artists_data=spotify.top_artists(50, 'long_term', 0)
+        tracks_data=spotify.top_tracks(50, 'medium_term', 0),
+        artists_data=spotify.top_artists(50, 'medium_term', 0)
     )
   else:
     return redirect('/login')

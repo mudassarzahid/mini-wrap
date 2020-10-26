@@ -3,13 +3,12 @@
   <meta charset='UTF-8'/>
   <head>
     <title>top artists / top tracks</title>
-    <link rel="stylesheet" href="{{url_for('static', filename = 'bubbles.css')}}" >
     <link rel="stylesheet" href="{{url_for('static', filename = 'stylesheet.css')}}" >
   </head>
   <body>
     <div id="wrapper">
       <div class="container">
-        <h1>My App</h1>
+        <h1>mudi's spotify wrapped</h1>
         <div class="top-artists-button button" onclick="buttonClick(1)">
           <span>top artists</span>
         </div>
@@ -17,7 +16,7 @@
           <span>top tracks</span>
         </div>
         <div id="tracks-ranking-content" class="ranking-content" style="display: none">
-          {% for i in range(10) %}
+          {% for i in range(50) %}
             {% set items = tracks_data['items'][i] %}
             {% if items['album']['images']|length > 0 %}
               {% set background_image = items['album']['images'][0]['url'] %}
@@ -31,7 +30,9 @@
                 <span>
                   {% set count = namespace(value=0) %}
                   {% for j in items['artists'] %}
-                    {% if count.value > 0 or items['artists']|length == 1 %}
+                    {% if count.value > 0 %}
+                      <span>{{ j['name'] }}</span>
+                      {% elif items['artists']|length == 1 %}
                       <span>{{ j['name'] }}</span>
                     {% else %}
                       <span>{{ j['name'] }},</span>
@@ -44,7 +45,7 @@
           {% endfor %}
         </div>
         <div id="artists-ranking-content" class="ranking-content" style="display: none">
-          {% for i in range(10) %}
+          {% for i in range(50) %}
             {% set items = artists_data['items'][i] %}
             {% if items['images']|length > 0 %}
               {% set background_image = items['images'][0]['url'] %}
@@ -55,26 +56,16 @@
                 {{ items['name'] }}
               </span>
               <div class="followers">
-                {{ '{:,}'.format(items['followers']['total']) }}
-                followers
-              </div>
-              <div class="genres">
-                genres:
-                {% set genres = items['genres'] %}
-                {% set seperator = ', ' %}
-                {{ seperator.join(genres) }}
+                <span>
+                  {{ '{:,}'.format(items['followers']['total']) }}
+                  followers
+                </span>
               </div>
             </div>
           {% endfor %}
         </div>
       </div>
-      <div class="background">
-        {% for i in range(0) %}
-          <div class="bubbles">i</div>
-        {% endfor %}
-      </div>
     </div>
-    <script type="text/javascript" src="{{url_for('static', filename = 'bubbles.js')}}"></script>
     <script type="text/javascript" src="{{url_for('static', filename = 'buttons.js')}}"></script>
   </body>
 </html>
