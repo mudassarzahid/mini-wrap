@@ -1,0 +1,34 @@
+.card-subtext {
+    text-align: right;
+    padding: 20px 0px;
+}
+
+.card-subtext span {
+    background-color: #78c281;
+}
+
+.followers {
+    text-align: right;
+    padding: 20px 0px;
+}
+
+.card-ranking {
+    text-transform: lowercase;
+    text-align: left;
+    height: 60px;
+    border-radius: 8px;
+    color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Arial", sans-serif;
+    font-weight: bold;
+    padding: 13px 10px;
+    background-position: center !important;
+    background-size: cover !important;
+    margin-bottom: 16px;
+    margin-top: 16px;
+}
+
+.card-ranking span {
+    padding: 4px;
+    background-color: rgba(0, 0, 0, 0.6);
+}

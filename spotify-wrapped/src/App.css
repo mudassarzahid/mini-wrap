@@ -1,0 +1,16 @@
+#wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+h1 {
+    font-family: "Arial", sans-serif;
+}
+
+.container {
+    width: 400px;
+    position: relative;
+    text-align: -webkit-center;
+}
+
