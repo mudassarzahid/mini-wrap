@@ -2,11 +2,14 @@ from flask import Flask, redirect, request, make_response, url_for, render_templ
 from process_data import get_recently, show_graph, get_dates
 from urllib.parse import quote
 import requests
+from flask_cors import CORS
 import json
 from spotify import Spotify
 import datetime
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+
 
 # Client Keys
 CLIENT_ID = "0ab0f042b3e44b3086e978dacb7cee47"
@@ -73,17 +76,38 @@ def callback():
   return response
 
 
+@app.route('/api/top/')
+def get_top():
+  cookie = request.args.get('spotify_token')
+  term = request.args.get('term')
+
+  if not term:
+    raise Exception('No valid term')
+
+  if not cookie:
+    raise Exception('No cookie')
+
+  spotify = Spotify(cookie)
+  tracks_data = spotify.top_tracks(50, term, 0)
+  artists_data = spotify.top_artists(50, term, 0)
+  return jsonify({'tracks_data': tracks_data, 'artists_data': artists_data})
+
+
 @app.route('/top')
 def top_artists_top_tracks():
   cookie = request.cookies.get('spotify_token')
+  term = request.args.get('term')
+
+  if not term:
+    raise Exception('No valid term')
 
   if cookie:
     spotify = Spotify(cookie)
 
     return render_template(
         "top.html",
-        tracks_data=spotify.top_tracks(50, 'medium_term', 0),
-        artists_data=spotify.top_artists(50, 'medium_term', 0)
+        artists_data=spotify.top_artists(50, term, 0),
+        tracks_data=spotify.top_tracks(50, term, 0)
     )
   else:
     return redirect('/login')
@@ -115,12 +139,12 @@ def graph():
     return redirect('/login')
 
 
-# @app.errorhandler(Exception)
-# def handle_exception(e):
+@app.errorhandler(Exception)
+def handle_exception(e):
 
-#   return json.dumps({
-#       "description": str(e),
-#   }), 400
+  return json.dumps({
+      "description": str(e),
+  }), 400
 
 
 def jsonify(data):

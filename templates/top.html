@@ -9,6 +9,11 @@
     <div id="wrapper">
       <div class="container">
         <h1>mudi's spotify wrapped</h1>
+        <form action="/top" method="get">
+          <button name="term" type="submit" value="short_term" id="submit">4 weeks</button>
+          <button name="term" type="submit" value="medium_term" id="submit">6 months</button>
+          <button name="term" type="submit" value="long_term" id="submit">all time</button>
+        </form>
         <div class="top-artists-button button" onclick="buttonClick(1)">
           <span>top artists</span>
         </div>
@@ -16,49 +21,32 @@
           <span>top tracks</span>
         </div>
         <div id="tracks-ranking-content" class="ranking-content" style="display: none">
-          {% for i in range(50) %}
-            {% set items = tracks_data['items'][i] %}
-            {% if items['album']['images']|length > 0 %}
-              {% set background_image = items['album']['images'][0]['url'] %}
-            {% endif %}
+          {% for i in tracks_data %}
+            {% set background_image = i['track_background'] %}
             <div class="tracks-ranking ranking" style="background: url({{background_image}});">
               <span>
-                {{ i+1 }}.
-                {{ items['name'] }}
+                {{ i['track_rank'] }}
+                {{ i['track_name'] }}
               </span>
               <div class="artists-name">
                 <span>
-                  {% set count = namespace(value=0) %}
-                  {% for j in items['artists'] %}
-                    {% if count.value > 0 %}
-                      <span>{{ j['name'] }}</span>
-                      {% elif items['artists']|length == 1 %}
-                      <span>{{ j['name'] }}</span>
-                    {% else %}
-                      <span>{{ j['name'] }},</span>
-                    {% endif %}
-                    {% set count.value = count.value + 1 %}
-                  {% endfor %}
+                  {{ i['track_artists'] }}
                 </span>
               </div>
             </div>
           {% endfor %}
         </div>
-        <div id="artists-ranking-content" class="ranking-content" style="display: none">
-          {% for i in range(50) %}
-            {% set items = artists_data['items'][i] %}
-            {% if items['images']|length > 0 %}
-              {% set background_image = items['images'][0]['url'] %}
-            {% endif %}
+        <div id="artists-ranking-content" class="ranking-content" >
+          {% for i in artists_data %}
+            {% set background_image = i['artist_background'] %}
             <div class="artists-ranking ranking" style="background: url({{background_image}});">
               <span>
-                {{ i+1 }}.
-                {{ items['name'] }}
+                {{ i['artist_rank'] }}
+                {{ i['artist_name'] }}
               </span>
               <div class="followers">
                 <span>
-                  {{ '{:,}'.format(items['followers']['total']) }}
-                  followers
+                  {{ i['artist_followers'] }}
                 </span>
               </div>
             </div>
