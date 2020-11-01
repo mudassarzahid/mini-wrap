@@ -22,7 +22,7 @@ SPOTIFY_API_URL = "https://api.spotify.com/v1"
 
 # Server-side Parameters
 REDIRECT_URI = "http://localhost:3000/callback"
-SCOPE = "user-read-recently-played user-top-read"
+SCOPE = "user-read-recently-played user-top-read user-read-private user-read-email"
 STATE = ""
 SHOW_DIALOG_bool = True
 SHOW_DIALOG_str = str(SHOW_DIALOG_bool).lower()
@@ -81,16 +81,19 @@ def get_top():
   cookie = request.args.get('spotify_token')
   term = request.args.get('term')
 
-  if not term:
-    raise Exception('No valid term')
-
   if not cookie:
     raise Exception('No cookie')
 
   spotify = Spotify(cookie)
   tracks_data = spotify.top_tracks(50, term, 0)
   artists_data = spotify.top_artists(50, term, 0)
-  return jsonify({'tracks_data': tracks_data, 'artists_data': artists_data})
+  tracks_popularity = spotify.tracks_popularity(50, term, 0)
+  artists_popularity = spotify.artists_popularity(50, term, 0)
+
+  return jsonify({'tracks_data': tracks_data,
+                  'artists_data': artists_data,
+                  'tracks_popularity': tracks_popularity,
+                  'artists_popularity': artists_popularity})
 
 
 @app.route('/top')
@@ -98,16 +101,16 @@ def top_artists_top_tracks():
   cookie = request.cookies.get('spotify_token')
   term = request.args.get('term')
 
-  if not term:
-    raise Exception('No valid term')
-
   if cookie:
     spotify = Spotify(cookie)
 
     return render_template(
         "top.html",
+        user_data=spotify.user_data(),
         artists_data=spotify.top_artists(50, term, 0),
-        tracks_data=spotify.top_tracks(50, term, 0)
+        tracks_data=spotify.top_tracks(50, term, 0),
+        tracks_popularity=spotify.tracks_popularity(50, term, 0),
+        artists_popularity=spotify.artists_popularity(50, term, 0)
     )
   else:
     return redirect('/login')
@@ -139,12 +142,12 @@ def graph():
     return redirect('/login')
 
 
-@app.errorhandler(Exception)
-def handle_exception(e):
+# @app.errorhandler(Exception)
+# def handle_exception(e):
 
-  return json.dumps({
-      "description": str(e),
-  }), 400
+#   return json.dumps({
+#       "description": str(e),
+#   }), 400
 
 
 def jsonify(data):

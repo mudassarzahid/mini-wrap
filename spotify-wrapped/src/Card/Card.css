@@ -13,19 +13,21 @@
 }
 
 .card-ranking {
-    text-transform: lowercase;
-    text-align: left;
-    height: 60px;
-    border-radius: 8px;
-    color: #ffffff;
     -webkit-font-smoothing: antialiased;
-    font-family: "Arial", sans-serif;
-    font-weight: bold;
-    padding: 13px 10px;
     background-position: center !important;
     background-size: cover !important;
-    margin-bottom: 16px;
+    border-radius: 8px;
+    color: #ffffff;
+    font-family: "Arial", sans-serif;
+    font-weight: bold;
+    height: 60px;
+    text-align: left;
+    text-transform: lowercase;
+    text-overflow: ellipsis;
     margin-top: 16px;
+    overflow: hidden;
+    padding: 14px 10px;
+    white-space: nowrap;
 }
 
 .card-ranking span {

@@ -8,11 +8,11 @@
   <body>
     <div id="wrapper">
       <div class="container">
-        <h1>mudi's spotify wrapped</h1>
+        <h1>{{ user_data }}'s spotify wrapped</h1>
         <form action="/top" method="get">
-          <button name="term" type="submit" value="short_term" id="submit">4 weeks</button>
-          <button name="term" type="submit" value="medium_term" id="submit">6 months</button>
-          <button name="term" type="submit" value="long_term" id="submit">all time</button>
+          <button name="term" type="submit" value="short_term" class="submit">4 weeks</button>
+          <button name="term" type="submit" value="medium_term" class="submit">6 months</button>
+          <button name="term" type="submit" value="long_term" class="submit">all time</button>
         </form>
         <div class="top-artists-button button" onclick="buttonClick(1)">
           <span>top artists</span>
@@ -20,7 +20,13 @@
         <div class="top-tracks-button button" onclick="buttonClick(2)">
           <span>top tracks</span>
         </div>
+        <div class="popularity">
+        </div>
         <div id="tracks-ranking-content" class="ranking-content" style="display: none">
+          <div class="popularity">
+            <div><span class="popularity-desc">average popularity score: </span>{{ tracks_popularity['average_popularity'] }}/100</div>
+            <div><span class="popularity-desc">least mainstream track: </span><span class="popularity-track-name">{{ tracks_popularity['least_mainstream_track_name'] }}</span> by <span class="popularity-track-artists">{{ tracks_popularity['least_mainstream_track_artists'] }}</span> (score: {{ tracks_popularity['least_mainstream_track_score'] }}/100)</div>
+          </div>
           {% for i in tracks_data %}
             {% set background_image = i['track_background'] %}
             <div class="tracks-ranking ranking" style="background: url({{background_image}});">
@@ -36,7 +42,11 @@
             </div>
           {% endfor %}
         </div>
-        <div id="artists-ranking-content" class="ranking-content" >
+        <div id="artists-ranking-content" class="ranking-content">
+          <div class="popularity">
+            <div><span class="popularity-desc">average popularity score:</span> {{ artists_popularity['average_popularity'] }}/100</div>
+            <div><span class="popularity-desc">least mainstream artist: </span><span class="popularity-artist-name">{{ artists_popularity['least_mainstream_artist_name'] }}</span> (score: {{ artists_popularity['least_mainstream_artist_score'] }}/100)</div>
+          </div>
           {% for i in artists_data %}
             {% set background_image = i['artist_background'] %}
             <div class="artists-ranking ranking" style="background: url({{background_image}});">
