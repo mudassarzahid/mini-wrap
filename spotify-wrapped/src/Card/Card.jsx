@@ -13,8 +13,7 @@ const Card = props => {
   }
 
   return (
-    <div className="card-ranking"
-         style={style}>
+    <div className="card-ranking" style={style}>
       <span>{props.text}</span>
       <div className="card-subtext">
         <span>{props.subtext}</span>

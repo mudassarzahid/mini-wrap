@@ -4,9 +4,10 @@ from exceptions import check_limit, check_status
 
 class Spotify():
 
-  API_URL = 'https://api.spotify.com/v1/me'
+  API_URL = 'https://api.spotify.com/v1'
 
   def __init__(self, token):
+
     self.token = token
 
     self.headers = {
@@ -17,24 +18,30 @@ class Spotify():
 
   def user_data(self):
 
-    response = requests.get(self.API_URL, headers=self.headers)
+    response = requests.get(
+        self.API_URL + '/me',
+        headers=self.headers)
 
     check_status(response)
 
-    return self.filter_user_data(response.json())
+    return response.json()['display_name']
 
-  def recently(self, limit=50):
+  def audio_features(self):
 
-    check_limit(limit)
+    id_list = []
+    for i, track_data in enumerate(self.top_tracks()):
+      id_list.append(track_data['track_id'])
+    ids = ','.join(id_list)
 
     response = requests.get(
-        self.API_URL + '/player/recently-played',
+        self.API_URL + '/audio-features',
         headers=self.headers,
-        params={'limit': limit}
-    )
+        params=(
+            ('ids', ids),
+        ))
 
     check_status(response)
-
+    print(response.json())
     return response.json()
 
   def top_tracks(self, limit=50, time_range='medium_term', offset=0):
@@ -42,7 +49,7 @@ class Spotify():
     check_limit(limit)
 
     response = requests.get(
-        self.API_URL + '/top/tracks',
+        self.API_URL + '/me/top/tracks',
         headers=self.headers,
         params=(
             ('time_range', time_range),
@@ -54,12 +61,29 @@ class Spotify():
 
     return self.filter_top_tracks(response.json())
 
+  def tracks_popularity(self, limit=50, time_range='medium_term', offset=0):
+
+    check_limit(limit)
+
+    response = requests.get(
+        self.API_URL + '/me/top/tracks',
+        headers=self.headers,
+        params=(
+            ('time_range', time_range),
+            ('limit', limit),
+            ('offset', offset),
+        ))
+
+    check_status(response)
+
+    return self.filter_tracks_popularity(response.json())
+
   def top_artists(self, limit=50, time_range='medium_term', offset=0):
 
     check_limit(limit)
 
     response = requests.get(
-        self.API_URL + '/top/artists',
+        self.API_URL + '/me/top/artists',
         headers=self.headers,
         params=(
             ('time_range', time_range),
@@ -76,7 +100,7 @@ class Spotify():
     check_limit(limit)
 
     response = requests.get(
-        self.API_URL + '/top/artists',
+        self.API_URL + '/me/top/artists',
         headers=self.headers,
         params=(
             ('time_range', time_range),
@@ -88,29 +112,14 @@ class Spotify():
 
     return self.filter_artists_popularity(response.json())
 
-  def tracks_popularity(self, limit=50, time_range='medium_term', offset=0):
-
-    check_limit(limit)
-
-    response = requests.get(
-        self.API_URL + '/top/tracks',
-        headers=self.headers,
-        params=(
-            ('time_range', time_range),
-            ('limit', limit),
-            ('offset', offset),
-        ))
-
-    check_status(response)
-
-    return self.filter_tracks_popularity(response.json())
-
   def filter_top_tracks(self, top_tracks):
 
     all_track_data = []
 
     for i, track_data in enumerate(top_tracks['items']):
       track_rank = str(i + 1) + ". "
+
+      track_id = track_data['id']
 
       if len(track_data['album']['images']) > 0:
         track_background = track_data['album']['images'][0]['url']
@@ -125,7 +134,8 @@ class Spotify():
 
       track_popularity = track_data['popularity']
 
-      all_track_data.append({'track_rank': track_rank,
+      all_track_data.append({'track_id': track_id,
+                             'track_rank': track_rank,
                              'track_background': track_background,
                              'track_name': track_name,
                              'track_artists': ', '.join(track_artists),
@@ -140,6 +150,8 @@ class Spotify():
     for i, artist_data in enumerate(top_artists['items']):
       artist_rank = str(i + 1) + ". "
 
+      artist_id = artist_data['id']
+
       if len(artist_data['images']) > 0:
         artist_background = artist_data['images'][0]['url']
       else:
@@ -151,7 +163,8 @@ class Spotify():
 
       artist_popularity = artist_data['popularity']
 
-      all_artist_data.append({'artist_rank': artist_rank,
+      all_artist_data.append({'artist_id': artist_id,
+                              'artist_rank': artist_rank,
                               'artist_background': artist_background,
                               'artist_name': artist_name,
                               'artist_followers': artist_followers,
@@ -220,6 +233,19 @@ class Spotify():
 
     return tracks_popularity_data
 
-  def filter_user_data(self, user_data):
+  def function():
+    pass
 
-    return user_data['display_name']
+  def recently(self, limit=50):
+
+    check_limit(limit)
+
+    response = requests.get(
+        self.API_URL + '/me/player/recently-played',
+        headers=self.headers,
+        params={'limit': limit}
+    )
+
+    check_status(response)
+
+    return response.json()

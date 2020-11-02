@@ -85,12 +85,14 @@ def get_top():
     raise Exception('No cookie')
 
   spotify = Spotify(cookie)
+  user_data = spotify.user_data()
   tracks_data = spotify.top_tracks(50, term, 0)
   artists_data = spotify.top_artists(50, term, 0)
   tracks_popularity = spotify.tracks_popularity(50, term, 0)
   artists_popularity = spotify.artists_popularity(50, term, 0)
 
-  return jsonify({'tracks_data': tracks_data,
+  return jsonify({'user_data': user_data,
+                  'tracks_data': tracks_data,
                   'artists_data': artists_data,
                   'tracks_popularity': tracks_popularity,
                   'artists_popularity': artists_popularity})
@@ -110,7 +112,8 @@ def top_artists_top_tracks():
         artists_data=spotify.top_artists(50, term, 0),
         tracks_data=spotify.top_tracks(50, term, 0),
         tracks_popularity=spotify.tracks_popularity(50, term, 0),
-        artists_popularity=spotify.artists_popularity(50, term, 0)
+        artists_popularity=spotify.artists_popularity(50, term, 0),
+        audio_features=spotify.audio_features()
     )
   else:
     return redirect('/login')

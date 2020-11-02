@@ -1,0 +1,13 @@
+.popularity {
+    font-family: "Arial", sans-serif;
+    font-size: 20px;
+    margin: 20px 0px 20px 0px;
+}
+
+.name, .track-artists {
+    font-style: italic;
+}
+
+.description {
+    font-weight: bold;
+}
