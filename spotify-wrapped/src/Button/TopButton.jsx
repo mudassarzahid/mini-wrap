@@ -1,15 +1,17 @@
-import React, {Component} from "react";
+import React from "react";
 import './TopButton.css';
 
-export default class TopButton extends Component {
-  state = {};
+const TopButton = props => {
+  let style = {};
 
-  render() {
-    return (
-      <div onClick={this.props.onClick} className="button">
-                <span>
-                    top {this.props.category}
-                </span>
-      </div>);
+  if (props.isSelected) {
+    style.backgroundColor = "#306b30";
   }
-}
+
+  return (
+    <div onClick={props.onClick} style={style} className="button">
+      <span>top {props.category}</span>
+    </div>);
+};
+
+export default TopButton;

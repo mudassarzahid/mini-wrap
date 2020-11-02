@@ -1,16 +1,18 @@
-import React, {Component} from "react";
+import React from "react";
 import './TermButton.css';
 
-export default class TermButton extends Component {
-  state = {};
+const TermButton = props => {
+  let style = {};
 
-  render() {
-    return (
-      <div className="term-button" value={this.props.term}>
-        <form action="/top" method="get">
-          <button name="term" type="submit" value={this.props.term} id="submit">{this.props.termdesc}</button>
-        </form>
-      </div>
-    )
+  if (props.isSelected) {
+    style.backgroundColor = "red";
   }
-}
+
+  return (
+    <div onClick={props.onClick} className="term-button" style={style} >
+      <span name="term">{props.termdesc}</span>
+    </div>
+  );
+};
+
+export default TermButton;
