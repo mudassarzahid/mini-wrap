@@ -15,3 +15,12 @@
     background: red;
     box-shadow: 0px 0px 1px #777;
 }
+
+@media screen and (max-width: 600px) {
+    .term-button {
+        font-size: 16px;
+        margin: 4px;
+    }
+}
+
+

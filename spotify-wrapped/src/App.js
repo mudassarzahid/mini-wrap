@@ -11,6 +11,8 @@ import Headline from "./Textfield/Headline";
 class App extends React.Component {
 
   state = {
+    'randomNumber': 0,
+    'emoji': '',
     'user_data': '',
     'artists_data': [],
     'tracks_data': [],
@@ -22,6 +24,25 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getTopData('medium_term');
+    this.generateEmoji();
+  }
+
+  generateEmoji() {
+    this.setState({
+      randomNumber: Math.round(Math.random() * 10)
+    }, () => {
+      if (this.state.randomNumber < 2) {
+        this.setState({emoji: '✌😗'})
+      } else if (this.state.randomNumber >= 2 && this.state.randomNumber < 4) {
+        this.setState({emoji: '🗣💯'})
+      } else if (this.state.randomNumber >= 4 && this.state.randomNumber < 6) {
+        this.setState({emoji: '👁️👄👁️'})
+      } else if (this.state.randomNumber >= 6 && this.state.randomNumber < 8) {
+        this.setState({emoji: '🆙📈'})
+      } else if (this.state.randomNumber >= 8 && this.state.randomNumber <= 10) {
+        this.setState({emoji: '🤘😎'})
+      }
+    });
   }
 
   getTopData(term) {
@@ -47,7 +68,8 @@ class App extends React.Component {
         <div id="wrapper">
           <div className="container">
 
-            <Headline username={this.state.user_data}/>
+            <Headline username={this.state.user_data}
+                      emoji={this.state.emoji}/>
 
             <span style={{display: 'inline-flex'}}>
 
@@ -79,19 +101,21 @@ class App extends React.Component {
               isSelected={this.state.termSelected === 'long_term'}/>
             </span>
 
-            <TopButton
-              onClick={() =>
-                this.setState({topVisible: 'top_artists'})
-              }
-              category={'artists'}
-              isSelected={this.state.topVisible === "top_artists"}/>
+            <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+              <TopButton
+                onClick={() =>
+                  this.setState({topVisible: 'top_artists'})
+                }
+                category={'artists'}
+                isSelected={this.state.topVisible === "top_artists"}/>
 
-            <TopButton
-              onClick={() =>
-                this.setState({topVisible: 'top_tracks'})
-              }
-              category={'tracks'}
-              isSelected={this.state.topVisible === "top_tracks"}/>
+              <TopButton
+                onClick={() =>
+                  this.setState({topVisible: 'top_tracks'})
+                }
+                category={'tracks'}
+                isSelected={this.state.topVisible === "top_tracks"}/>
+            </div>
 
             <Popularity description={this.state.artists_popularity.average_popularity}
                         category={'artist'}
@@ -108,22 +132,25 @@ class App extends React.Component {
                         score={this.state.tracks_popularity.least_mainstream_track_score}
                         isVisible={this.state.topVisible === 'top_tracks'}/>
 
+            <div>
+              {this.state.tracks_data.map((track_data) => (
+                <Card backgroundUrl={track_data.track_background}
+                      text={`${track_data.track_rank} ${track_data.track_name}`}
+                      subtext={track_data.track_artists}
+                      key={track_data.track_id}
+                      isVisible={this.state.topVisible === 'top_tracks'}/>
+              ))}
+            </div>
 
-            {this.state.tracks_data.map((track_data) => (
-              <Card backgroundUrl={track_data.track_background}
-                    text={`${track_data.track_rank} ${track_data.track_name}`}
-                    subtext={track_data.track_artists}
-                    key={track_data.track_id}
-                    isVisible={this.state.topVisible === 'top_tracks'}/>
-            ))}
-
-            {this.state.artists_data.map((artist_data) => (
-              <Card backgroundUrl={artist_data.artist_background}
-                    text={`${artist_data.artist_rank} ${artist_data.artist_name}`}
-                    subtext={artist_data.artist_followers}
-                    key={artist_data.artist_id}
-                    isVisible={this.state.topVisible === 'top_artists'}/>
-            ))}
+            <div>
+              {this.state.artists_data.map((artist_data) => (
+                <Card backgroundUrl={artist_data.artist_background}
+                      text={`${artist_data.artist_rank} ${artist_data.artist_name}`}
+                      subtext={artist_data.artist_followers}
+                      key={artist_data.artist_id}
+                      isVisible={this.state.topVisible === 'top_artists'}/>
+              ))}
+            </div>
           </div>
         </div>
       </div>

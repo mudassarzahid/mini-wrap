@@ -41,8 +41,53 @@ class Spotify():
         ))
 
     check_status(response)
-    print(response.json())
-    return response.json()
+
+    return self.filter_audio_features(response.json())
+
+  def filter_audio_features(self, audio_data):
+
+    number_tracks = 0
+    danceability = 0
+    energy = 0
+    key = 0
+    loudness = 0
+    mode = 0
+    speechiness = 0
+    acousticness = 0
+    instrumentalness = 0
+    liveness = 0
+    valence = 0
+    duration_min = 0
+    time_signature = 0
+
+    for i, audio_data in enumerate(audio_data['audio_features']):
+      danceability += audio_data['danceability']
+      energy += audio_data['energy']
+      key += audio_data['key']
+      loudness += audio_data['loudness']
+      mode += audio_data['mode']
+      speechiness += audio_data['speechiness']
+      acousticness += audio_data['acousticness']
+      instrumentalness += audio_data['instrumentalness']
+      liveness += audio_data['liveness']
+      valence += audio_data['valence']
+      duration_min += audio_data['duration_ms']
+      time_signature += audio_data['time_signature']
+      number_tracks += 1
+
+    audio_features_list = {'danceability': round(danceability / number_tracks, 1) * 100,
+                           'energy': round(energy / number_tracks, 1) * 100,
+                           'loudness': round(loudness / number_tracks, 1),
+                           'mode': round(mode / number_tracks, 1) * 100,
+                           'speechiness': round(speechiness / number_tracks, 1) * 100,
+                           'acousticness': round(acousticness / number_tracks, 1) * 100,
+                           'instrumentalness': round(instrumentalness / number_tracks, 2) * 100,
+                           'liveness': round(liveness / number_tracks, 1) * 100,
+                           'valence': round(valence / number_tracks, 1) * 100,
+                           'duration_min': round((duration_min / number_tracks) / 60000, 2),
+                           'time_signature': round(time_signature / number_tracks, 1)}
+
+    return(audio_features_list)
 
   def top_tracks(self, limit=50, time_range='medium_term', offset=0):
 
