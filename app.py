@@ -90,12 +90,14 @@ def get_top():
   artists_data = spotify.top_artists(50, term, 0)
   tracks_popularity = spotify.tracks_popularity(50, term, 0)
   artists_popularity = spotify.artists_popularity(50, term, 0)
+  audio_features = spotify.audio_features(50, term, 0)
 
   return jsonify({'user_data': user_data,
                   'tracks_data': tracks_data,
                   'artists_data': artists_data,
                   'tracks_popularity': tracks_popularity,
-                  'artists_popularity': artists_popularity})
+                  'artists_popularity': artists_popularity,
+                  'audio_features': audio_features})
 
 
 @app.route('/top')
@@ -113,7 +115,7 @@ def top_artists_top_tracks():
         tracks_data=spotify.top_tracks(50, term, 0),
         tracks_popularity=spotify.tracks_popularity(50, term, 0),
         artists_popularity=spotify.artists_popularity(50, term, 0),
-        audio_features=spotify.audio_features()
+        audio_features=spotify.audio_features(50, term, 0)
     )
   else:
     return redirect('/login')
@@ -121,36 +123,12 @@ def top_artists_top_tracks():
     # long_term (several years), medium_term (last 6 months), short_term (last 4 weeks)
 
 
-@app.route('/recently_played')
-def recently_played():
+@app.errorhandler(Exception)
+def handle_exception(e):
 
-  cookie = request.cookies.get('spotify_token')
-
-  if cookie:
-    spotify = Spotify(cookie)
-    return jsonify(get_recently(spotify))
-  else:
-    return redirect('/login')
-
-
-@app.route('/graph')
-def graph():
-
-  cookie = request.cookies.get('spotify_token')
-
-  if cookie:
-    spotify = Spotify(cookie)
-    return show_graph(spotify)
-  else:
-    return redirect('/login')
-
-
-# @app.errorhandler(Exception)
-# def handle_exception(e):
-
-#   return json.dumps({
-#       "description": str(e),
-#   }), 400
+  return json.dumps({
+      "description": str(e),
+  }), 400
 
 
 def jsonify(data):

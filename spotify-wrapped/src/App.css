@@ -10,6 +10,26 @@
     text-align: -webkit-center;
 }
 
+.term-buttons {
+    display: inline-flex;
+}
+
+.top-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.audio-feature-texfield {
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+}
+
+.popularity-textfield {
+    display: inline-flex;
+}
+
 @media screen and (max-width: 600px) {
     .container {
         width: 100%;

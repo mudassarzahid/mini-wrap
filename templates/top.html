@@ -10,43 +10,6 @@
       <div class="container">
         <h1>{{ user_data }}'s spotify wrapped</h1>
 
-
-        <div class="meter">
-          <span style="width: {{audio_features['danceability']}}%"></span>
-        </div>
-        <div class="meter">
-          <span style="width: {{audio_features['energy']}}%"></span>
-        </div>
-        <div class="meter">
-          <span style="width: {{audio_features['key']}}%"></span>
-        </div>
-        <div class="meter">
-          <span style="width: {{audio_features['loudness']}}%"></span>
-        </div>
-        <div class="meter">
-          <span style="width: {{audio_features['mode']}}%"></span>
-        </div>
-        <div class="meter">
-          <span style="width: {{audio_features['speechiness']}}%"></span>
-        </div>
-        <div class="meter">
-          <span style="width: {{audio_features['acoustic']}}%"></span>
-        </div>
-        <div class="meter">
-          <span style="width: {{audio_features['instrumentalness']}}%"></span>
-        </div>
-        <div class="meter">
-          <span style="width: {{audio_features['liveness']}}%"></span>
-        </div>
-        <div class="meter">
-          <span style="width: {{audio_features['valence']}}%"></span>
-        </div>
-        <div class="meter">
-          <span style="width: {{audio_features['duration_min']}}%"></span>
-        </div>
-        <div class="meter">
-          <span style="width: {{audio_features['time_signature']}}%"></span>
-        </div>
         {{audio_features}}
 
         <form action="/top" method="get">

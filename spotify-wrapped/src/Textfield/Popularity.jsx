@@ -11,18 +11,17 @@ const Popularity = props => {
   }
 
   return (
-    <div className="popularity"
-         style={style}>
-      <div>
-        <span className="description">average popularity score: </span>
-        {props.description}/100
-      </div>
-      <div>
-        <span className="description">least mainstream {props.category}: </span>
-        <span className="name">{props.name}</span>
-        <span className="by">{props.by}</span>
-        <span className="track-artists">{props.trackArtists} </span>
-        (score: {props.score}/100)
+    <div style={style}>
+      <div className="popularity-content">
+        <div>
+          <div>{props.averagePopularity}/10</div>
+          <div className="description">average popularity</div>
+        </div>
+
+        <div>
+          <div className="name">{props.name}</div>
+          <div className="description">least mainstream</div>
+        </div>
       </div>
     </div>);
 
