@@ -4,9 +4,9 @@ import './AudioFeature.css';
 const AudioFeature = props => {
   return (
     <div className="audio-feature">
-      <div>{props.emoji}</div>
+      <div className="audio-feature-emoji">{props.emoji}</div>
       <div>{props.score}{props.scale}</div>
-      <div>{props.category}</div>
+      <div className="audio-feature-category">{props.category}</div>
     </div>);
 };
 

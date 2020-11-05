@@ -3,7 +3,7 @@
     padding: 20px 0px;
 }
 
-a {
+.card-link {
     color: white;
     text-decoration: none;
     target-new: tab;
@@ -19,7 +19,6 @@ a {
     background-position: center !important;
     background-size: cover !important;
     border-radius: 8px;
-    font-family: "Arial", sans-serif;
     font-weight: bold;
     height: 60px;
     text-align: left;

@@ -5,7 +5,7 @@
 }
 
 .container {
-    width: 400px;
+    width: 420px;
     position: relative;
     text-align: -webkit-center;
 }
@@ -20,14 +20,13 @@
     justify-content: center;
 }
 
-.audio-feature-texfield {
+.audio-feature-texfield, .popularity-textfield {
     width: 100%;
-    display: inline-flex;
+    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-}
-
-.popularity-textfield {
-    display: inline-flex;
+    flex-flow: row wrap;
 }
 
 @media screen and (max-width: 600px) {

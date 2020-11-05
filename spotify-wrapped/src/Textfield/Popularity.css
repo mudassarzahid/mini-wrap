@@ -1,8 +1,30 @@
 .popularity-content {
-    font-family: "Arial", sans-serif;
     font-size: 20px;
-    margin: 20px 0px 20px 0px;
+    margin-bottom: 10px;
     display: inline-flex;
+    gap: 10px;
+}
+
+.popularity-link {
+    color: black;
+    text-decoration: none;
+    target-new: tab;
+}
+
+.name, .average-popularity {
+    font-size: 16px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.popularity-element {
+    padding: 10px 20px 10px 20px;
+    max-width: 163px;
+    border: 1px solid #e3e3e3;
+    border-radius: 3px;
+    min-width: 163px;
+    flex-basis: 100%;
 }
 
 .description {

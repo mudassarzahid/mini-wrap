@@ -52,7 +52,7 @@ class Spotify():
     duration_min = 0
     energy = 0
     tempo = 0
-    valence = 0
+    happiness = 0
     number_tracks = 0
 
     for i, audio_data in enumerate(audio_data['audio_features']):
@@ -60,14 +60,14 @@ class Spotify():
       duration_min += audio_data['duration_ms']
       energy += audio_data['energy']
       tempo += audio_data['tempo']
-      valence += audio_data['valence']
+      happiness += audio_data['valence']
       number_tracks += 1
 
-    audio_features_list = {'danceability': round((danceability / number_tracks) * 10, 1),
-                           'duration_min': round((duration_min / number_tracks) / 60000, 1),
-                           'energy': round((energy / number_tracks) * 10, 1),
-                           'tempo': round(tempo / number_tracks, 1),
-                           'valence': round((valence / number_tracks) * 10, 1)}
+    audio_features_list = {'danceability': '{:.1f}'.format(round((danceability / number_tracks) * 10, 1)),
+                           'duration_min': '{:.1f}'.format(round((duration_min / number_tracks) / 60000, 1)),
+                           'energy': '{:.1f}'.format(round((energy / number_tracks) * 10, 1)),
+                           'tempo': '{:.1f}'.format(round(tempo / number_tracks, 1)),
+                           'happiness': '{:.1f}'.format(round((happiness / number_tracks) * 10, 1))}
 
     return(audio_features_list)
 
@@ -106,7 +106,6 @@ class Spotify():
       track_name = track_data['name']
 
       track_url = track_data['external_urls']['spotify']
-      print(track_url)
 
       track_artists = []
       for artist in track_data['artists']:
@@ -152,7 +151,6 @@ class Spotify():
       tracks_popularity_data = {'number_tracks': 0,
                                 'average_popularity': 0,
                                 'least_mainstream_track_name': '',
-                                'least_mainstream_track_artists': '',
                                 'least_mainstream_track_score': 0}
 
       return tracks_popularity_data
@@ -160,18 +158,16 @@ class Spotify():
     for i, track_data in enumerate(top_tracks['items']):
       average_popularity += track_data['popularity']
 
-      if track_data['popularity'] < least_mainstream_track_score and track_data['popularity'] > 0:
-        least_mainstream_track_artists = []
-        for artist in track_data['artists']:
-          least_mainstream_track_artists.append(artist['name'])
+      if track_data['popularity'] < least_mainstream_track_score and track_data['popularity'] >= 5:
         least_mainstream_track_score = track_data['popularity']
         least_mainstream_track_name = track_data['name']
+        least_mainstream_track_url = track_data['external_urls']['spotify']
 
     tracks_popularity_data = {'number_tracks': number_tracks,
-                              'average_popularity': round((average_popularity / number_tracks) / 10, 1),
+                              'average_popularity': '{:.1f}'.format(round((average_popularity / number_tracks) / 10, 1)),
                               'least_mainstream_track_name': least_mainstream_track_name,
-                              'least_mainstream_track_artists': ', '.join(least_mainstream_track_artists),
-                              'least_mainstream_track_score': round(least_mainstream_track_score / 10, 1)}
+                              'least_mainstream_track_score': '{:.1f}'.format(round(least_mainstream_track_score / 10, 1)),
+                              'least_mainstream_track_url': least_mainstream_track_url}
 
     return tracks_popularity_data
 
@@ -260,13 +256,15 @@ class Spotify():
     for i, artist_data in enumerate(top_artists['items']):
       average_popularity += artist_data['popularity']
 
-      if artist_data['popularity'] < least_mainstream_artist_score and artist_data['popularity'] > 0:
+      if artist_data['popularity'] < least_mainstream_artist_score and artist_data['popularity'] >= 5:
         least_mainstream_artist_name = artist_data['name']
         least_mainstream_artist_score = artist_data['popularity']
+        least_mainstream_artist_url = artist_data['external_urls']['spotify']
 
     artists_popularity_data = {'number_artists': number_artists,
-                               'average_popularity': round((average_popularity / number_artists) / 10, 1),
+                               'average_popularity': '{:.1f}'.format(round((average_popularity / number_artists) / 10, 1)),
                                'least_mainstream_artist_name': least_mainstream_artist_name,
-                               'least_mainstream_artist_score': round(least_mainstream_artist_score / 10, 1)}
+                               'least_mainstream_artist_score': '{:.1f}'.format(round(least_mainstream_artist_score / 10, 1)),
+                               'least_mainstream_artist_url': least_mainstream_artist_url}
 
     return artists_popularity_data

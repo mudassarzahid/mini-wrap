@@ -16,7 +16,10 @@ class App extends React.Component {
     'energyEmoji': '',
     'danceabilityEmoji': '',
     'tempoEmoji': '',
-    'valenceEmoji': '',
+    'happinessEmoji': '',
+    'tracksPopularityEmoji': '',
+    'artistsPopularityEmoji': '',
+    'leastMainstreamEmoji': '',
     'user_data': '',
     'artists_data': [],
     'tracks_data': [],
@@ -63,7 +66,9 @@ class App extends React.Component {
     let danceability = this.state.audio_features.danceability;
     let energy = this.state.audio_features.energy;
     let tempo = this.state.audio_features.tempo;
-    let valence = this.state.audio_features.valence;
+    let happiness = this.state.audio_features.happiness;
+    let tracksPopularity = this.state.tracks_popularity.average_popularity;
+    let artistsPopularity = this.state.artists_popularity.average_popularity;
 
     const danceabilityEmoji = [
       [[0, 1.7], '🧍🧍🧍'],
@@ -90,13 +95,22 @@ class App extends React.Component {
       [[120, 168], '🚀🚀'],
       [[168, Number.MAX_VALUE], '🚀🚀🚀'],
     ]
-    const valenceEmoji = [
+    const happinessEmoji = [
       [[0, 1.7], '😫😫😫'],
       [[1.7, 3.3], '😫😫'],
       [[3.3, 5.0], '😫'],
       [[5.0, 6.7], '😆'],
       [[6.7, 8.4], '😆😆'],
       [[8.4, 10.0], '😆😆😆'],
+    ]
+
+    const popularityEmoji = [
+      [[0, 1.7], '👤👤👤'],
+      [[1.7, 3.3], '👤👤'],
+      [[3.3, 5.0], '👤'],
+      [[5.0, 6.7], '🔥'],
+      [[6.7, 8.4], '🔥🔥'],
+      [[8.4, 10.0], '🔥🔥🔥'],
     ]
 
     for (let i = 0; i < danceabilityEmoji.length; i++) {
@@ -117,12 +131,12 @@ class App extends React.Component {
       }
     }
 
-    for (let i = 0; i < valenceEmoji.length; i++) {
-      let valueRange = valenceEmoji[i][0];
+    for (let i = 0; i < happinessEmoji.length; i++) {
+      let valueRange = happinessEmoji[i][0];
       let begin = valueRange[0];
       let end = valueRange[1];
-      if (valence >= begin && valence <= end) {
-        this.setState({valenceEmoji: valenceEmoji[i][1]});
+      if (happiness >= begin && happiness <= end) {
+        this.setState({happinessEmoji: happinessEmoji[i][1]});
       }
     }
 
@@ -134,6 +148,20 @@ class App extends React.Component {
         this.setState({tempoEmoji: tempoEmoji[i][1]});
       }
     }
+
+    for (let i = 0; i < popularityEmoji.length; i++) {
+      let valueRange = popularityEmoji[i][0];
+      let begin = valueRange[0];
+      let end = valueRange[1];
+      if (tracksPopularity >= begin && tracksPopularity <= end) {
+        this.setState({tracksPopularityEmoji: popularityEmoji[i][1]});
+      }
+      if (artistsPopularity >= begin && artistsPopularity <= end) {
+        this.setState({artistsPopularityEmoji: popularityEmoji[i][1]});
+      }
+    }
+
+    this.setState({leastMainstreamEmoji: '🎧'})
   }
 
   render() {
@@ -174,7 +202,7 @@ class App extends React.Component {
                 isSelected={this.state.termSelected === 'long_term'}/>
             </div>
 
-            <div className="top-buttons">
+            <div className="top-buttons" style={{'marginBottom': '20px'}}>
               <TopButton
                 onClick={() =>
                   this.setState({topVisible: 'top_artists'})
@@ -190,59 +218,68 @@ class App extends React.Component {
                 isSelected={this.state.topVisible === "top_tracks"}/>
             </div>
 
-            <div className="audio-feature-texfield">
-              <div>
-                <AudioFeature emoji={this.state.danceabilityEmoji}
-                              category='danceability'
-                              score={this.state.audio_features.danceability}
-                              scale='/10'/>
-                <AudioFeature emoji={this.state.energyEmoji}
-                              category='energy'
-                              score={this.state.audio_features.energy}
-                              scale='/10'/>
-              </div>
-              <div>
-                <AudioFeature emoji={this.state.tempoEmoji}
-                              category='tempo'
-                              score={this.state.audio_features.tempo}
-                              scale=' bpm'/>
-                <AudioFeature emoji={this.state.valenceEmoji}
-                              category='valence'
-                              score={this.state.audio_features.valence}
-                              scale='/10'/>
-              </div>
+            <div className="popularity-textfield">
+              <Popularity
+                popularityEmoji={this.state.artistsPopularityEmoji}
+                leastMainstreamEmoji={this.state.leastMainstreamEmoji}
+                averagePopularity={this.state.artists_popularity.average_popularity}
+                name={this.state.artists_popularity.least_mainstream_artist_name}
+                link={this.state.artists_popularity.least_mainstream_artist_url}
+                isVisible={this.state.topVisible === 'top_artists'}/>
+
+              <Popularity
+                popularityEmoji={this.state.tracksPopularityEmoji}
+                leastMainstreamEmoji={this.state.leastMainstreamEmoji}
+                averagePopularity={this.state.tracks_popularity.average_popularity}
+                name={this.state.tracks_popularity.least_mainstream_track_name}
+                link={this.state.tracks_popularity.least_mainstream_track_url}
+                isVisible={this.state.topVisible === 'top_tracks'}/>
             </div>
 
-            <div className="popularity-textfield">
-              <Popularity averagePopularity={this.state.artists_popularity.average_popularity}
-                          name={this.state.artists_popularity.least_mainstream_artist_name}
-                          isVisible={this.state.topVisible === 'top_artists'}/>
-
-              <Popularity averagePopularity={this.state.tracks_popularity.average_popularity}
-                          name={`${this.state.tracks_popularity.least_mainstream_track_name} by 
-                                 ${this.state.tracks_popularity.least_mainstream_track_artists}`}
-                          isVisible={this.state.topVisible === 'top_tracks'}/>
+            <div className="audio-feature-texfield">
+              <AudioFeature
+                emoji={this.state.danceabilityEmoji}
+                category='danceability'
+                score={this.state.audio_features.danceability}
+                scale='/10'/>
+              <AudioFeature
+                emoji={this.state.energyEmoji}
+                category='energy'
+                score={this.state.audio_features.energy}
+                scale='/10'/>
+              <AudioFeature
+                emoji={this.state.tempoEmoji}
+                category='tempo'
+                score={this.state.audio_features.tempo}
+                scale=' bpm'/>
+              <AudioFeature
+                emoji={this.state.happinessEmoji}
+                category='happiness'
+                score={this.state.audio_features.happiness}
+                scale='/10'/>
             </div>
 
             <div>
               {this.state.tracks_data.map((track_data) => (
-                <Card backgroundUrl={track_data.track_background}
-                      link={track_data.track_url}
-                      text={`${track_data.track_rank} ${track_data.track_name}`}
-                      subtext={track_data.track_artists}
-                      key={track_data.track_id}
-                      isVisible={this.state.topVisible === 'top_tracks'}/>
+                <Card
+                  backgroundUrl={track_data.track_background}
+                  link={track_data.track_url}
+                  text={`${track_data.track_rank} ${track_data.track_name}`}
+                  subtext={track_data.track_artists}
+                  key={track_data.track_id}
+                  isVisible={this.state.topVisible === 'top_tracks'}/>
               ))}
             </div>
 
             <div>
               {this.state.artists_data.map((artist_data) => (
-                <Card backgroundUrl={artist_data.artist_background}
-                      link={artist_data.artist_url}
-                      text={`${artist_data.artist_rank} ${artist_data.artist_name}`}
-                      subtext={artist_data.artist_followers}
-                      key={artist_data.artist_id}
-                      isVisible={this.state.topVisible === 'top_artists'}/>
+                <Card
+                  backgroundUrl={artist_data.artist_background}
+                  link={artist_data.artist_url}
+                  text={`${artist_data.artist_rank} ${artist_data.artist_name}`}
+                  subtext={artist_data.artist_followers}
+                  key={artist_data.artist_id}
+                  isVisible={this.state.topVisible === 'top_artists'}/>
               ))}
             </div>
           </div>

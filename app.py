@@ -22,7 +22,7 @@ SPOTIFY_API_URL = "https://api.spotify.com/v1"
 
 # Server-side Parameters
 REDIRECT_URI = "http://localhost:3000/callback"
-SCOPE = "user-read-recently-played user-top-read user-read-private user-read-email"
+SCOPE = "user-top-read user-read-private user-read-email"
 STATE = ""
 SHOW_DIALOG_bool = True
 SHOW_DIALOG_str = str(SHOW_DIALOG_bool).lower()
