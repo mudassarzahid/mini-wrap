@@ -5,8 +5,39 @@
     border-radius: 3px;
     min-width: 106px;
     flex-basis: 100%;
+    color: black;
 }
 .audio-feature-category, .audio-feature-emoji {
     font-weight: bold;
     font-size: 20px;
+}
+
+@media screen and (max-width: 600px) {
+    .audio-feature {
+        max-width: 134px;
+        min-width: 113px;
+    }
+
+    .audio-feature-category, .audio-feature-emoji {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 409px) {
+    .audio-feature {
+        max-width: 113px;
+        min-width: 113px;
+    }
+}
+
+@media screen and (max-width: 367px) {
+    .audio-feature {
+        max-width: 89px;
+        min-width: 89px;
+        font-size: 15px;
+    }
+
+    .audio-feature-category, .audio-feature-emoji {
+        font-size: 15px;
+    }
 }

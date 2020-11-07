@@ -1,13 +1,12 @@
 .button {
     background-color: mediumseagreen;
-    border-radius: 32px;
+    border-radius: 8px;
     display: inline-block;
     cursor: pointer;
-    color: #ffffff;
     font-size: 20px;
     font-weight: bold;
-    padding: 13px 32px;
-    margin: 0px 2px 0px 2px;
+    padding: 14px 32px;
+    margin: 0px 20px 0px 20px;
 }
 
 .button:hover {
@@ -21,7 +20,22 @@
 
 @media screen and (max-width: 600px) {
     .button {
-        font-size: 13px;
+        font-size: 18px;
+        margin: 0px 10px 0px 10px;
+    }
+}
+
+@media screen and (max-width: 409px) {
+    .button {
+        font-size: 17px;
+        margin: 0px 6px 0px 6px;
+    }
+}
+
+@media screen and (max-width: 367px) {
+    .button {
+        font-size: 15px;
+        margin: 0px 6px 0px 6px;
     }
 }
 

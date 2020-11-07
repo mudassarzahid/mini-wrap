@@ -1,7 +1,11 @@
 .username {
-
+    font-style: italic;
 }
 
-.username > h1 > span {
+.headline {
+    color: black;
+}
+
+.headline > h1 > span {
     white-space: nowrap;
 }

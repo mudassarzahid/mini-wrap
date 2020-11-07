@@ -8,6 +8,8 @@ import TermButton from "./Button/TermButton";
 import Popularity from "./Textfield/Popularity";
 import Headline from "./Textfield/Headline";
 import AudioFeature from "./Textfield/AudioFeature";
+import Gallery from "react-photo-gallery";
+
 
 class App extends React.Component {
 
@@ -27,7 +29,8 @@ class App extends React.Component {
     'artists_popularity': '',
     'topVisible': 'top_artists',
     'termSelected': 'medium_term',
-    'audio_features': ''
+    'audio_features': '',
+    'tracks_collage': []
   }
 
   componentDidMount() {
@@ -45,7 +48,8 @@ class App extends React.Component {
           tracks_data: res.data.tracks_data,
           tracks_popularity: res.data.tracks_popularity,
           artists_popularity: res.data.artists_popularity,
-          audio_features: res.data.audio_features
+          audio_features: res.data.audio_features,
+          tracks_collage: res.data.tracks_collage
         }, () => {
           this.generateAudioEmoji();
           ;
@@ -167,7 +171,15 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+
+        <div className="gallery">
+          <Gallery photos={this.state.tracks_collage}/>
+        </div>
+
         <div id="wrapper">
+
+
+
           <div className="container">
 
             <Headline username={this.state.user_data}
@@ -201,6 +213,30 @@ class App extends React.Component {
                 termdesc="all time"
                 isSelected={this.state.termSelected === 'long_term'}/>
             </div>
+
+            <div className="audio-feature-texfield">
+              <AudioFeature
+                emoji={this.state.danceabilityEmoji}
+                category='danceability'
+                score={this.state.audio_features.danceability}
+                scale='/10'/>
+              <AudioFeature
+                emoji={this.state.energyEmoji}
+                category='energy'
+                score={this.state.audio_features.energy}
+                scale='/10'/>
+              <AudioFeature
+                emoji={this.state.tempoEmoji}
+                category='tempo'
+                score={this.state.audio_features.tempo}
+                scale=' bpm'/>
+              <AudioFeature
+                emoji={this.state.happinessEmoji}
+                category='happiness'
+                score={this.state.audio_features.happiness}
+                scale='/10'/>
+            </div>
+
 
             <div className="top-buttons" style={{'marginBottom': '20px'}}>
               <TopButton
@@ -236,29 +272,6 @@ class App extends React.Component {
                 isVisible={this.state.topVisible === 'top_tracks'}/>
             </div>
 
-            <div className="audio-feature-texfield">
-              <AudioFeature
-                emoji={this.state.danceabilityEmoji}
-                category='danceability'
-                score={this.state.audio_features.danceability}
-                scale='/10'/>
-              <AudioFeature
-                emoji={this.state.energyEmoji}
-                category='energy'
-                score={this.state.audio_features.energy}
-                scale='/10'/>
-              <AudioFeature
-                emoji={this.state.tempoEmoji}
-                category='tempo'
-                score={this.state.audio_features.tempo}
-                scale=' bpm'/>
-              <AudioFeature
-                emoji={this.state.happinessEmoji}
-                category='happiness'
-                score={this.state.audio_features.happiness}
-                scale='/10'/>
-            </div>
-
             <div>
               {this.state.tracks_data.map((track_data) => (
                 <Card
@@ -266,7 +279,7 @@ class App extends React.Component {
                   link={track_data.track_url}
                   text={`${track_data.track_rank} ${track_data.track_name}`}
                   subtext={track_data.track_artists}
-                  key={track_data.track_id}
+                  key={`card_track_id + ${track_data.track_id}`}
                   isVisible={this.state.topVisible === 'top_tracks'}/>
               ))}
             </div>
@@ -278,7 +291,7 @@ class App extends React.Component {
                   link={artist_data.artist_url}
                   text={`${artist_data.artist_rank} ${artist_data.artist_name}`}
                   subtext={artist_data.artist_followers}
-                  key={artist_data.artist_id}
+                  key={`card_artist_id + ${artist_data.artist_id}`}
                   isVisible={this.state.topVisible === 'top_artists'}/>
               ))}
             </div>

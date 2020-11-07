@@ -3,6 +3,7 @@
     margin-bottom: 10px;
     display: inline-flex;
     gap: 10px;
+    color: black;
 }
 
 .popularity-link {
@@ -30,3 +31,33 @@
 .description {
     font-weight: bold;
 }
+
+@media screen and (max-width: 600px) {
+    .popularity-element {
+        max-width: 134px;
+        min-width: 134px;
+    }
+
+    .popularity-content {
+        font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 409px) {
+    .popularity-element {
+        max-width: 113px;
+        min-width: 113px;
+    }
+}
+
+@media screen and (max-width: 367px) {
+    .popularity-content, .name, .average-popularity {
+        font-size: 15px;
+    }
+
+    .popularity-element {
+        max-width: 89px;
+        min-width: 89px;
+    }
+}
+

@@ -5,7 +5,7 @@ const TermButton = props => {
   let style = {};
 
   if (props.isSelected) {
-    style.backgroundColor = "red";
+    style.backgroundColor = "rgba(89, 89, 89, 1)";
   }
 
   return (

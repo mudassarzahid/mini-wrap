@@ -8,6 +8,7 @@
     width: 420px;
     position: relative;
     text-align: -webkit-center;
+    color: white;
 }
 
 .term-buttons {
@@ -27,6 +28,16 @@
     flex-wrap: wrap;
     justify-content: center;
     flex-flow: row wrap;
+    line-height: 26px;
+}
+
+.audio-feature-texfield {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.gallery {
+    justify-content: center;
 }
 
 @media screen and (max-width: 600px) {

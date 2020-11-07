@@ -38,3 +38,9 @@
     padding: 4px;
     background-color: rgba(0, 0, 0, 0.6);
 }
+
+@media screen and (max-width: 367px) {
+    .card-ranking {
+        font-size: 15px;
+    }
+}
