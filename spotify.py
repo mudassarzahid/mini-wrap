@@ -1,3 +1,4 @@
+from itertools import islice
 import requests
 from exceptions import check_limit, check_status
 
@@ -123,6 +124,51 @@ class Spotify():
 
     return all_track_data
 
+  # Tracks collage
+  def top_tracks_collage(self, limit=50, time_range='medium_term', offset=0):
+
+    check_limit(limit)
+
+    response = requests.get(
+        self.API_URL + '/me/top/tracks',
+        headers=self.headers,
+        params=(
+            ('time_range', time_range),
+            ('limit', limit),
+            ('offset', offset),
+        ))
+
+    check_status(response)
+
+    return self.filter_top_tracks_collage(response.json())
+
+  def filter_top_tracks_collage(self, top_tracks):
+
+    track_images = []
+
+    for i, track_data in enumerate(islice(top_tracks['items'], 9)):
+
+      if len(track_data['album']['images']) > 0:
+        track_large_image = track_data['album']['images'][0]['url']
+        track_medium_image = track_data['album']['images'][1]['url']
+      else:
+        track_large_image = ''
+        track_medium_image = ''
+
+      track_name = track_data['name']
+
+      track_artists = []
+      for artist in track_data['artists']:
+        track_artists.append(artist['name'])
+
+      track_images.append({'src': track_large_image,
+                           'thumbnail': track_medium_image,
+                           'thumbnailWidth': 320,
+                           'thumbnailHeight': 320,
+                           'tags': [{'value': track_name, 'title': "track_name"}, {'value': ', '.join(track_artists), 'title': "track_artists"}]})
+
+    return track_images
+
   # Top tracks popularity
   def tracks_popularity(self, limit=50, time_range='medium_term', offset=0):
 
@@ -220,6 +266,47 @@ class Spotify():
                               'artist_popularity': artist_popularity})
 
     return all_artist_data
+
+# Artists collage
+  def top_artists_collage(self, limit=50, time_range='medium_term', offset=0):
+
+    check_limit(limit)
+
+    response = requests.get(
+        self.API_URL + '/me/top/artists',
+        headers=self.headers,
+        params=(
+            ('time_range', time_range),
+            ('limit', limit),
+            ('offset', offset),
+        ))
+
+    check_status(response)
+
+    return self.filter_top_artists_collage(response.json())
+
+  def filter_top_artists_collage(self, top_artists):
+
+    artist_images = []
+
+    for i, artist_data in enumerate(islice(top_artists['items'], 9)):
+
+      if len(artist_data['images']) > 0:
+        artist_large_image = artist_data['images'][0]['url']
+        artist_medium_image = artist_data['images'][1]['url']
+      else:
+        artist_large_image = ''
+        artist_medium_image = ''
+
+      artist_name = artist_data['name']
+
+      artist_images.append({'src': artist_large_image,
+                            'thumbnail': artist_medium_image,
+                            'thumbnailWidth': 320,
+                            'thumbnailHeight': 320,
+                            'tags': [{'value': artist_name, 'title': "artist_name"}]})
+
+    return artist_images
 
   # Top artists popularity
   def artists_popularity(self, limit=50, time_range='medium_term', offset=0):

@@ -8,7 +8,8 @@ import TermButton from "./Button/TermButton";
 import Popularity from "./Textfield/Popularity";
 import Headline from "./Textfield/Headline";
 import AudioFeature from "./Textfield/AudioFeature";
-import Gallery from "react-photo-gallery";
+import Collage from "./Collage/Collage";
+import html2canvas from "html2canvas";
 
 
 class App extends React.Component {
@@ -30,15 +31,20 @@ class App extends React.Component {
     'topVisible': 'top_artists',
     'termSelected': 'medium_term',
     'audio_features': '',
-    'tracks_collage': []
+    'tracks_collage': [],
+    'artists_collage': [],
+    'top_category_text': '',
+    'term_text': '',
+    'date': ''
   }
 
   componentDidMount() {
     this.getData('medium_term');
     this.generateHeadlineEmoji();
+    this.setDate();
   }
 
-  getData(term,) {
+  getData(term) {
     const spotify_token = Cookies.get('spotify_token');
     axios.get(`http://localhost:3000/api/top/?term=${term}&spotify_token=${spotify_token}`)
       .then(res => {
@@ -49,10 +55,11 @@ class App extends React.Component {
           tracks_popularity: res.data.tracks_popularity,
           artists_popularity: res.data.artists_popularity,
           audio_features: res.data.audio_features,
-          tracks_collage: res.data.tracks_collage
+          tracks_collage: res.data.tracks_collage,
+          artists_collage: res.data.artists_collage
         }, () => {
           this.generateAudioEmoji();
-          ;
+          this.generateCollageText();
         })
       })
       .catch(function (error) {
@@ -168,18 +175,50 @@ class App extends React.Component {
     this.setState({leastMainstreamEmoji: '🎧'})
   }
 
+  generateCollageText() {
+    if (this.state.topVisible === 'top_artists') {
+      this.setState({top_category_text: 'top artists'})
+    } else if (this.state.topVisible === 'top_tracks') {
+      this.setState({top_category_text: 'top tracks'})
+    }
+
+    if (this.state.termSelected === 'short_term') {
+      this.setState({term_text: '4 weeks'})
+    } else if (this.state.termSelected === 'medium_term') {
+      this.setState({term_text: '6 months'})
+    } else if (this.state.termSelected === 'long_term') {
+      this.setState({term_text: 'all time'})
+    }
+  }
+
+  setDate() {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+
+    this.setState({date: mm + '/' + dd + '/' + yyyy})
+  }
+
   render() {
     return (
       <div className="App">
 
-        <div className="gallery">
-          <Gallery photos={this.state.tracks_collage}/>
+        <div>
+          <div className="gallery" id="cpimg">
+            <div>{this.state.top_category_text} {this.state.term_text} {this.state.user_data}</div>
+            <Collage images={this.state.tracks_collage}/>
+            <div>{this.state.date}</div>
+          </div>
+
+          <div className="gallery">
+            <div>{this.state.top_category_text} {this.state.term_text} {this.state.user_data}</div>
+            <Collage images={this.state.artists_collage}/>
+            <div>{this.state.date}</div>
+          </div>
         </div>
 
         <div id="wrapper">
-
-
-
           <div className="container">
 
             <Headline username={this.state.user_data}

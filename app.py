@@ -91,13 +91,17 @@ def get_top():
   tracks_popularity = spotify.tracks_popularity(50, term, 0)
   artists_popularity = spotify.artists_popularity(50, term, 0)
   audio_features = spotify.audio_features(50, term, 0)
+  tracks_collage = spotify.top_tracks_collage(50, term, 0)
+  artists_collage = spotify.top_artists_collage(50, term, 0)
 
   return jsonify({'user_data': user_data,
                   'tracks_data': tracks_data,
                   'artists_data': artists_data,
                   'tracks_popularity': tracks_popularity,
                   'artists_popularity': artists_popularity,
-                  'audio_features': audio_features})
+                  'audio_features': audio_features,
+                  'tracks_collage': tracks_collage,
+                  'artists_collage': artists_collage})
 
 
 @app.route('/top')
@@ -115,7 +119,8 @@ def top_artists_top_tracks():
         tracks_data=spotify.top_tracks(50, term, 0),
         tracks_popularity=spotify.tracks_popularity(50, term, 0),
         artists_popularity=spotify.artists_popularity(50, term, 0),
-        audio_features=spotify.audio_features(50, term, 0)
+        audio_features=spotify.audio_features(50, term, 0),
+        tracks_collage=spotify.top_tracks_collage(50, term, 0)
     )
   else:
     return redirect('/login')
