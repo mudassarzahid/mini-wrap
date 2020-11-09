@@ -200,25 +200,30 @@ class App extends React.Component {
     this.setState({date: mm + '/' + dd + '/' + yyyy})
   }
 
+  h2c() {
+    html2canvas(document.querySelector("#cpimg")).then(canvas => {
+      document.body.appendChild(canvas)
+    });
+  }
+
   render() {
     return (
       <div className="App">
 
-        <div>
-          <div className="gallery" id="cpimg">
-            <div>{this.state.top_category_text} {this.state.term_text} {this.state.user_data}</div>
-            <Collage images={this.state.tracks_collage}/>
-            <div>{this.state.date}</div>
-          </div>
+        <div className="gallery" id="cpimg">
+          <div>{this.state.term_text} {this.state.user_data}</div>
+          <Collage images={this.state.tracks_collage}/>
+          <div>{this.state.date}</div>
+        </div>
+        <button onClick={this.h2c}>SAVECANVAS</button>
 
-          <div className="gallery">
-            <div>{this.state.top_category_text} {this.state.term_text} {this.state.user_data}</div>
-            <Collage images={this.state.artists_collage}/>
-            <div>{this.state.date}</div>
-          </div>
+        <div className="gallery" id="cpimg">
+          <div>{this.state.term_text} {this.state.user_data}</div>
+          <Collage images={this.state.artists_collage}/>
+          <div>{this.state.date}</div>
         </div>
 
-        <div id="wrapper">
+       <div id="wrapper">
           <div className="container">
 
             <Headline username={this.state.user_data}
