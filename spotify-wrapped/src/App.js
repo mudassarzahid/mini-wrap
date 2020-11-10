@@ -10,6 +10,7 @@ import Headline from "./Textfield/Headline";
 import AudioFeature from "./Textfield/AudioFeature";
 import Collage from "./Collage/Collage";
 import html2canvas from "html2canvas";
+import SaveButton from "./Button/SaveButton";
 
 
 class App extends React.Component {
@@ -163,26 +164,25 @@ class App extends React.Component {
     return (
       <div className="App">
 
-          <div className="collage">
-            <div className="gallery" id="tracks_img">
-              <div className="collage-term-text">my top tracks this year</div>
-              <Collage images={this.state.tracks_collage}/>
-              <div className="collage-subtext">
-                <span className="website-name">https://wrapped.mudi.me/</span>
-                <span className="date-textfield">{this.state.date}</span>
-              </div>
-            </div>
-            <button onClick={this.toCanvas}>save tracks</button>
-          </div>
-
-        {/*<ShareButton>s</ShareButton>*/}
-
-
         <div id="wrapper">
           <div className="container">
 
             <Headline username={this.state.user_data}
                       emoji={this.state.headlineEmoji}/>
+
+            <div className="collage">
+              <div className="gallery" id="tracks_img">
+                <div className="collage-headline">my top tracks this year</div>
+                <Collage images={this.state.tracks_collage}/>
+                <div className="collage-subtext">
+                  <span className="website-name">https://wrapped.mudi.me/</span>
+                  <span className="date-textfield">{this.state.date}</span>
+                </div>
+              </div>
+              <SaveButton onClick={this.toCanvas}/>
+            </div>
+
+            {/*<ShareButton>s</ShareButton>*/}
 
             <div className="term-buttons">
               <TermButton

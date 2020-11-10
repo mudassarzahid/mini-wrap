@@ -9,7 +9,9 @@ const TopButton = props => {
   }
 
   return (
-    <div onClick={props.onClick} style={style} className="button">
+    <div onClick={props.onClick}
+         style={style}
+         className="button">
       <span>top {props.category}</span>
     </div>);
 };

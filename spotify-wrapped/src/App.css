@@ -10,6 +10,14 @@
 
 .collage-subtext {
     padding: 5px;
+    color: black;
+}
+
+.collage-headline {
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: black;
 }
 
 .date-textfield {
@@ -50,11 +58,7 @@
 }
 
 .gallery {
-    justify-content: center;
-    text-align: center;
-    contain: layout;
-    max-width: 552px;
-    min-width: 552px;
+    width: 552px;
     padding: 10px;
 }
 
