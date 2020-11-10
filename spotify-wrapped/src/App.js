@@ -33,7 +33,6 @@ class App extends React.Component {
     'audio_features': '',
     'tracks_collage': [],
     'artists_collage': [],
-    'top_category_text': '',
     'term_text': '',
     'date': ''
   }
@@ -41,7 +40,6 @@ class App extends React.Component {
   componentDidMount() {
     this.getData('medium_term');
     this.generateHeadlineEmoji();
-    this.setDate();
   }
 
   getData(term) {
@@ -81,21 +79,13 @@ class App extends React.Component {
     let tracksPopularity = this.state.tracks_popularity.average_popularity;
     let artistsPopularity = this.state.artists_popularity.average_popularity;
 
-    const danceabilityEmoji = [
-      [[0, 1.7], '🧍🧍🧍'],
-      [[1.7, 3.3], '🧍🧍'],
-      [[3.3, 5.0], '🧍'],
-      [[5.0, 6.7], '💃'],
-      [[6.7, 8.4], '💃💃'],
-      [[8.4, 10.0], '💃💃💃'],
-    ]
-    const energyEmoji = [
-      [[0, 1.7], '💤💤💤'],
-      [[1.7, 3.3], '💤💤'],
-      [[3.3, 5.0], '💤'],
-      [[5.0, 6.7], '⚡'],
-      [[6.7, 8.4], '⚡⚡'],
-      [[8.4, 10.0], '⚡⚡⚡'],
+    const emojiList = [
+      [[0, 1.7], '🧍🧍🧍', '💤💤💤', '😫😫😫', '👤👤👤'],
+      [[1.7, 3.3], '🧍🧍', '💤💤', '😫😫', '👤👤'],
+      [[3.3, 5.0], '🧍', '💤', '😫', '👤'],
+      [[5.0, 6.7], '💃', '⚡', '😆', '🔥'],
+      [[6.7, 8.4], '💃💃', '⚡⚡', '😆😆', '🔥🔥'],
+      [[8.4, 10.0], '💃💃💃', '⚡⚡⚡', '😆😆😆', '🔥🔥🔥']
     ]
 
     const tempoEmoji = [
@@ -104,54 +94,32 @@ class App extends React.Component {
       [[66, 76], '🐌'],
       [[76, 120], '🚀'],
       [[120, 168], '🚀🚀'],
-      [[168, Number.MAX_VALUE], '🚀🚀🚀'],
-    ]
-    const happinessEmoji = [
-      [[0, 1.7], '😫😫😫'],
-      [[1.7, 3.3], '😫😫'],
-      [[3.3, 5.0], '😫'],
-      [[5.0, 6.7], '😆'],
-      [[6.7, 8.4], '😆😆'],
-      [[8.4, 10.0], '😆😆😆'],
+      [[168, Number.MAX_VALUE], '🚀🚀🚀']
     ]
 
-    const popularityEmoji = [
-      [[0, 1.7], '👤👤👤'],
-      [[1.7, 3.3], '👤👤'],
-      [[3.3, 5.0], '👤'],
-      [[5.0, 6.7], '🔥'],
-      [[6.7, 8.4], '🔥🔥'],
-      [[8.4, 10.0], '🔥🔥🔥'],
-    ]
-
-    for (let i = 0; i < danceabilityEmoji.length; i++) {
-      let valueRange = danceabilityEmoji[i][0];
+    for (let i = 0; i < 6; i++) {
+      let valueRange = emojiList[i][0];
       let begin = valueRange[0];
       let end = valueRange[1];
+
       if (danceability >= begin && danceability <= end) {
-        this.setState({danceabilityEmoji: danceabilityEmoji[i][1]});
+        this.setState({danceabilityEmoji: emojiList[i][1]});
       }
-    }
-
-    for (let i = 0; i < energyEmoji.length; i++) {
-      let valueRange = energyEmoji[i][0];
-      let begin = valueRange[0];
-      let end = valueRange[1];
       if (energy >= begin && energy <= end) {
-        this.setState({energyEmoji: energyEmoji[i][1]});
+        this.setState({energyEmoji: emojiList[i][2]});
       }
-    }
-
-    for (let i = 0; i < happinessEmoji.length; i++) {
-      let valueRange = happinessEmoji[i][0];
-      let begin = valueRange[0];
-      let end = valueRange[1];
       if (happiness >= begin && happiness <= end) {
-        this.setState({happinessEmoji: happinessEmoji[i][1]});
+        this.setState({happinessEmoji: emojiList[i][3]});
+      }
+      if (tracksPopularity >= begin && tracksPopularity <= end) {
+        this.setState({tracksPopularityEmoji: emojiList[i][4]});
+      }
+      if (artistsPopularity >= begin && artistsPopularity <= end) {
+        this.setState({artistsPopularityEmoji: emojiList[i][4]});
       }
     }
 
-    for (let i = 0; i < tempoEmoji.length; i++) {
+    for (let i = 0; i < 6; i++) {
       let valueRange = tempoEmoji[i][0];
       let begin = valueRange[0];
       let end = valueRange[1];
@@ -160,28 +128,10 @@ class App extends React.Component {
       }
     }
 
-    for (let i = 0; i < popularityEmoji.length; i++) {
-      let valueRange = popularityEmoji[i][0];
-      let begin = valueRange[0];
-      let end = valueRange[1];
-      if (tracksPopularity >= begin && tracksPopularity <= end) {
-        this.setState({tracksPopularityEmoji: popularityEmoji[i][1]});
-      }
-      if (artistsPopularity >= begin && artistsPopularity <= end) {
-        this.setState({artistsPopularityEmoji: popularityEmoji[i][1]});
-      }
-    }
-
     this.setState({leastMainstreamEmoji: '🎧'})
   }
 
   generateCollageText() {
-    if (this.state.topVisible === 'top_artists') {
-      this.setState({top_category_text: 'top artists'})
-    } else if (this.state.topVisible === 'top_tracks') {
-      this.setState({top_category_text: 'top tracks'})
-    }
-
     if (this.state.termSelected === 'short_term') {
       this.setState({term_text: '4 weeks'})
     } else if (this.state.termSelected === 'medium_term') {
@@ -189,6 +139,8 @@ class App extends React.Component {
     } else if (this.state.termSelected === 'long_term') {
       this.setState({term_text: 'all time'})
     }
+
+    this.setDate();
   }
 
   setDate() {
@@ -200,30 +152,33 @@ class App extends React.Component {
     this.setState({date: mm + '/' + dd + '/' + yyyy})
   }
 
-  h2c() {
-    html2canvas(document.querySelector("#cpimg")).then(canvas => {
-      document.body.appendChild(canvas)
+  toCanvas() {
+    html2canvas(document.querySelector("#tracks_img"), {useCORS: true, allowTaint: true}).then(canvas => {
+      window.location.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
     });
   }
+
 
   render() {
     return (
       <div className="App">
 
-        <div className="gallery" id="cpimg">
-          <div>{this.state.term_text} {this.state.user_data}</div>
-          <Collage images={this.state.tracks_collage}/>
-          <div>{this.state.date}</div>
-        </div>
-        <button onClick={this.h2c}>SAVECANVAS</button>
+          <div className="collage">
+            <div className="gallery" id="tracks_img">
+              <div className="collage-term-text">my top tracks this year</div>
+              <Collage images={this.state.tracks_collage}/>
+              <div className="collage-subtext">
+                <span className="website-name">https://wrapped.mudi.me/</span>
+                <span className="date-textfield">{this.state.date}</span>
+              </div>
+            </div>
+            <button onClick={this.toCanvas}>save tracks</button>
+          </div>
 
-        <div className="gallery" id="cpimg">
-          <div>{this.state.term_text} {this.state.user_data}</div>
-          <Collage images={this.state.artists_collage}/>
-          <div>{this.state.date}</div>
-        </div>
+        {/*<ShareButton>s</ShareButton>*/}
 
-       <div id="wrapper">
+
+        <div id="wrapper">
           <div className="container">
 
             <Headline username={this.state.user_data}
@@ -282,7 +237,7 @@ class App extends React.Component {
             </div>
 
 
-            <div className="top-buttons" style={{'marginBottom': '20px'}}>
+            <div className="top-buttons">
               <TopButton
                 onClick={() =>
                   this.setState({topVisible: 'top_artists'})

@@ -4,6 +4,18 @@
     justify-content: center;
 }
 
+.website-name {
+    float: left;
+}
+
+.collage-subtext {
+    padding: 5px;
+}
+
+.date-textfield {
+    float: right;
+}
+
 .container {
     width: 420px;
     position: relative;
@@ -19,6 +31,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    margin-bottom: 20px;
 }
 
 .audio-feature-texfield, .popularity-textfield {
@@ -42,6 +55,7 @@
     contain: layout;
     max-width: 552px;
     min-width: 552px;
+    padding: 10px;
 }
 
 .gallery div {
