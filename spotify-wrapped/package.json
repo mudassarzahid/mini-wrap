@@ -18,9 +18,11 @@
     "react-meta-tags": "^0.7.4",
     "react-photo-collage": "^1.0.7",
     "react-photo-gallery": "^8.0.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "react-share": "^4.3.1",
     "react-social": "^1.10.0",
+    "react-spotify-login": "^0.9.1",
     "styled-components": "^5.2.1",
     "web-vitals": "^0.2.4"
   },
