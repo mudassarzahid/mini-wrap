@@ -40,8 +40,21 @@
     background-color: rgba(0, 0, 0, 0.6);
 }
 
+@media screen and (max-width: 600px) {
+    .card-ranking {
+        width: 343px;
+    }
+}
+
+@media screen and (max-width: 409px) {
+    .card-ranking {
+        width: 307px;
+    }
+}
+
 @media screen and (max-width: 367px) {
     .card-ranking {
         font-size: 15px;
+        width: 252px;
     }
 }

@@ -11,6 +11,8 @@ import AudioFeature from "./Textfield/AudioFeature";
 import Collage from "./Collage/Collage";
 import html2canvas from "html2canvas";
 import SaveButton from "./Button/SaveButton";
+import {FacebookButton} from "react-social";
+import ShowAllButton from "./Button/ShowAllButton";
 
 
 class App extends React.Component {
@@ -35,7 +37,10 @@ class App extends React.Component {
     'tracks_collage': [],
     'artists_collage': [],
     'term_text': '',
-    'date': ''
+    'date': '',
+    'areCardsVisible': false,
+    'showText': false,
+    'showTextMessage': 'Show All'
   }
 
   componentDidMount() {
@@ -64,6 +69,11 @@ class App extends React.Component {
       .catch(function (error) {
         console.log(error);
       });
+    if (this.state.showText === true){
+      this.setState({showTextMessage:"Show All"})
+    } else {
+      this.setState({showTextMessage:"Hide All"})
+    }
   }
 
   generateHeadlineEmoji() {
@@ -157,7 +167,8 @@ class App extends React.Component {
     html2canvas(document.querySelector("#tracks_img"), {
       useCORS: true,
       allowTaint: true,
-      scrollY: -window.scrollY
+      scrollY: -window.scrollY,
+      scrollX: -window.scrollX
     }).then(canvas => {
       let a = document.createElement('a');
       a.download = "image";
@@ -169,10 +180,20 @@ class App extends React.Component {
     });
   }
 
-  toCanvas() {
-    html2canvas(document.querySelector("#tracks_img"), {useCORS: true, allowTaint: true}).then(canvas => {
-      window.location.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-    })
+  artistsToCanvas() {
+    html2canvas(document.querySelector("#artists_img"), {
+      useCORS: true,
+      allowTaint: true,
+      scrollY: -window.scrollY
+    }).then(canvas => {
+      let a = document.createElement('a');
+      a.download = "image";
+      a.href = canvas.toDataURL();
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      a = null;
+    });
   }
 
   render() {
@@ -188,7 +209,10 @@ class App extends React.Component {
             <div className="term-buttons">
               <TermButton
                 onClick={() => {
-                  this.setState({termSelected: 'short_term'});
+                  this.setState({
+                    termSelected: 'short_term',
+                    areCardsVisible: false
+                  });
                   this.getData('short_term');
                 }}
                 value="short_term"
@@ -197,7 +221,10 @@ class App extends React.Component {
 
               <TermButton
                 onClick={() => {
-                  this.setState({termSelected: 'medium_term'});
+                  this.setState({
+                    termSelected: 'medium_term',
+                    areCardsVisible: false
+                  });
                   this.getData('medium_term');
                 }}
                 value="medium_term"
@@ -206,7 +233,10 @@ class App extends React.Component {
 
               <TermButton
                 onClick={() => {
-                  this.setState({termSelected: 'long_term'});
+                  this.setState({
+                    termSelected: 'long_term',
+                    areCardsVisible: false
+                  });
                   this.getData('long_term');
                 }}
                 value="long_term"
@@ -240,14 +270,20 @@ class App extends React.Component {
             <div className="top-buttons">
               <TopButton
                 onClick={() =>
-                  this.setState({topVisible: 'top_tracks'})
-                }
+                  this.setState({
+                      topVisible: 'top_tracks',
+                      areCardsVisible: false
+                    }
+                  )}
                 category={'tracks'}
                 isSelected={this.state.topVisible === "top_tracks"}/>
 
               <TopButton
                 onClick={() =>
-                  this.setState({topVisible: 'top_artists'})
+                  this.setState({
+                    topVisible: 'top_artists',
+                    areCardsVisible: false
+                  })
                 }
                 category={'artists'}
                 isSelected={this.state.topVisible === "top_artists"}/>
@@ -271,9 +307,7 @@ class App extends React.Component {
                 isVisible={this.state.topVisible === 'top_tracks'}/>
             </div>
 
-
             <div className="collage">
-
               <div>
                 <Collage id="tracks_img"
                          category="tracks"
@@ -284,6 +318,7 @@ class App extends React.Component {
 
                 <SaveButton onClick={this.tracksToCanvas}
                             isVisible={this.state.topVisible === 'top_tracks'}/>
+
               </div>
 
               <div>
@@ -294,35 +329,43 @@ class App extends React.Component {
                          isVisible={this.state.topVisible === 'top_artists'}
                          date={this.state.date}/>
 
-                <SaveButton onClick={this.tracksToCanvas}
+                <SaveButton onClick={this.artistsToCanvas}
                             isVisible={this.state.topVisible === 'top_artists'}/>
               </div>
-
             </div>
 
-            <div>
+            <div className="all-cards">
               {this.state.tracks_data.map((track_data) => (
                 <Card
+                  areCardsVisible={this.state.areCardsVisible}
                   backgroundUrl={track_data.track_background}
                   link={track_data.track_url}
                   text={`${track_data.track_rank} ${track_data.track_name}`}
                   subtext={track_data.track_artists}
                   key={`card_track_id + ${track_data.track_id}`}
-                  isVisible={this.state.topVisible === 'top_tracks'}/>
+                  isCardVisible={this.state.topVisible === 'top_tracks'}/>
               ))}
-            </div>
 
-            <div>
               {this.state.artists_data.map((artist_data) => (
                 <Card
+                  areCardsVisible={this.state.areCardsVisible}
                   backgroundUrl={artist_data.artist_background}
                   link={artist_data.artist_url}
                   text={`${artist_data.artist_rank} ${artist_data.artist_name}`}
                   subtext={artist_data.artist_followers}
                   key={`card_artist_id + ${artist_data.artist_id}`}
-                  isVisible={this.state.topVisible === 'top_artists'}/>
+                  isCardVisible={this.state.topVisible === 'top_artists'}/>
               ))}
             </div>
+            <ShowAllButton
+              onClick={() => {
+                this.setState({
+                  areCardsVisible: !this.state.areCardsVisible,
+                  showText: !this.state.showText
+                });
+              }}
+              show={this.state.showTextMessage}/>
+
           </div>
         </div>
       </div>

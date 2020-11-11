@@ -2,28 +2,38 @@ import React from "react";
 import './Card.css';
 
 const Card = props => {
-  let style = {
+  let cardStyle = {
     background: `url(${props.backgroundUrl})`,
   };
 
-  if (props.isVisible) {
-    style.display = 'block';
+  let allCardsStyle = {}
+
+  if (props.isCardVisible) {
+    cardStyle.display = 'block';
   } else {
-    style.display = 'none';
+    cardStyle.display = 'none';
+  }
+
+  if (props.areCardsVisible) {
+    allCardsStyle.display = 'block';
+  } else {
+    allCardsStyle.display = 'none';
   }
 
   return (
-    <div className="card-ranking"
-         style={style}>
-      <a className="card-link"
-         href={props.link}
-         target="_blank"
-         rel="noreferrer">
-        <span>{props.text}</span>
-        <div className="card-subtext">
-          <span>{props.subtext}</span>
-        </div>
-      </a>
+    <div style={allCardsStyle}>
+      <div className="card-ranking"
+           style={cardStyle}>
+        <a className="card-link"
+           href={props.link}
+           target="_blank"
+           rel="noreferrer">
+          <span>{props.text}</span>
+          <div className="card-subtext">
+            <span>{props.subtext}</span>
+          </div>
+        </a>
+      </div>
     </div>
   );
 };

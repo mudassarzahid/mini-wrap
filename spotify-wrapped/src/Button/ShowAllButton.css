@@ -1,0 +1,10 @@
+.show-all-button {
+    background-color: mediumseagreen;
+    border-radius: 8px;
+    display: inline-block;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 14px 165px 14px 165px;
+    margin: 10px 20px 10px 20px;
+}
