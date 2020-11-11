@@ -23,7 +23,6 @@
 }
 
 .container {
-    width: 420px;
     position: relative;
     text-align: -webkit-center;
     color: white;
@@ -53,40 +52,6 @@
 .audio-feature-texfield {
     margin-top: 10px;
     margin-bottom: 20px;
-}
-
-.gallery {
-    width: 552px;
-    padding: 10px;
-}
-
-
-.ReactGridGallery_tile-bottom-bar {
-    padding-bottom: 10px !important;
-}
-
-.ReactGridGallery_tile-bottom-bar > div {
-    display: flow-root !important;
-    text-align: center;
-    overflow: hidden !important;
-    white-space: nowrap !important;
-    text-overflow: ellipsis !important;
-}
-
-.ReactGridGallery_tile-bottom-bar > div > span {
-    color: black !important;
-    background: rgba(255, 255, 255, 0.8) !important;
-    padding: 0 0.6em 0.25em !important;
-    font-variant: small-caps;
-    border-radius: 0 !important;
-}
-
-.ReactGridGallery_tile-bottom-bar > div > span {
-    font-weight: bold !important;
-}
-
-.ReactGridGallery_tile-bottom-bar > div, .ReactGridGallery_tile-icon-bar > div, .ReactGridGallery_tile-viewport > img {
-    cursor: default !important;
 }
 
 @media screen and (max-width: 600px) {

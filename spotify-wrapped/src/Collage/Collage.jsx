@@ -1,5 +1,6 @@
 import React from 'react';
 import Gallery from 'react-grid-gallery';
+import './Collage.css';
 
 const Collage = props => {
   let style = {}
@@ -11,18 +12,16 @@ const Collage = props => {
   }
 
   return (
-    <div style={style}
-         className="gallery"
-         id={props.id}>
+    <div className="gallery"
+         id={props.id}
+         style={style}>
       <div className="collage-headline">
         my top {props.category} {props.term}
       </div>
 
-      <Gallery
-        images={props.images}
-        isVisible={props.visible}
-        enableLightbox={false}
-        enableImageSelection={false}/>
+      <Gallery images={props.images}
+               enableLightbox={false}
+               enableImageSelection={false}/>
 
       <div className="collage-subtext">
         <span className="website-name">https://wrapped.mudi.me/</span>

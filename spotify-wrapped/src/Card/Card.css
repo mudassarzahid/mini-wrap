@@ -27,6 +27,7 @@
     overflow: hidden;
     padding: 14px 10px;
     white-space: nowrap;
+    width: 420px;
 }
 
 .card-ranking:hover {

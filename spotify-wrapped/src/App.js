@@ -154,27 +154,26 @@ class App extends React.Component {
   }
 
   tracksToCanvas() {
-    html2canvas(document.querySelector("#tracks_img"), {useCORS: true, allowTaint: true, scrollY: -window.scrollY}).then(canvas => {
+    html2canvas(document.querySelector("#tracks_img"), {
+      useCORS: true,
+      allowTaint: true,
+      scrollY: -window.scrollY
+    }).then(canvas => {
       let a = document.createElement('a');
       a.download = "image";
       a.href = canvas.toDataURL();
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
+      a = null;
     });
   }
 
-  artistsToCanvas() {
-    html2canvas(document.querySelector("#artists_img"), {useCORS: true, allowTaint: true, scrollY: -window.scrollY}).then(canvas => {
-      let b = document.createElement('b');
-      b.download = "image";
-      b.href = canvas.toDataURL();
-      document.body.appendChild(b);
-      b.click();
-      document.body.removeChild(b);
-    });
+  toCanvas() {
+    html2canvas(document.querySelector("#tracks_img"), {useCORS: true, allowTaint: true}).then(canvas => {
+      window.location.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+    })
   }
-
 
   render() {
     return (
@@ -211,7 +210,7 @@ class App extends React.Component {
                   this.getData('long_term');
                 }}
                 value="long_term"
-                termdesc="of all time"
+                termdesc="all time"
                 isSelected={this.state.termSelected === 'long_term'}/>
             </div>
 
@@ -237,7 +236,6 @@ class App extends React.Component {
                 score={this.state.audio_features.happiness}
                 scale='/10'/>
             </div>
-
 
             <div className="top-buttons">
               <TopButton
@@ -273,29 +271,32 @@ class App extends React.Component {
                 isVisible={this.state.topVisible === 'top_tracks'}/>
             </div>
 
+
             <div className="collage">
-              <Collage
-                id="tracks_img"
-                images={this.state.tracks_collage}
-                category="tracks"
-                term={this.state.term_text}
-                isVisible={this.state.topVisible === 'top_tracks'}
-                date={this.state.date}/>
-              <SaveButton onClick={this.tracksToCanvas}
-                          isVisible={this.state.topVisible === 'top_tracks'}/>
 
-              <Collage
-                id="artists_img"
-                images={this.state.artists_collage}
-                category="artists"
-                term={this.state.term_text}
-                isVisible={this.state.topVisible === 'top_artists'}
-                date={this.state.date}/>
-              <SaveButton onClick={this.artistsToCanvas}
-                          isVisible={this.state.topVisible === 'top_artists'}/>
+              <div>
+                <Collage id="tracks_img"
+                         category="tracks"
+                         term={this.state.term_text}
+                         images={this.state.tracks_collage}
+                         isVisible={this.state.topVisible === 'top_tracks'}
+                         date={this.state.date}/>
+
+                <SaveButton onClick={this.tracksToCanvas}/>
+              </div>
+
+              <div>
+                <Collage id="artists_img"
+                         category="artists"
+                         term={this.state.term_text}
+                         images={this.state.artists_collage}
+                         isVisible={this.state.topVisible === 'top_artists'}
+                         date={this.state.date}/>
+
+                <SaveButton onClick={this.tracksToCanvas}/>
+              </div>
+
             </div>
-
-            {/*<ShareButton/>*/}
 
             <div>
               {this.state.tracks_data.map((track_data) => (
