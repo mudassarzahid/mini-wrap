@@ -13,8 +13,12 @@ const Card = props => {
   }
 
   return (
-    <div className="card-ranking" style={style}>
-      <a className="card-link" href={props.link} target="_blank" rel="noreferrer">
+    <div className="card-ranking"
+         style={style}>
+      <a className="card-link"
+         href={props.link}
+         target="_blank"
+         rel="noreferrer">
         <span>{props.text}</span>
         <div className="card-subtext">
           <span>{props.subtext}</span>

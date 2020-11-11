@@ -29,7 +29,7 @@ class App extends React.Component {
     'tracks_data': [],
     'tracks_popularity': '',
     'artists_popularity': '',
-    'topVisible': 'top_artists',
+    'topVisible': 'top_tracks',
     'termSelected': 'medium_term',
     'audio_features': '',
     'tracks_collage': [],
@@ -134,9 +134,9 @@ class App extends React.Component {
 
   generateCollageText() {
     if (this.state.termSelected === 'short_term') {
-      this.setState({term_text: '4 weeks'})
+      this.setState({term_text: 'this month'})
     } else if (this.state.termSelected === 'medium_term') {
-      this.setState({term_text: '6 months'})
+      this.setState({term_text: 'this year'})
     } else if (this.state.termSelected === 'long_term') {
       this.setState({term_text: 'all time'})
     }
@@ -153,9 +153,25 @@ class App extends React.Component {
     this.setState({date: mm + '/' + dd + '/' + yyyy})
   }
 
-  toCanvas() {
-    html2canvas(document.querySelector("#tracks_img"), {useCORS: true, allowTaint: true}).then(canvas => {
-      window.location.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+  tracksToCanvas() {
+    html2canvas(document.querySelector("#tracks_img"), {useCORS: true, allowTaint: true, scrollY: -window.scrollY}).then(canvas => {
+      let a = document.createElement('a');
+      a.download = "image";
+      a.href = canvas.toDataURL();
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    });
+  }
+
+  artistsToCanvas() {
+    html2canvas(document.querySelector("#artists_img"), {useCORS: true, allowTaint: true, scrollY: -window.scrollY}).then(canvas => {
+      let b = document.createElement('b');
+      b.download = "image";
+      b.href = canvas.toDataURL();
+      document.body.appendChild(b);
+      b.click();
+      document.body.removeChild(b);
     });
   }
 
@@ -169,20 +185,6 @@ class App extends React.Component {
 
             <Headline username={this.state.user_data}
                       emoji={this.state.headlineEmoji}/>
-
-            <div className="collage">
-              <div className="gallery" id="tracks_img">
-                <div className="collage-headline">my top tracks this year</div>
-                <Collage images={this.state.tracks_collage}/>
-                <div className="collage-subtext">
-                  <span className="website-name">https://wrapped.mudi.me/</span>
-                  <span className="date-textfield">{this.state.date}</span>
-                </div>
-              </div>
-              <SaveButton onClick={this.toCanvas}/>
-            </div>
-
-            {/*<ShareButton>s</ShareButton>*/}
 
             <div className="term-buttons">
               <TermButton
@@ -209,7 +211,7 @@ class App extends React.Component {
                   this.getData('long_term');
                 }}
                 value="long_term"
-                termdesc="all time"
+                termdesc="of all time"
                 isSelected={this.state.termSelected === 'long_term'}/>
             </div>
 
@@ -240,17 +242,17 @@ class App extends React.Component {
             <div className="top-buttons">
               <TopButton
                 onClick={() =>
-                  this.setState({topVisible: 'top_artists'})
-                }
-                category={'artists'}
-                isSelected={this.state.topVisible === "top_artists"}/>
-
-              <TopButton
-                onClick={() =>
                   this.setState({topVisible: 'top_tracks'})
                 }
                 category={'tracks'}
                 isSelected={this.state.topVisible === "top_tracks"}/>
+
+              <TopButton
+                onClick={() =>
+                  this.setState({topVisible: 'top_artists'})
+                }
+                category={'artists'}
+                isSelected={this.state.topVisible === "top_artists"}/>
             </div>
 
             <div className="popularity-textfield">
@@ -270,6 +272,30 @@ class App extends React.Component {
                 link={this.state.tracks_popularity.least_mainstream_track_url}
                 isVisible={this.state.topVisible === 'top_tracks'}/>
             </div>
+
+            <div className="collage">
+              <Collage
+                id="tracks_img"
+                images={this.state.tracks_collage}
+                category="tracks"
+                term={this.state.term_text}
+                isVisible={this.state.topVisible === 'top_tracks'}
+                date={this.state.date}/>
+              <SaveButton onClick={this.tracksToCanvas}
+                          isVisible={this.state.topVisible === 'top_tracks'}/>
+
+              <Collage
+                id="artists_img"
+                images={this.state.artists_collage}
+                category="artists"
+                term={this.state.term_text}
+                isVisible={this.state.topVisible === 'top_artists'}
+                date={this.state.date}/>
+              <SaveButton onClick={this.artistsToCanvas}
+                          isVisible={this.state.topVisible === 'top_artists'}/>
+            </div>
+
+            {/*<ShareButton/>*/}
 
             <div>
               {this.state.tracks_data.map((track_data) => (

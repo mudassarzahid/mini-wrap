@@ -14,8 +14,6 @@
 }
 
 .collage-headline {
-    font-weight: bold;
-    font-size: 24px;
     margin-bottom: 10px;
     color: black;
 }
@@ -62,9 +60,6 @@
     padding: 10px;
 }
 
-.gallery div {
-    border: 0 !important;
-}
 
 .ReactGridGallery_tile-bottom-bar {
     padding-bottom: 10px !important;
