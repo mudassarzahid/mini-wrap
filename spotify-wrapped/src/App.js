@@ -138,7 +138,7 @@ class App extends React.Component {
     } else if (this.state.termSelected === 'medium_term') {
       this.setState({term_text: 'this year'})
     } else if (this.state.termSelected === 'long_term') {
-      this.setState({term_text: 'all time'})
+      this.setState({term_text: 'of all time'})
     }
 
     this.setDate();
@@ -282,7 +282,8 @@ class App extends React.Component {
                          isVisible={this.state.topVisible === 'top_tracks'}
                          date={this.state.date}/>
 
-                <SaveButton onClick={this.tracksToCanvas}/>
+                <SaveButton onClick={this.tracksToCanvas}
+                            isVisible={this.state.topVisible === 'top_tracks'}/>
               </div>
 
               <div>
@@ -293,7 +294,8 @@ class App extends React.Component {
                          isVisible={this.state.topVisible === 'top_artists'}
                          date={this.state.date}/>
 
-                <SaveButton onClick={this.tracksToCanvas}/>
+                <SaveButton onClick={this.tracksToCanvas}
+                            isVisible={this.state.topVisible === 'top_artists'}/>
               </div>
 
             </div>
