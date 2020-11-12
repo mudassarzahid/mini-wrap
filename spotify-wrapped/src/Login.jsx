@@ -15,7 +15,7 @@ const Login = props => {
       <h1>Mini Spotify Wrapped</h1>
       <div className="login-button">
         <SpotifyLogin clientId="0ab0f042b3e44b3086e978dacb7cee47"
-                      redirectUri="http://localhost:3001/login"
+                      redirectUri="http://localhost:3001/wrapped"
                       onSuccess={response => {
                         console.log(response);
                         Cookies.set('spotify_token', response.access_token);

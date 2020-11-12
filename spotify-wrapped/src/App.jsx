@@ -1,22 +1,20 @@
 import './App.css';
 import React from "react";
-import TopButton from "./Button/TopButton";
-import Card from "./Card/Card";
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import html2canvas from "html2canvas";
+import TopButton from "./Button/TopButton";
 import TermButton from "./Button/TermButton";
+import SaveButton from "./Button/SaveButton";
+import ShowAllButton from "./Button/ShowAllButton";
+import ShareComponent from "./Button/ShareComponent";
+import Card from "./Card/Card";
 import Popularity from "./Textfield/Popularity";
 import Headline from "./Textfield/Headline";
 import AudioFeature from "./Textfield/AudioFeature";
 import Collage from "./Collage/Collage";
-import html2canvas from "html2canvas";
-import SaveButton from "./Button/SaveButton";
-import {ShareButtonRoundSquare} from "react-custom-share";
-import ShowAllButton from "./Button/ShowAllButton";
-import ShareComponent from "./Button/ShareComponent";
 
-
-class Wrapped extends React.Component {
+class App extends React.Component {
 
   state = {
     'headlineEmoji': '',
@@ -27,16 +25,18 @@ class Wrapped extends React.Component {
     'tracksPopularityEmoji': '',
     'artistsPopularityEmoji': '',
     'leastMainstreamEmoji': '',
+
     'user_data': '',
     'artists_data': [],
     'tracks_data': [],
     'tracks_popularity': '',
     'artists_popularity': '',
-    'topVisible': 'top_tracks',
-    'termSelected': 'medium_term',
     'audio_features': '',
     'tracks_collage': [],
     'artists_collage': [],
+
+    'topVisible': 'top_tracks',
+    'termSelected': 'medium_term',
     'term_text': '',
     'date': '',
     'areCardsVisible': false,
@@ -378,4 +378,4 @@ class Wrapped extends React.Component {
   }
 }
 
-export default Wrapped;
+export default App;

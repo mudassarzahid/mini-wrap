@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Wrapped from './Wrapped';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {
   BrowserRouter as Router,
@@ -17,7 +17,7 @@ ReactDOM.render(
       <Switch>
 
         <Route exact path="/">
-          <Wrapped/>
+          <App/>
         </Route>
 
         <Route path="/login">
