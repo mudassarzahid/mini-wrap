@@ -4,6 +4,7 @@
     display: block;
     min-height: 1px;
     overflow: auto;
+    border: 1px solid rgb(227, 227, 227);
 }
 
 .ReactGridGallery_tile-bottom-bar {

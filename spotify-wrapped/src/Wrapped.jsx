@@ -11,11 +11,12 @@ import AudioFeature from "./Textfield/AudioFeature";
 import Collage from "./Collage/Collage";
 import html2canvas from "html2canvas";
 import SaveButton from "./Button/SaveButton";
-import {FacebookButton} from "react-social";
+import {ShareButtonRoundSquare} from "react-custom-share";
 import ShowAllButton from "./Button/ShowAllButton";
+import ShareComponent from "./Button/ShareComponent";
 
 
-class App extends React.Component {
+class Wrapped extends React.Component {
 
   state = {
     'headlineEmoji': '',
@@ -312,28 +313,30 @@ class App extends React.Component {
             </div>
 
             <div className="collage">
-              <div style={{"overflow": "scroll"}}>
-                <Collage id="tracks_img"
-                         category="tracks"
-                         term={this.state.term_text}
-                         images={this.state.tracks_collage}
-                         isVisible={this.state.topVisible === 'top_tracks'}
-                         date={this.state.date}/>
-              </div>
+                <div style={{"overflow": "scroll"}}>
+                  <Collage id="tracks_img"
+                           category="tracks"
+                           term={this.state.term_text}
+                           images={this.state.tracks_collage}
+                           isVisible={this.state.topVisible === 'top_tracks'}
+                           date={this.state.date}/>
+                </div>
               <SaveButton onClick={this.tracksToCanvas}
                           isVisible={this.state.topVisible === 'top_tracks'}/>
 
-              <div style={{"overflow": "scroll"}}>
-                <Collage id="artists_img"
-                         category="artists"
-                         term={this.state.term_text}
-                         images={this.state.artists_collage}
-                         isVisible={this.state.topVisible === 'top_artists'}
-                         date={this.state.date}/>
-              </div>
+                <div style={{"overflow": "scroll"}}>
+                  <Collage id="artists_img"
+                           category="artists"
+                           term={this.state.term_text}
+                           images={this.state.artists_collage}
+                           isVisible={this.state.topVisible === 'top_artists'}
+                           date={this.state.date}/>
+                </div>
               <SaveButton onClick={this.artistsToCanvas}
                           isVisible={this.state.topVisible === 'top_artists'}/>
             </div>
+
+            <ShareComponent/>
 
             <div className="all-cards">
               {this.state.tracks_data.map((track_data) => (
@@ -375,4 +378,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default Wrapped;

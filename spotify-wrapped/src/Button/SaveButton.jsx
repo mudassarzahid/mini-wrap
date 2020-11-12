@@ -12,7 +12,7 @@ const SaveButton = props => {
 
   return (
     <div style={style}>
-      <div className="button"
+      <div className="save-button"
            id={props.id}
            onClick={props.onClick}
            visible={props.isVisible}>
