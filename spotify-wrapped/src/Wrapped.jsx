@@ -3,6 +3,7 @@ import React from "react";
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import html2canvas from "html2canvas";
+import {withRouter} from 'react-router-dom';
 import TopButton from "./Button/TopButton";
 import TermButton from "./Button/TermButton";
 import SaveButton from "./Button/SaveButton";
@@ -14,7 +15,15 @@ import Headline from "./Textfield/Headline";
 import AudioFeature from "./Textfield/AudioFeature";
 import Collage from "./Collage/Collage";
 
-class App extends React.Component {
+class Wrapped extends React.Component {
+
+  //TODO: font
+  //TODO: save button in line with social media?
+  //TODO: collage headline styling?
+  //TODO: show all / hide all
+  //TODO: mudi.me mainpage
+  //TODO: recently generated collage
+  //TODO: collage sharing link / text
 
   state = {
     'headlineEmoji': '',
@@ -51,6 +60,10 @@ class App extends React.Component {
 
   getData(term) {
     const spotify_token = Cookies.get('spotify_token');
+    if (!spotify_token) {
+      const { history } = this.props;
+      history.push('/')
+    }
     axios.get(`http://localhost:3000/api/top/?term=${term}&spotify_token=${spotify_token}`)
       .then(res => {
         this.setState({
@@ -378,4 +391,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withRouter(Wrapped);

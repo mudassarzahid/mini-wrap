@@ -14,12 +14,16 @@ const Login = props => {
     <div>
       <h1>Mini Spotify Wrapped</h1>
       <div className="login-button">
-        <SpotifyLogin clientId="0ab0f042b3e44b3086e978dacb7cee47"
+        <SpotifyLogin clientId="8792004e128746f2a9b7dcb46f3912fa"
                       redirectUri="http://localhost:3001/wrapped"
                       onSuccess={response => {
                         console.log(response);
-                        Cookies.set('spotify_token', response.access_token);
-                        history.push('/')
+                        let now = new Date();
+                        let time = now.getTime();
+                        let expireTime = time + 3600;
+                        console.log(response)
+                        Cookies.set('spotify_token', response.access_token, {expires: expireTime});
+                        history.push('/wrapped')
                       }}
                       onFailure={onFailure}/>
       </div>
