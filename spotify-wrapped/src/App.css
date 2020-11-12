@@ -2,6 +2,7 @@
     position: relative;
     display: flex;
     justify-content: center;
+    text-transform: lowercase;
 }
 
 .website-name {

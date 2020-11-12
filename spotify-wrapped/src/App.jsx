@@ -64,16 +64,12 @@ class App extends React.Component {
         }, () => {
           this.generateAudioEmoji();
           this.generateCollageText();
+          this.toggleCardsButton();
         })
       })
       .catch(function (error) {
         console.log(error);
       });
-    if (this.state.showText === true){
-      this.setState({showTextMessage:"Show All"})
-    } else {
-      this.setState({showTextMessage:"Hide All"})
-    }
   }
 
   generateHeadlineEmoji() {
@@ -164,14 +160,13 @@ class App extends React.Component {
   }
 
   tracksToCanvas() {
+    window.scrollTo(0, 0);
     html2canvas(document.querySelector("#tracks_img"), {
       useCORS: true,
-      allowTaint: true,
-      scrollY: -window.scrollY,
-      scrollX: -window.scrollX
+      allowTaint: true
     }).then(canvas => {
       let a = document.createElement('a');
-      a.download = "image";
+      a.download = "image.png";
       a.href = canvas.toDataURL();
       document.body.appendChild(a);
       a.click();
@@ -181,19 +176,28 @@ class App extends React.Component {
   }
 
   artistsToCanvas() {
+    window.scrollTo(0, 0);
     html2canvas(document.querySelector("#artists_img"), {
       useCORS: true,
-      allowTaint: true,
-      scrollY: -window.scrollY
+      allowTaint: true
     }).then(canvas => {
       let a = document.createElement('a');
-      a.download = "image";
+      a.download = "image.png";
       a.href = canvas.toDataURL();
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       a = null;
     });
+  }
+
+  toggleCardsButton() {
+    if (this.state.showText === true) {
+      this.setState({showTextMessage: "Hide All"})
+    }
+    if (this.state.showText === false) {
+      this.setState({showTextMessage: "Show All"})
+    }
   }
 
   render() {
@@ -308,30 +312,27 @@ class App extends React.Component {
             </div>
 
             <div className="collage">
-              <div>
+              <div style={{"overflow": "scroll"}}>
                 <Collage id="tracks_img"
                          category="tracks"
                          term={this.state.term_text}
                          images={this.state.tracks_collage}
                          isVisible={this.state.topVisible === 'top_tracks'}
                          date={this.state.date}/>
-
-                <SaveButton onClick={this.tracksToCanvas}
-                            isVisible={this.state.topVisible === 'top_tracks'}/>
-
               </div>
+              <SaveButton onClick={this.tracksToCanvas}
+                          isVisible={this.state.topVisible === 'top_tracks'}/>
 
-              <div>
+              <div style={{"overflow": "scroll"}}>
                 <Collage id="artists_img"
                          category="artists"
                          term={this.state.term_text}
                          images={this.state.artists_collage}
                          isVisible={this.state.topVisible === 'top_artists'}
                          date={this.state.date}/>
-
-                <SaveButton onClick={this.artistsToCanvas}
-                            isVisible={this.state.topVisible === 'top_artists'}/>
               </div>
+              <SaveButton onClick={this.artistsToCanvas}
+                          isVisible={this.state.topVisible === 'top_artists'}/>
             </div>
 
             <div className="all-cards">
@@ -357,6 +358,7 @@ class App extends React.Component {
                   isCardVisible={this.state.topVisible === 'top_artists'}/>
               ))}
             </div>
+
             <ShowAllButton
               onClick={() => {
                 this.setState({

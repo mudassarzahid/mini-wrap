@@ -2,15 +2,7 @@ import React from "react";
 import './ShowAllButton.css';
 
 const ShowAllButton = props => {
- /* let style = {}
-
-  if (props.isVisible) {
-    style.display = 'block';
-  } else {
-    style.display = 'none';
-  }*/
-
-  return (
+ return (
     <div>
       <div className="show-all-button"
            onClick={props.onClick}

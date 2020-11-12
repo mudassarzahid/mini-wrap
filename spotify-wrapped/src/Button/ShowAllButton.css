@@ -5,6 +5,34 @@
     cursor: pointer;
     font-size: 20px;
     font-weight: bold;
-    padding: 14px 165px 14px 165px;
+    padding: 15px;
     margin: 10px 20px 10px 20px;
+    width: 450px;
+}
+
+.show-all-button:hover {
+    background-color: #306b30;
+}
+
+.show-all-button:active {
+    position: relative;
+    top: 1px;
+}
+
+@media screen and (max-width: 600px) {
+    .show-all-button {
+        width: 300px;
+    }
+}
+
+@media screen and (max-width: 409px) {
+    .show-all-button {
+        width: 268px;
+    }
+}
+
+@media screen and (max-width: 367px) {
+    .show-all-button {
+        width: 220px;
+    }
 }

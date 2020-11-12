@@ -22,18 +22,18 @@ const Card = props => {
 
   return (
     <div style={allCardsStyle}>
-      <div className="card-ranking"
-           style={cardStyle}>
-        <a className="card-link"
-           href={props.link}
-           target="_blank"
-           rel="noreferrer">
+      <a className="card-link"
+         href={props.link}
+         target="_blank"
+         rel="noreferrer">
+        <div className="card-ranking"
+             style={cardStyle}>
           <span>{props.text}</span>
           <div className="card-subtext">
             <span>{props.subtext}</span>
           </div>
-        </a>
-      </div>
+        </div>
+      </a>
     </div>
   );
 };

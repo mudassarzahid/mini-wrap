@@ -13,6 +13,7 @@ const SaveButton = props => {
   return (
     <div style={style}>
       <div className="button"
+           id={props.id}
            onClick={props.onClick}
            visible={props.isVisible}>
         <span>save collage</span>
