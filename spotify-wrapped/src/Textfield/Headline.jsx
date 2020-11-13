@@ -4,7 +4,7 @@ import './Headline.css';
 const Headline = props => {
   return (
     <div className="headline">
-      <h1><span className="username">{props.username}</span>'s Mini Spotify Wrapped <span>{props.emoji}</span></h1>
+      <h1><span className="username">{props.username}</span>'s Mini Wrap <span>{props.emoji}</span></h1>
     </div>);
 
 };

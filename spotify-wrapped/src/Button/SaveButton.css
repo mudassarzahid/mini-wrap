@@ -1,12 +1,12 @@
 .save-button {
     background-color: mediumseagreen;
-    border-radius: 8px;
+    border-radius: 4px;
     display: inline-block;
     cursor: pointer;
     font-size: 20px;
     font-weight: bold;
-    padding: 14px 32px;
-    margin: 20px;
+    padding: 9.9px 14px;
+    margin: 10px 7px 0 7px;
 }
 
 .save-button:hover {
@@ -16,4 +16,11 @@
 .save-button:active {
     position: relative;
     top: 1px;
+}
+
+@media screen and (max-width: 1024px) {
+    .save-button {
+        padding: 10px 14px;
+        margin: 7px;
+    }
 }

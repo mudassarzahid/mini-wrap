@@ -1,4 +1,5 @@
-import './App.css';
+import './Wrapped.css';
+import './Spinner.css';
 import React from "react";
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -18,12 +19,11 @@ import Collage from "./Collage/Collage";
 class Wrapped extends React.Component {
 
   //TODO: font
-  //TODO: save button in line with social media?
   //TODO: collage headline styling?
-  //TODO: show all / hide all
   //TODO: mudi.me mainpage
-  //TODO: recently generated collage
   //TODO: collage sharing link / text
+  //TODO: loading states
+  //TODO: recently generated collage
 
   state = {
     'headlineEmoji': '',
@@ -44,13 +44,14 @@ class Wrapped extends React.Component {
     'tracks_collage': [],
     'artists_collage': [],
 
-    'topVisible': 'top_tracks',
+    'topVisible': 'top tracks',
     'termSelected': 'medium_term',
     'term_text': '',
     'date': '',
     'areCardsVisible': false,
     'showText': false,
-    'showTextMessage': 'Show All'
+    'showTextMessage': 'show all',
+    'isLoading': true
   }
 
   componentDidMount() {
@@ -59,11 +60,10 @@ class Wrapped extends React.Component {
   }
 
   getData(term) {
+    this.setState({isLoading: true});
     const spotify_token = Cookies.get('spotify_token');
-    if (!spotify_token) {
-      const { history } = this.props;
-      history.push('/')
-    }
+    const {history} = this.props;
+
     axios.get(`http://localhost:3000/api/top/?term=${term}&spotify_token=${spotify_token}`)
       .then(res => {
         this.setState({
@@ -74,15 +74,16 @@ class Wrapped extends React.Component {
           artists_popularity: res.data.artists_popularity,
           audio_features: res.data.audio_features,
           tracks_collage: res.data.tracks_collage,
-          artists_collage: res.data.artists_collage
+          artists_collage: res.data.artists_collage,
+          isLoading: false
         }, () => {
           this.generateAudioEmoji();
           this.generateCollageText();
-          this.toggleCardsButton();
         })
       })
       .catch(function (error) {
         console.log(error);
+        history.push('/')
       });
   }
 
@@ -180,7 +181,7 @@ class Wrapped extends React.Component {
       allowTaint: true
     }).then(canvas => {
       let a = document.createElement('a');
-      a.download = "image.png";
+      a.download = "tracks_collage.png";
       a.href = canvas.toDataURL();
       document.body.appendChild(a);
       a.click();
@@ -196,7 +197,7 @@ class Wrapped extends React.Component {
       allowTaint: true
     }).then(canvas => {
       let a = document.createElement('a');
-      a.download = "image.png";
+      a.download = "artists_collage.png";
       a.href = canvas.toDataURL();
       document.body.appendChild(a);
       a.click();
@@ -207,14 +208,150 @@ class Wrapped extends React.Component {
 
   toggleCardsButton() {
     if (this.state.showText === true) {
-      this.setState({showTextMessage: "Hide All"})
+      this.setState({showTextMessage: "show all"})
     }
     if (this.state.showText === false) {
-      this.setState({showTextMessage: "Show All"})
+      this.setState({showTextMessage: "hide all"})
     }
   }
 
+  resetCardsButton() {
+    this.setState({
+      areCardsVisible: false,
+      showText: false,
+      showTextMessage: 'show all'
+    })
+  }
+
   render() {
+    const application = <>
+      <div className="audio-feature-texfield">
+        <AudioFeature
+          emoji={this.state.danceabilityEmoji}
+          category='danceability'
+          score={this.state.audio_features.danceability}
+          scale='/10'/>
+        <AudioFeature
+          emoji={this.state.energyEmoji}
+          category='energy'
+          score={this.state.audio_features.energy}
+          scale='/10'/>
+        <AudioFeature
+          emoji={this.state.tempoEmoji}
+          category='tempo'
+          score={this.state.audio_features.tempo}
+          scale=' bpm'/>
+        <AudioFeature
+          emoji={this.state.happinessEmoji}
+          category='happiness'
+          score={this.state.audio_features.happiness}
+          scale='/10'/>
+      </div>
+
+      <div className="top-buttons">
+        <TopButton
+          onClick={() => {
+            this.setState({
+              topVisible: 'top tracks',
+              areCardsVisible: false
+            })
+            this.resetCardsButton();
+          }}
+          category={'tracks'}
+          isSelected={this.state.topVisible === "top tracks"}/>
+
+        <TopButton
+          onClick={() => {
+            this.setState({
+              topVisible: 'top artists',
+              areCardsVisible: false
+            })
+            this.resetCardsButton();
+          }}
+          category={'artists'}
+          isSelected={this.state.topVisible === "top artists"}/>
+      </div>
+
+      <div className="popularity-textfield">
+        <Popularity
+          popularityEmoji={this.state.artistsPopularityEmoji}
+          leastMainstreamEmoji={this.state.leastMainstreamEmoji}
+          averagePopularity={this.state.artists_popularity.average_popularity}
+          name={this.state.artists_popularity.least_mainstream_artist_name}
+          link={this.state.artists_popularity.least_mainstream_artist_url}
+          isVisible={this.state.topVisible === 'top artists'}/>
+
+        <Popularity
+          popularityEmoji={this.state.tracksPopularityEmoji}
+          leastMainstreamEmoji={this.state.leastMainstreamEmoji}
+          averagePopularity={this.state.tracks_popularity.average_popularity}
+          name={this.state.tracks_popularity.least_mainstream_track_name}
+          link={this.state.tracks_popularity.least_mainstream_track_url}
+          isVisible={this.state.topVisible === 'top tracks'}/>
+      </div>
+
+      <div className="collage">
+        <div style={{"overflow": "scroll"}}>
+          <Collage id="tracks_img"
+                   category="tracks"
+                   term={this.state.term_text}
+                   images={this.state.tracks_collage}
+                   isVisible={this.state.topVisible === 'top tracks'}
+                   date={this.state.date}/>
+        </div>
+
+        <div style={{"overflow": "scroll"}}>
+          <Collage id="artists_img"
+                   category="artists"
+                   term={this.state.term_text}
+                   images={this.state.artists_collage}
+                   isVisible={this.state.topVisible === 'top artists'}
+                   date={this.state.date}/>
+        </div>
+      </div>
+
+      <div className="save-and-share">
+        <SaveButton onClick={this.tracksToCanvas}
+                    isVisible={this.state.topVisible === 'top tracks'}/>
+        <SaveButton onClick={this.artistsToCanvas}
+                    isVisible={this.state.topVisible === 'top artists'}/>
+        <ShareComponent/>
+      </div>
+
+      <div className="all-cards">
+        {this.state.tracks_data.map((track_data) => (
+          <Card
+            areCardsVisible={this.state.areCardsVisible}
+            backgroundUrl={track_data.track_background}
+            link={track_data.track_url}
+            text={`${track_data.track_rank} ${track_data.track_name}`}
+            subtext={track_data.track_artists}
+            key={`card_track_id + ${track_data.track_id}`}
+            isCardVisible={this.state.topVisible === 'top tracks'}/>
+        ))}
+
+        {this.state.artists_data.map((artist_data) => (
+          <Card
+            areCardsVisible={this.state.areCardsVisible}
+            backgroundUrl={artist_data.artist_background}
+            link={artist_data.artist_url}
+            text={`${artist_data.artist_rank} ${artist_data.artist_name}`}
+            subtext={artist_data.artist_followers}
+            key={`card_artist_id + ${artist_data.artist_id}`}
+            isCardVisible={this.state.topVisible === 'top artists'}/>
+        ))}
+      </div>
+
+      <ShowAllButton
+        onClick={() => {
+          this.setState({
+            areCardsVisible: !this.state.areCardsVisible,
+            showText: !this.state.showText
+          });
+          this.toggleCardsButton();
+        }}
+        show={this.state.showTextMessage + ' ' + this.state.topVisible}/></>;
+
     return (
       <div className="App">
 
@@ -231,6 +368,7 @@ class Wrapped extends React.Component {
                     termSelected: 'short_term',
                     areCardsVisible: false
                   });
+                  this.resetCardsButton();
                   this.getData('short_term');
                 }}
                 value="short_term"
@@ -243,6 +381,7 @@ class Wrapped extends React.Component {
                     termSelected: 'medium_term',
                     areCardsVisible: false
                   });
+                  this.resetCardsButton();
                   this.getData('medium_term');
                 }}
                 value="medium_term"
@@ -255,6 +394,7 @@ class Wrapped extends React.Component {
                     termSelected: 'long_term',
                     areCardsVisible: false
                   });
+                  this.resetCardsButton();
                   this.getData('long_term');
                 }}
                 value="long_term"
@@ -262,127 +402,15 @@ class Wrapped extends React.Component {
                 isSelected={this.state.termSelected === 'long_term'}/>
             </div>
 
-            <div className="audio-feature-texfield">
-              <AudioFeature
-                emoji={this.state.danceabilityEmoji}
-                category='danceability'
-                score={this.state.audio_features.danceability}
-                scale='/10'/>
-              <AudioFeature
-                emoji={this.state.energyEmoji}
-                category='energy'
-                score={this.state.audio_features.energy}
-                scale='/10'/>
-              <AudioFeature
-                emoji={this.state.tempoEmoji}
-                category='tempo'
-                score={this.state.audio_features.tempo}
-                scale=' bpm'/>
-              <AudioFeature
-                emoji={this.state.happinessEmoji}
-                category='happiness'
-                score={this.state.audio_features.happiness}
-                scale='/10'/>
-            </div>
+            {this.state.isLoading && <div className="spinner">
+              <div className="rect1"/>
+              <div className="rect2"/>
+              <div className="rect3"/>
+              <div className="rect4"/>
+              <div className="rect5"/>
+            </div>}
 
-            <div className="top-buttons">
-              <TopButton
-                onClick={() =>
-                  this.setState({
-                      topVisible: 'top_tracks',
-                      areCardsVisible: false
-                    }
-                  )}
-                category={'tracks'}
-                isSelected={this.state.topVisible === "top_tracks"}/>
-
-              <TopButton
-                onClick={() =>
-                  this.setState({
-                    topVisible: 'top_artists',
-                    areCardsVisible: false
-                  })
-                }
-                category={'artists'}
-                isSelected={this.state.topVisible === "top_artists"}/>
-            </div>
-
-            <div className="popularity-textfield">
-              <Popularity
-                popularityEmoji={this.state.artistsPopularityEmoji}
-                leastMainstreamEmoji={this.state.leastMainstreamEmoji}
-                averagePopularity={this.state.artists_popularity.average_popularity}
-                name={this.state.artists_popularity.least_mainstream_artist_name}
-                link={this.state.artists_popularity.least_mainstream_artist_url}
-                isVisible={this.state.topVisible === 'top_artists'}/>
-
-              <Popularity
-                popularityEmoji={this.state.tracksPopularityEmoji}
-                leastMainstreamEmoji={this.state.leastMainstreamEmoji}
-                averagePopularity={this.state.tracks_popularity.average_popularity}
-                name={this.state.tracks_popularity.least_mainstream_track_name}
-                link={this.state.tracks_popularity.least_mainstream_track_url}
-                isVisible={this.state.topVisible === 'top_tracks'}/>
-            </div>
-
-            <div className="collage">
-                <div style={{"overflow": "scroll"}}>
-                  <Collage id="tracks_img"
-                           category="tracks"
-                           term={this.state.term_text}
-                           images={this.state.tracks_collage}
-                           isVisible={this.state.topVisible === 'top_tracks'}
-                           date={this.state.date}/>
-                </div>
-              <SaveButton onClick={this.tracksToCanvas}
-                          isVisible={this.state.topVisible === 'top_tracks'}/>
-
-                <div style={{"overflow": "scroll"}}>
-                  <Collage id="artists_img"
-                           category="artists"
-                           term={this.state.term_text}
-                           images={this.state.artists_collage}
-                           isVisible={this.state.topVisible === 'top_artists'}
-                           date={this.state.date}/>
-                </div>
-              <SaveButton onClick={this.artistsToCanvas}
-                          isVisible={this.state.topVisible === 'top_artists'}/>
-            </div>
-
-            <ShareComponent/>
-
-            <div className="all-cards">
-              {this.state.tracks_data.map((track_data) => (
-                <Card
-                  areCardsVisible={this.state.areCardsVisible}
-                  backgroundUrl={track_data.track_background}
-                  link={track_data.track_url}
-                  text={`${track_data.track_rank} ${track_data.track_name}`}
-                  subtext={track_data.track_artists}
-                  key={`card_track_id + ${track_data.track_id}`}
-                  isCardVisible={this.state.topVisible === 'top_tracks'}/>
-              ))}
-
-              {this.state.artists_data.map((artist_data) => (
-                <Card
-                  areCardsVisible={this.state.areCardsVisible}
-                  backgroundUrl={artist_data.artist_background}
-                  link={artist_data.artist_url}
-                  text={`${artist_data.artist_rank} ${artist_data.artist_name}`}
-                  subtext={artist_data.artist_followers}
-                  key={`card_artist_id + ${artist_data.artist_id}`}
-                  isCardVisible={this.state.topVisible === 'top_artists'}/>
-              ))}
-            </div>
-
-            <ShowAllButton
-              onClick={() => {
-                this.setState({
-                  areCardsVisible: !this.state.areCardsVisible,
-                  showText: !this.state.showText
-                });
-              }}
-              show={this.state.showTextMessage}/>
+            {!this.state.isLoading && application}
 
           </div>
         </div>

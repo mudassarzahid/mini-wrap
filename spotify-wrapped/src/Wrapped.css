@@ -5,6 +5,10 @@
     text-transform: lowercase;
 }
 
+.save-and-share {
+    display: inline-flex;
+}
+
 .website-name {
     float: left;
 }
@@ -60,6 +64,11 @@
         width: 100%;
         margin: 4px;
     }
+
+    .save-and-share {
+        display: block;
+    }
 }
+
 
 

@@ -1,5 +1,7 @@
 import React from "react";
 import './SaveButton.css';
+import { FaDownload } from 'react-icons/fa';
+
 
 const SaveButton = props => {
   let style = {}
@@ -16,7 +18,7 @@ const SaveButton = props => {
            id={props.id}
            onClick={props.onClick}
            visible={props.isVisible}>
-        <span>save collage</span>
+        <span><FaDownload/> download image</span>
       </div>
     </div>
   );

@@ -12,9 +12,9 @@ const Login = props => {
 
   return (
     <div>
-      <h1>Mini Spotify Wrapped</h1>
+      <h1>Mini Spotify Wrap</h1>
       <div className="login-button">
-        <SpotifyLogin clientId="8792004e128746f2a9b7dcb46f3912fa"
+        <SpotifyLogin clientId="0ab0f042b3e44b3086e978dacb7cee47"
                       redirectUri="http://localhost:3001/wrapped"
                       onSuccess={response => {
                         console.log(response);

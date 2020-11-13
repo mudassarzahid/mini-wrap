@@ -1,10 +1,15 @@
+.collage {
+    padding: 10px;
+}
+
 .gallery {
     width: 552px;
-    padding: 10px 20px 20px 20px;
+    padding: 20px;
     display: block;
     min-height: 1px;
     overflow: auto;
     border: 1px solid rgb(227, 227, 227);
+    border-radius: 3px;
 }
 
 .ReactGridGallery_tile-bottom-bar {

@@ -1,5 +1,5 @@
 .show-all-button {
-    background-color: mediumseagreen;
+    background-color: rgba(166, 166, 166, 1);
     border-radius: 8px;
     display: inline-block;
     cursor: pointer;
@@ -11,7 +11,7 @@
 }
 
 .show-all-button:hover {
-    background-color: #306b30;
+    background-color: rgb(89, 89, 89);
 }
 
 .show-all-button:active {
