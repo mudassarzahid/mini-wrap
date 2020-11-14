@@ -6,14 +6,14 @@ import React from "react";
 
 const ShareComponent = props => {
   const shareBlockProps = {
-    url: 'https://mywebsite.com/page-to-share/',
+    url: 'http://wrapped.mudi.me',
     button: ShareButtonRoundSquare,
     buttons: [
       { network: 'Twitter', icon: FaTwitter },
       { network: 'Facebook', icon: FaFacebook },
-      { network: 'Pinterest', icon: FaPinterest, media: 'https://mywebsite.com/image-to-share.jpg' }
+      { network: 'Pinterest', icon: FaPinterest }
     ],
-    text: `Give it a try - mywebsite.com `,
+    text: `Make your own Spotify collage here! `,
   };
 
   return <ShareBlockStandard {...shareBlockProps} />;

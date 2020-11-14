@@ -5,7 +5,7 @@
     cursor: pointer;
     font-size: 20px;
     font-weight: bold;
-    padding: 9.9px 14px;
+    padding: 8.9px 14px;
     margin: 10px 7px 0 7px;
 }
 
@@ -20,7 +20,7 @@
 
 @media screen and (max-width: 1024px) {
     .save-button {
-        padding: 10px 14px;
+        padding: 9px 14px;
         margin: 7px;
     }
 }
