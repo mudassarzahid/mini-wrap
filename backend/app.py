@@ -1,5 +1,4 @@
 from flask import Flask, redirect, request, make_response, url_for, render_template
-from process_data import get_recently, show_graph, get_dates
 from urllib.parse import quote
 import requests
 from flask_cors import CORS
