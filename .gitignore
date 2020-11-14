@@ -111,3 +111,4 @@ venv.bak/
 # Temporary data
 .ipynb_checkpoints/
 .DS_Store
+.idea
