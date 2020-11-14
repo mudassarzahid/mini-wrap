@@ -9,47 +9,54 @@ cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 @app.route('/api/top/')
 def get_top():
-  cookie = request.args.get('spotify_token')
-  term = request.args.get('term')
+    cookie = request.args.get('spotify_token')
+    term = request.args.get('term')
 
-  if not cookie:
-    raise Exception('No cookie')
+    if not cookie:
+        raise Exception('No cookie')
 
-  spotify = Spotify(cookie)
-  user_data = spotify.user_data()
-  tracks_data = spotify.top_tracks(50, term, 0)
-  artists_data = spotify.top_artists(50, term, 0)
-  tracks_popularity = spotify.tracks_popularity(50, term, 0)
-  artists_popularity = spotify.artists_popularity(50, term, 0)
-  audio_features = spotify.audio_features(50, term, 0)
-  tracks_collage = spotify.top_tracks_collage(50, term, 0)
-  artists_collage = spotify.top_artists_collage(50, term, 0)
+    spotify = Spotify(cookie)
+    requested_tracks_data = spotify.top_tracks(50, term, 0)
+    requested_artists_data = spotify.top_artists(50, term, 0)
+    requested_audio_features_data = spotify.audio_features(requested_tracks_data, 50, term, 0)
 
-  return jsonify({'user_data': user_data,
-                  'tracks_data': tracks_data,
-                  'artists_data': artists_data,
-                  'tracks_popularity': tracks_popularity,
-                  'artists_popularity': artists_popularity,
-                  'audio_features': audio_features,
-                  'tracks_collage': tracks_collage,
-                  'artists_collage': artists_collage})
+    tracks_data = spotify.filter_top_tracks(requested_tracks_data)
+    tracks_popularity = spotify.filter_tracks_popularity(requested_tracks_data)
+    tracks_collage = spotify.filter_top_tracks_collage(requested_tracks_data)
+
+    artists_data = spotify.filter_top_artists(requested_artists_data)
+    artists_popularity = spotify.filter_artists_popularity(requested_artists_data)
+    artists_collage = spotify.filter_top_artists_collage(requested_artists_data)
+
+    user_data = spotify.user_data()
+    audio_features = spotify.filter_audio_features(requested_audio_features_data)
+
+    return jsonify({
+        'user_data': user_data,
+        'audio_features': audio_features,
+        'tracks_data': tracks_data,
+        'tracks_popularity': tracks_popularity,
+        'tracks_collage': tracks_collage,
+        'artists_data': artists_data,
+        'artists_popularity': artists_popularity,
+        'artists_collage': artists_collage
+    })
 
 
 @app.errorhandler(Exception)
 def handle_exception(e):
-
-  return json.dumps({
-      "description": str(e),
-  }), 400
+    return json.dumps({
+        "description": str(e),
+    }), 400
 
 
 def jsonify(data):
-  return app.response_class(
-      response=json.dumps(data, indent=2),
-      status=200,
-      mimetype='application/json'
-  )
+    return app.response_class(
+        response=json.dumps(data, indent=2),
+        status=200,
+        mimetype='application/json'
+    )
 
 
 if __name__ == '__main__':
-  app.run(debug=True, host='localhost', port=3000)
+    app.run(debug=True, host='localhost', port=3000)

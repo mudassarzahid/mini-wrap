@@ -1,357 +1,305 @@
-from itertools import islice
 import requests
+from itertools import islice
 from exceptions import check_limit, check_status
 
 
 class Spotify():
+    API_URL = 'https://api.spotify.com/v1'
 
-  API_URL = 'https://api.spotify.com/v1'
+    def __init__(self, token):
 
-  def __init__(self, token):
+        self.token = token
 
-    self.token = token
+        self.headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': "Bearer {}".format(self.token)
+        }
 
-    self.headers = {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': "Bearer {}".format(self.token)
-    }
+    def user_data(self):
 
-  # User data
-  def user_data(self):
+        response = requests.get(
+            self.API_URL + '/me',
+            headers=self.headers)
 
-    response = requests.get(
-        self.API_URL + '/me',
-        headers=self.headers)
+        check_status(response)
 
-    check_status(response)
+        return response.json()['display_name']
 
-    return response.json()['display_name']
+    def audio_features(self, tracks_data, limit=50, time_range='medium_term', offset=0):
 
-  # Audio features
-  def audio_features(self, limit=50, time_range='medium_term', offset=0):
+        id_list = []
+        for i, track_data in enumerate(self.filter_top_tracks(tracks_data)):
+            id_list.append(track_data['track_id'])
+        ids = ','.join(id_list)
 
-    id_list = []
-    for i, track_data in enumerate(self.top_tracks(limit, time_range, offset)):
-      id_list.append(track_data['track_id'])
-    ids = ','.join(id_list)
+        response = requests.get(
+            self.API_URL + '/audio-features',
+            headers=self.headers,
+            params=(
+                ('ids', ids),
+            ))
 
-    response = requests.get(
-        self.API_URL + '/audio-features',
-        headers=self.headers,
-        params=(
-            ('ids', ids),
-        ))
+        check_status(response)
 
-    check_status(response)
+        return response.json()
 
-    return self.filter_audio_features(response.json())
+    def top_tracks(self, limit=50, time_range='medium_term', offset=0):
 
-  def filter_audio_features(self, audio_data):
+        check_limit(limit)
 
-    danceability = 0
-    duration_min = 0
-    energy = 0
-    tempo = 0
-    happiness = 0
-    number_tracks = 0
+        response = requests.get(
+            self.API_URL + '/me/top/tracks',
+            headers=self.headers,
+            params=(
+                ('time_range', time_range),
+                ('limit', limit),
+                ('offset', offset),
+            ))
 
-    for i, audio_data in enumerate(audio_data['audio_features']):
-      danceability += audio_data['danceability']
-      duration_min += audio_data['duration_ms']
-      energy += audio_data['energy']
-      tempo += audio_data['tempo']
-      happiness += audio_data['valence']
-      number_tracks += 1
+        check_status(response)
 
-    audio_features_list = {'danceability': '{:.1f}'.format(round((danceability / number_tracks) * 10, 1)),
-                           'duration_min': '{:.1f}'.format(round((duration_min / number_tracks) / 60000, 1)),
-                           'energy': '{:.1f}'.format(round((energy / number_tracks) * 10, 1)),
-                           'tempo': '{:.1f}'.format(round(tempo / number_tracks, 1)),
-                           'happiness': '{:.1f}'.format(round((happiness / number_tracks) * 10, 1))}
+        return response.json()
 
-    return(audio_features_list)
+    def top_artists(self, limit=50, time_range='medium_term', offset=0):
 
-  # Top tracks
-  def top_tracks(self, limit=50, time_range='medium_term', offset=0):
+        check_limit(limit)
 
-    check_limit(limit)
+        response = requests.get(
+            self.API_URL + '/me/top/artists',
+            headers=self.headers,
+            params=(
+                ('time_range', time_range),
+                ('limit', limit),
+                ('offset', offset),
+            ))
 
-    response = requests.get(
-        self.API_URL + '/me/top/tracks',
-        headers=self.headers,
-        params=(
-            ('time_range', time_range),
-            ('limit', limit),
-            ('offset', offset),
-        ))
+        check_status(response)
 
-    check_status(response)
+        return response.json()
 
-    return self.filter_top_tracks(response.json())
+    def filter_audio_features(self, audio_data):
 
-  def filter_top_tracks(self, top_tracks):
+        danceability = 0
+        duration_min = 0
+        energy = 0
+        tempo = 0
+        happiness = 0
+        number_tracks = 0
 
-    all_track_data = []
+        for i, audio_data in enumerate(audio_data['audio_features']):
+            danceability += audio_data['danceability']
+            duration_min += audio_data['duration_ms']
+            energy += audio_data['energy']
+            tempo += audio_data['tempo']
+            happiness += audio_data['valence']
+            number_tracks += 1
 
-    for i, track_data in enumerate(top_tracks['items']):
-      track_rank = str(i + 1) + ". "
+        audio_features_list = {
+            'danceability': '{:.1f}'.format(round((danceability / number_tracks) * 10, 1)),
+            'duration_min': '{:.1f}'.format(round((duration_min / number_tracks) / 60000, 1)),
+            'energy': '{:.1f}'.format(round((energy / number_tracks) * 10, 1)),
+            'tempo': '{:.1f}'.format(round(tempo / number_tracks, 1)),
+            'happiness': '{:.1f}'.format(round((happiness / number_tracks) * 10, 1))
+        }
 
-      track_id = track_data['id']
+        return audio_features_list
 
-      if len(track_data['album']['images']) > 0:
-        track_background = track_data['album']['images'][0]['url']
-      else:
-        track_background = ''
+    def filter_top_tracks(self, top_tracks):
 
-      track_name = track_data['name']
+        all_track_data = []
 
-      track_url = track_data['external_urls']['spotify']
+        for i, track_data in enumerate(top_tracks['items']):
+            track_rank = str(i + 1) + ". "
 
-      track_artists = []
-      for artist in track_data['artists']:
-        track_artists.append(artist['name'])
+            track_id = track_data['id']
 
-      track_popularity = track_data['popularity']
+            if len(track_data['album']['images']) > 0:
+                track_background = track_data['album']['images'][0]['url']
+            else:
+                track_background = ''
 
-      all_track_data.append({'track_id': track_id,
-                             'track_rank': track_rank,
-                             'track_background': track_background,
-                             'track_name': track_name,
-                             'track_url': track_url,
-                             'track_artists': ', '.join(track_artists),
-                             'track_popularity': track_popularity})
+            track_name = track_data['name']
 
-    return all_track_data
+            track_url = track_data['external_urls']['spotify']
 
-  # Tracks collage
-  def top_tracks_collage(self, limit=50, time_range='medium_term', offset=0):
+            track_artists = []
+            for artist in track_data['artists']:
+                track_artists.append(artist['name'])
 
-    check_limit(limit)
+            track_popularity = track_data['popularity']
 
-    response = requests.get(
-        self.API_URL + '/me/top/tracks',
-        headers=self.headers,
-        params=(
-            ('time_range', time_range),
-            ('limit', limit),
-            ('offset', offset),
-        ))
+            all_track_data.append({'track_id': track_id,
+                                   'track_rank': track_rank,
+                                   'track_background': track_background,
+                                   'track_name': track_name,
+                                   'track_url': track_url,
+                                   'track_artists': ', '.join(track_artists),
+                                   'track_popularity': track_popularity})
 
-    check_status(response)
+        return all_track_data
 
-    return self.filter_top_tracks_collage(response.json())
+    def filter_top_tracks_collage(self, top_tracks):
 
-  def filter_top_tracks_collage(self, top_tracks):
+        track_images = []
 
-    track_images = []
+        for i, track_data in enumerate(islice(top_tracks['items'], 9)):
 
-    for i, track_data in enumerate(islice(top_tracks['items'], 9)):
+            if len(track_data['album']['images']) > 0:
+                track_large_image = track_data['album']['images'][0]['url']
+                track_medium_image = track_data['album']['images'][1]['url']
+            else:
+                track_large_image = ''
+                track_medium_image = ''
 
-      if len(track_data['album']['images']) > 0:
-        track_large_image = track_data['album']['images'][0]['url']
-        track_medium_image = track_data['album']['images'][1]['url']
-      else:
-        track_large_image = ''
-        track_medium_image = ''
+            track_name = track_data['name']
+            track_url = track_data['external_urls']['spotify']
 
-      track_name = track_data['name']
+            track_artists = []
+            for artist in track_data['artists']:
+                track_artists.append(artist['name'])
 
-      track_artists = []
-      for artist in track_data['artists']:
-        track_artists.append(artist['name'])
+            track_images.append({
+                'url': track_url,
+                'src': track_large_image,
+                'thumbnail': track_medium_image,
+                'thumbnailWidth': 320,
+                'thumbnailHeight': 320,
+                'tags': [
+                    {'value': track_name, 'title': "track_name"},
+                    {'value': ', '.join(track_artists), 'title': "track_artists"},
+                ]
+            })
 
-      track_images.append({'src': track_large_image,
-                           'thumbnail': track_medium_image,
-                           'thumbnailWidth': 320,
-                           'thumbnailHeight': 320,
-                           'tags': [{'value': track_name, 'title': "track_name"}, {'value': ', '.join(track_artists), 'title': "track_artists"}]})
+        return track_images
 
-    return track_images
+    def filter_tracks_popularity(self, top_tracks):
 
-  # Top tracks popularity
-  def tracks_popularity(self, limit=50, time_range='medium_term', offset=0):
+        average_popularity = 0
+        number_tracks = top_tracks['total']
+        least_mainstream_track_score = 100
+        least_mainstream_track_name = ''
+        least_mainstream_track_url = ''
 
-    check_limit(limit)
+        if number_tracks == 0:
+            tracks_popularity_data = {
+                'number_tracks': 0,
+                'average_popularity': 0,
+                'least_mainstream_track_name': '',
+                'least_mainstream_track_score': 0
+            }
 
-    response = requests.get(
-        self.API_URL + '/me/top/tracks',
-        headers=self.headers,
-        params=(
-            ('time_range', time_range),
-            ('limit', limit),
-            ('offset', offset),
-        ))
+            return tracks_popularity_data
 
-    check_status(response)
+        for i, track_data in enumerate(top_tracks['items']):
+            average_popularity += track_data['popularity']
 
-    return self.filter_tracks_popularity(response.json())
+            if least_mainstream_track_score > track_data['popularity'] >= 5:
+                least_mainstream_track_score = track_data['popularity']
+                least_mainstream_track_name = track_data['name']
+                least_mainstream_track_url = track_data['external_urls']['spotify']
 
-  def filter_tracks_popularity(self, top_tracks):
+        tracks_popularity_data = {
+            'number_tracks': number_tracks,
+            'average_popularity': '{:.1f}'.format(round((average_popularity / number_tracks) / 10, 1)),
+            'least_mainstream_track_name': least_mainstream_track_name,
+            'least_mainstream_track_score': '{:.1f}'.format(round(least_mainstream_track_score / 10, 1)),
+            'least_mainstream_track_url': least_mainstream_track_url
+        }
 
-    average_popularity = 0
-    number_tracks = top_tracks['total']
-    least_mainstream_track_score = 100
+        return tracks_popularity_data
 
-    if number_tracks == 0:
-      tracks_popularity_data = {'number_tracks': 0,
-                                'average_popularity': 0,
-                                'least_mainstream_track_name': '',
-                                'least_mainstream_track_score': 0}
+    def filter_top_artists(self, top_artists):
 
-      return tracks_popularity_data
+        all_artist_data = []
 
-    for i, track_data in enumerate(top_tracks['items']):
-      average_popularity += track_data['popularity']
+        for i, artist_data in enumerate(top_artists['items']):
+            artist_rank = str(i + 1) + ". "
 
-      if track_data['popularity'] < least_mainstream_track_score and track_data['popularity'] >= 5:
-        least_mainstream_track_score = track_data['popularity']
-        least_mainstream_track_name = track_data['name']
-        least_mainstream_track_url = track_data['external_urls']['spotify']
+            artist_id = artist_data['id']
 
-    tracks_popularity_data = {'number_tracks': number_tracks,
-                              'average_popularity': '{:.1f}'.format(round((average_popularity / number_tracks) / 10, 1)),
-                              'least_mainstream_track_name': least_mainstream_track_name,
-                              'least_mainstream_track_score': '{:.1f}'.format(round(least_mainstream_track_score / 10, 1)),
-                              'least_mainstream_track_url': least_mainstream_track_url}
+            if len(artist_data['images']) > 0:
+                artist_background = artist_data['images'][0]['url']
+            else:
+                artist_background = ''
 
-    return tracks_popularity_data
+            artist_name = artist_data['name']
 
-  # Top artists
-  def top_artists(self, limit=50, time_range='medium_term', offset=0):
+            artist_url = artist_data['external_urls']['spotify']
 
-    check_limit(limit)
+            artist_followers = '{:,}'.format(artist_data['followers']['total']) + ' followers'
 
-    response = requests.get(
-        self.API_URL + '/me/top/artists',
-        headers=self.headers,
-        params=(
-            ('time_range', time_range),
-            ('limit', limit),
-            ('offset', offset),
-        ))
+            artist_popularity = artist_data['popularity']
 
-    check_status(response)
+            all_artist_data.append({
+                'artist_id': artist_id,
+                'artist_rank': artist_rank,
+                'artist_background': artist_background,
+                'artist_name': artist_name,
+                'artist_url': artist_url,
+                'artist_followers': artist_followers,
+                'artist_popularity': artist_popularity
+            })
 
-    return self.filter_top_artists(response.json())
+        return all_artist_data
 
-  def filter_top_artists(self, top_artists):
+    def filter_top_artists_collage(self, top_artists):
 
-    all_artist_data = []
+        artist_images = []
 
-    for i, artist_data in enumerate(top_artists['items']):
-      artist_rank = str(i + 1) + ". "
+        for i, artist_data in enumerate(islice(top_artists['items'], 9)):
 
-      artist_id = artist_data['id']
+            if len(artist_data['images']) > 0:
+                artist_large_image = artist_data['images'][0]['url']
+                artist_medium_image = artist_data['images'][1]['url']
+            else:
+                artist_large_image = ''
+                artist_medium_image = ''
 
-      if len(artist_data['images']) > 0:
-        artist_background = artist_data['images'][0]['url']
-      else:
-        artist_background = ''
+            artist_name = artist_data['name']
+            artist_url = artist_data['external_urls']['spotify']
 
-      artist_name = artist_data['name']
+            artist_images.append({
+                'url': artist_url,
+                'src': artist_large_image,
+                'thumbnail': artist_medium_image,
+                'thumbnailWidth': 320,
+                'thumbnailHeight': 320,
+                'tags': [{'value': artist_name, 'title': "artist_name"}]
+            })
 
-      artist_url = artist_data['external_urls']['spotify']
+        return artist_images
 
-      artist_followers = '{:,}'.format(artist_data['followers']['total']) + ' followers'
+    def filter_artists_popularity(self, top_artists):
 
-      artist_popularity = artist_data['popularity']
+        average_popularity = 0
+        number_artists = top_artists['total']
+        least_mainstream_artist_score = 100
+        least_mainstream_artist_name = ''
+        least_mainstream_artist_url = ''
 
-      all_artist_data.append({'artist_id': artist_id,
-                              'artist_rank': artist_rank,
-                              'artist_background': artist_background,
-                              'artist_name': artist_name,
-                              'artist_url': artist_url,
-                              'artist_followers': artist_followers,
-                              'artist_popularity': artist_popularity})
+        if number_artists == 0:
+            tracks_popularity_data = {'number_artists': 0,
+                                      'average_popularity': 0,
+                                      'least_mainstream_artist_name': '',
+                                      'least_mainstream_artist_score': 0}
 
-    return all_artist_data
+            return tracks_popularity_data
 
-# Artists collage
-  def top_artists_collage(self, limit=50, time_range='medium_term', offset=0):
+        for i, artist_data in enumerate(top_artists['items']):
+            average_popularity += artist_data['popularity']
 
-    check_limit(limit)
+            if least_mainstream_artist_score > artist_data['popularity'] >= 5:
+                least_mainstream_artist_name = artist_data['name']
+                least_mainstream_artist_score = artist_data['popularity']
+                least_mainstream_artist_url = artist_data['external_urls']['spotify']
 
-    response = requests.get(
-        self.API_URL + '/me/top/artists',
-        headers=self.headers,
-        params=(
-            ('time_range', time_range),
-            ('limit', limit),
-            ('offset', offset),
-        ))
+        artists_popularity_data = {
+            'number_artists': number_artists,
+            'average_popularity': '{:.1f}'.format(round((average_popularity / number_artists) / 10, 1)),
+            'least_mainstream_artist_name': least_mainstream_artist_name,
+            'least_mainstream_artist_score': '{:.1f}'.format(round(least_mainstream_artist_score / 10, 1)),
+            'least_mainstream_artist_url': least_mainstream_artist_url
+        }
 
-    check_status(response)
-
-    return self.filter_top_artists_collage(response.json())
-
-  def filter_top_artists_collage(self, top_artists):
-
-    artist_images = []
-
-    for i, artist_data in enumerate(islice(top_artists['items'], 9)):
-
-      if len(artist_data['images']) > 0:
-        artist_large_image = artist_data['images'][0]['url']
-        artist_medium_image = artist_data['images'][1]['url']
-      else:
-        artist_large_image = ''
-        artist_medium_image = ''
-
-      artist_name = artist_data['name']
-
-      artist_images.append({'src': artist_large_image,
-                            'thumbnail': artist_medium_image,
-                            'thumbnailWidth': 320,
-                            'thumbnailHeight': 320,
-                            'tags': [{'value': artist_name, 'title': "artist_name"}]})
-
-    return artist_images
-
-  # Top artists popularity
-  def artists_popularity(self, limit=50, time_range='medium_term', offset=0):
-
-    check_limit(limit)
-
-    response = requests.get(
-        self.API_URL + '/me/top/artists',
-        headers=self.headers,
-        params=(
-            ('time_range', time_range),
-            ('limit', limit),
-            ('offset', offset),
-        ))
-
-    check_status(response)
-
-    return self.filter_artists_popularity(response.json())
-
-  def filter_artists_popularity(self, top_artists):
-
-    average_popularity = 0
-    number_artists = top_artists['total']
-    least_mainstream_artist_score = 100
-
-    if number_artists == 0:
-      tracks_popularity_data = {'number_artists': 0,
-                                'average_popularity': 0,
-                                'least_mainstream_artist_name': '',
-                                'least_mainstream_artist_score': 0}
-
-      return tracks_popularity_data
-
-    for i, artist_data in enumerate(top_artists['items']):
-      average_popularity += artist_data['popularity']
-
-      if artist_data['popularity'] < least_mainstream_artist_score and artist_data['popularity'] >= 5:
-        least_mainstream_artist_name = artist_data['name']
-        least_mainstream_artist_score = artist_data['popularity']
-        least_mainstream_artist_url = artist_data['external_urls']['spotify']
-
-    artists_popularity_data = {'number_artists': number_artists,
-                               'average_popularity': '{:.1f}'.format(round((average_popularity / number_artists) / 10, 1)),
-                               'least_mainstream_artist_name': least_mainstream_artist_name,
-                               'least_mainstream_artist_score': '{:.1f}'.format(round(least_mainstream_artist_score / 10, 1)),
-                               'least_mainstream_artist_url': least_mainstream_artist_url}
-
-    return artists_popularity_data
+        return artists_popularity_data
