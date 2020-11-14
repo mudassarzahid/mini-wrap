@@ -1,4 +1,4 @@
-import './Wrapped.css';
+import './App.css';
 import './Spinner.css';
 import React from "react";
 import axios from 'axios';
@@ -16,7 +16,7 @@ import Headline from "./Textfield/Headline";
 import AudioFeature from "./Textfield/AudioFeature";
 import Collage from "./Collage/Collage";
 
-class Wrapped extends React.Component {
+class App extends React.Component {
 
   //TODO: mudi.me mainpage
   //TODO: collage sharing link / text
@@ -57,11 +57,18 @@ class Wrapped extends React.Component {
   }
 
   getData(term) {
+    let url;
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+      url = "http://localhost:3000"
+    } else {
+      url = "http://api.wrapped.mudi.me"
+    }
+
     this.setState({isLoading: true});
     const spotify_token = Cookies.get('spotify_token');
     const {history} = this.props;
 
-    axios.get(`http://localhost:3000/api/top/?term=${term}&spotify_token=${spotify_token}`)
+    axios.get(`${url}/api/top/?term=${term}&spotify_token=${spotify_token}`)
       .then(res => {
         this.setState({
           user_data: res.data.user_data,
@@ -416,4 +423,4 @@ class Wrapped extends React.Component {
   }
 }
 
-export default withRouter(Wrapped);
+export default withRouter(App);

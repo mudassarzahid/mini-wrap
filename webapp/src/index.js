@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Wrapped from './Wrapped';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {
   BrowserRouter as Router,
@@ -20,8 +20,8 @@ ReactDOM.render(
           <Login/>
         </Route>
 
-        <Route path="/wrapped">
-          <Wrapped/>
+        <Route path="/app">
+          <App/>
         </Route>
 
       </Switch>
