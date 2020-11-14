@@ -165,7 +165,6 @@ class App extends React.Component {
     } else if (this.state.termSelected === 'long_term') {
       this.setState({term_text: 'of all time'})
     }
-    console.log(this)
 
     this.setDate();
   }
