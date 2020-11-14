@@ -9,24 +9,6 @@
     display: inline-flex;
 }
 
-.website-name {
-    float: left;
-}
-
-.collage-subtext {
-    padding: 5px;
-    color: black;
-}
-
-.collage-headline {
-    margin-bottom: 10px;
-    color: black;
-}
-
-.date-textfield {
-    float: right;
-}
-
 .container {
     position: relative;
     text-align: -webkit-center;

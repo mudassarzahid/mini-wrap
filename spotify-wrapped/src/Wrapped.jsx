@@ -18,11 +18,8 @@ import Collage from "./Collage/Collage";
 
 class Wrapped extends React.Component {
 
-  //TODO: font
-  //TODO: collage headline styling?
   //TODO: mudi.me mainpage
   //TODO: collage sharing link / text
-  //TODO: loading states
   //TODO: recently generated collage
 
   state = {

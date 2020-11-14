@@ -2,6 +2,26 @@
     padding: 10px;
 }
 
+.collage-headline {
+    margin-bottom: 10px;
+    color: black;
+}
+
+.collage-subtext {
+    padding: 5px;
+    color: black;
+}
+
+.website-name {
+    float: left;
+    padding-top: 3px;
+}
+
+.date-textfield {
+    float: right;
+    padding-top: 3px;
+}
+
 .gallery {
     width: 552px;
     padding: 20px;
@@ -31,7 +51,7 @@
     padding: 0 0.6em 0.25em !important;
     font-variant: small-caps;
     border-radius: 0 !important;
-    font-weight: bold !important;
+    font-size: 80% !important;
 }
 
 .ReactGridGallery_tile-bottom-bar > div, .ReactGridGallery_tile-icon-bar > div, .ReactGridGallery_tile-viewport > img {
