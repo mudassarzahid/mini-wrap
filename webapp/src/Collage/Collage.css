@@ -54,7 +54,4 @@
     font-size: 80% !important;
 }
 
-.ReactGridGallery_tile-bottom-bar > div, .ReactGridGallery_tile-icon-bar > div, .ReactGridGallery_tile-viewport > img {
-    cursor: default !important;
-}
 

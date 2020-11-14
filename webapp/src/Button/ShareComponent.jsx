@@ -1,3 +1,4 @@
+/*
 import { ShareButtonRoundSquare, ShareBlockStandard } from 'react-custom-share';
 import { FaFacebook } from 'react-icons/fa';
 import { FaTwitter } from 'react-icons/fa';
@@ -19,4 +20,4 @@ const ShareComponent = props => {
   return <ShareBlockStandard {...shareBlockProps} />;
 };
 
-export default ShareComponent;
+export default ShareComponent;*/

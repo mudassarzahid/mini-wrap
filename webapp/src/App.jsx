@@ -9,7 +9,7 @@ import TopButton from "./Button/TopButton";
 import TermButton from "./Button/TermButton";
 import SaveButton from "./Button/SaveButton";
 import ShowAllButton from "./Button/ShowAllButton";
-import ShareComponent from "./Button/ShareComponent";
+//import ShareComponent from "./Button/ShareComponent";
 import Card from "./Card/Card";
 import Popularity from "./Textfield/Popularity";
 import Headline from "./Textfield/Headline";
@@ -17,10 +17,6 @@ import AudioFeature from "./Textfield/AudioFeature";
 import Collage from "./Collage/Collage";
 
 class App extends React.Component {
-
-  //TODO: mudi.me mainpage
-  //TODO: collage sharing link / text
-  //TODO: recently generated collage
 
   state = {
     'headlineEmoji': '',
@@ -87,7 +83,9 @@ class App extends React.Component {
       })
       .catch(function (error) {
         console.log(error);
-        history.push('/')
+        if (error.response.status === 400) {
+          history.push('/')
+        }
       });
   }
 
@@ -319,7 +317,9 @@ class App extends React.Component {
                     isVisible={this.state.topVisible === 'top tracks'}/>
         <SaveButton onClick={this.artistsToCanvas}
                     isVisible={this.state.topVisible === 'top artists'}/>
+{/*
         <ShareComponent/>
+*/}
       </div>
 
       <div className="all-cards">

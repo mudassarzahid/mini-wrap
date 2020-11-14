@@ -21,7 +21,8 @@ const Collage = props => {
 
       <Gallery images={props.images}
                enableLightbox={false}
-               enableImageSelection={false}/>
+               enableImageSelection={false}
+               onClickThumbnail={(index) => {window.open(props.images[index].url, '_blank')}}/>
 
       <div className="collage-subtext">
         <span className="website-name">https://wrapped.mudi.me/</span>
