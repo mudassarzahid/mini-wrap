@@ -22,6 +22,7 @@ const Login = props => {
       <div className="login-button">
         <SpotifyLogin clientId="0ab0f042b3e44b3086e978dacb7cee47"
                       redirectUri={`${url}/app`}
+                      scope="user-top-read user-read-private user-read-email"
                       onSuccess={response => {
                         console.log(response);
                         let access_token = response.access_token
