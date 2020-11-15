@@ -19,3 +19,18 @@
     position: relative;
     top: 1px;
 }
+
+.login-headline {
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.login-sub-headline {
+    font-size: 20px;
+    margin-bottom: 12px;
+    margin-top: 4px;
+}
+
+.sample-collages {
+    margin: 12px;
+}

@@ -18,7 +18,9 @@ const Login = props => {
 
   return (
     <div>
-      <h1>Mini Spotify Wrap</h1>
+      <div className="login-headline">Mini Spotify Wrap</div>
+      <div className="login-sub-headline">generate your own Spotify collage</div>
+
       <div className="login-button">
         <SpotifyLogin clientId="0ab0f042b3e44b3086e978dacb7cee47"
                       redirectUri={`${url}/app`}
@@ -31,9 +33,14 @@ const Login = props => {
                       }}
                       onFailure={onFailure}/>
       </div>
+
+      <div className="sample-collages">
+        <img src="/sample_collage.png" alt="sample_tracks_collage"/>
+      </div>
       <div>
         built by <a href="https://twitter.com/mudassar_z" target="_blank" rel="noreferrer">Mudi</a>
       </div>
+
     </div>)
 };
 

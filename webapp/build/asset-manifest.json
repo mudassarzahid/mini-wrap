@@ -1,6 +1,7 @@
 {
   "files": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "main.css": "/static/css/main.2f044edb.chunk.css",
     "main.js": "/static/js/main.684d1750.chunk.js",
     "main.js.map": "/static/js/main.684d1750.chunk.js.map",
@@ -19,6 +20,11 @@
     "main.js": "/static/js/main.0db06056.chunk.js",
     "main.js.map": "/static/js/main.0db06056.chunk.js.map",
 >>>>>>> 8a9da26... Set scope
+=======
+    "main.css": "/static/css/main.63375e27.chunk.css",
+    "main.js": "/static/js/main.a867ccdb.chunk.js",
+    "main.js.map": "/static/js/main.a867ccdb.chunk.js.map",
+>>>>>>> f9b4b01... Add sample collage
     "runtime-main.js": "/static/js/runtime-main.094cec7e.js",
     "runtime-main.js.map": "/static/js/runtime-main.094cec7e.js.map",
     "static/js/2.f380b03d.chunk.js": "/static/js/2.f380b03d.chunk.js",
@@ -27,8 +33,13 @@
     "static/js/3.7905b5db.chunk.js.map": "/static/js/3.7905b5db.chunk.js.map",
 >>>>>>> 1a1229c... Update index.html
     "index.html": "/index.html",
+<<<<<<< HEAD
     "static/css/main.2f044edb.chunk.css.map": "/static/css/main.2f044edb.chunk.css.map",
     "static/js/2.70210136.chunk.js.LICENSE.txt": "/static/js/2.70210136.chunk.js.LICENSE.txt"
+=======
+    "static/css/main.63375e27.chunk.css.map": "/static/css/main.63375e27.chunk.css.map",
+    "static/js/2.241ad423.chunk.js.LICENSE.txt": "/static/js/2.241ad423.chunk.js.LICENSE.txt"
+>>>>>>> f9b4b01... Add sample collage
   },
   "entrypoints": [
 <<<<<<< HEAD
@@ -38,6 +49,7 @@
     "static/js/main.684d1750.chunk.js"
 =======
     "static/js/runtime-main.094cec7e.js",
+<<<<<<< HEAD
     "static/js/2.f380b03d.chunk.js",
     "static/css/main.6dfeebee.chunk.css",
 <<<<<<< HEAD
@@ -46,5 +58,10 @@
 =======
     "static/js/main.0db06056.chunk.js"
 >>>>>>> 8a9da26... Set scope
+=======
+    "static/js/2.241ad423.chunk.js",
+    "static/css/main.63375e27.chunk.css",
+    "static/js/main.a867ccdb.chunk.js"
+>>>>>>> f9b4b01... Add sample collage
   ]
 }
