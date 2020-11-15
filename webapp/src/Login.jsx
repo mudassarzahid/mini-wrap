@@ -24,12 +24,9 @@ const Login = props => {
                       redirectUri={`${url}/app`}
                       onSuccess={response => {
                         console.log(response);
-                        let now = new Date();
-                        let time = now.getTime();
-                        let expireTime = time + 3600;
+                        let access_token = response.access_token
                         console.log(response)
-                        Cookies.set('spotify_token', response.access_token, {expires: expireTime});
-                        history.push('/app')
+                        history.push(`/app?access_token=${access_token}`)
                       }}
                       onFailure={onFailure}/>
       </div>

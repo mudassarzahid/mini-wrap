@@ -61,10 +61,11 @@ class App extends React.Component {
     }
 
     this.setState({isLoading: true});
-    const spotify_token = Cookies.get('spotify_token');
+    const urlParams = new URLSearchParams(window.location.search);
+    const accessToken = urlParams.get('access_token');
     const {history} = this.props;
 
-    axios.get(`${url}/api/top/?term=${term}&spotify_token=${spotify_token}`)
+    axios.get(`${url}/api/top/?term=${term}&spotify_token=${accessToken}`)
       .then(res => {
         this.setState({
           user_data: res.data.user_data,
