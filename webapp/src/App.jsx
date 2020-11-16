@@ -2,7 +2,6 @@ import './App.css';
 import './Spinner.css';
 import React from "react";
 import axios from 'axios';
-import Cookies from 'js-cookie';
 import html2canvas from "html2canvas";
 import {withRouter} from 'react-router-dom';
 import TopButton from "./Button/TopButton";

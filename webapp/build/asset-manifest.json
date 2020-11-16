@@ -1,76 +1,22 @@
 {
   "files": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "main.css": "/static/css/main.2f044edb.chunk.css",
-    "main.js": "/static/js/main.684d1750.chunk.js",
-    "main.js.map": "/static/js/main.684d1750.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.322ae43f.js",
-    "runtime-main.js.map": "/static/js/runtime-main.322ae43f.js.map",
-    "static/js/2.70210136.chunk.js": "/static/js/2.70210136.chunk.js",
-    "static/js/2.70210136.chunk.js.map": "/static/js/2.70210136.chunk.js.map",
-    "static/js/3.b9bcf601.chunk.js": "/static/js/3.b9bcf601.chunk.js",
-    "static/js/3.b9bcf601.chunk.js.map": "/static/js/3.b9bcf601.chunk.js.map",
-=======
-    "main.css": "/static/css/main.6dfeebee.chunk.css",
-<<<<<<< HEAD
-    "main.js": "/static/js/main.4f06e509.chunk.js",
-    "main.js.map": "/static/js/main.4f06e509.chunk.js.map",
-=======
-    "main.js": "/static/js/main.0db06056.chunk.js",
-    "main.js.map": "/static/js/main.0db06056.chunk.js.map",
->>>>>>> 8a9da26... Set scope
-=======
-    "main.css": "/static/css/main.63375e27.chunk.css",
-<<<<<<< HEAD
-    "main.js": "/static/js/main.a867ccdb.chunk.js",
-    "main.js.map": "/static/js/main.a867ccdb.chunk.js.map",
->>>>>>> f9b4b01... Add sample collage
-=======
-    "main.js": "/static/js/main.b8ccdd4c.chunk.js",
-    "main.js.map": "/static/js/main.b8ccdd4c.chunk.js.map",
->>>>>>> 00ccd03... SSL Certificate
-    "runtime-main.js": "/static/js/runtime-main.094cec7e.js",
-    "runtime-main.js.map": "/static/js/runtime-main.094cec7e.js.map",
-    "static/js/2.f380b03d.chunk.js": "/static/js/2.f380b03d.chunk.js",
-    "static/js/2.f380b03d.chunk.js.map": "/static/js/2.f380b03d.chunk.js.map",
-    "static/js/3.7905b5db.chunk.js": "/static/js/3.7905b5db.chunk.js",
-    "static/js/3.7905b5db.chunk.js.map": "/static/js/3.7905b5db.chunk.js.map",
->>>>>>> 1a1229c... Update index.html
+    "main.css": "/static/css/main.edeb2b00.chunk.css",
+    "main.js": "/static/js/main.8ee0a92c.chunk.js",
+    "main.js.map": "/static/js/main.8ee0a92c.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.38bf9512.js",
+    "runtime-main.js.map": "/static/js/runtime-main.38bf9512.js.map",
+    "static/js/2.a92f3628.chunk.js": "/static/js/2.a92f3628.chunk.js",
+    "static/js/2.a92f3628.chunk.js.map": "/static/js/2.a92f3628.chunk.js.map",
+    "static/js/3.7694d5f2.chunk.js": "/static/js/3.7694d5f2.chunk.js",
+    "static/js/3.7694d5f2.chunk.js.map": "/static/js/3.7694d5f2.chunk.js.map",
     "index.html": "/index.html",
-<<<<<<< HEAD
-    "static/css/main.2f044edb.chunk.css.map": "/static/css/main.2f044edb.chunk.css.map",
-    "static/js/2.70210136.chunk.js.LICENSE.txt": "/static/js/2.70210136.chunk.js.LICENSE.txt"
-=======
-    "static/css/main.63375e27.chunk.css.map": "/static/css/main.63375e27.chunk.css.map",
-    "static/js/2.241ad423.chunk.js.LICENSE.txt": "/static/js/2.241ad423.chunk.js.LICENSE.txt"
->>>>>>> f9b4b01... Add sample collage
+    "static/css/main.edeb2b00.chunk.css.map": "/static/css/main.edeb2b00.chunk.css.map",
+    "static/js/2.a92f3628.chunk.js.LICENSE.txt": "/static/js/2.a92f3628.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-<<<<<<< HEAD
-    "static/js/runtime-main.322ae43f.js",
-    "static/js/2.70210136.chunk.js",
-    "static/css/main.2f044edb.chunk.css",
-    "static/js/main.684d1750.chunk.js"
-=======
-    "static/js/runtime-main.094cec7e.js",
-<<<<<<< HEAD
-    "static/js/2.f380b03d.chunk.js",
-    "static/css/main.6dfeebee.chunk.css",
-<<<<<<< HEAD
-    "static/js/main.4f06e509.chunk.js"
->>>>>>> 1a1229c... Update index.html
-=======
-    "static/js/main.0db06056.chunk.js"
->>>>>>> 8a9da26... Set scope
-=======
-    "static/js/2.241ad423.chunk.js",
-    "static/css/main.63375e27.chunk.css",
-<<<<<<< HEAD
-    "static/js/main.a867ccdb.chunk.js"
->>>>>>> f9b4b01... Add sample collage
-=======
-    "static/js/main.b8ccdd4c.chunk.js"
->>>>>>> 00ccd03... SSL Certificate
+    "static/js/runtime-main.38bf9512.js",
+    "static/js/2.a92f3628.chunk.js",
+    "static/css/main.edeb2b00.chunk.css",
+    "static/js/main.8ee0a92c.chunk.js"
   ]
 }

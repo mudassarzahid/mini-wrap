@@ -1,7 +1,6 @@
 import React from "react";
 import './Login.css';
 import SpotifyLogin from 'react-spotify-login';
-import Cookies from 'js-cookie';
 import {useHistory} from "react-router-dom";
 
 
@@ -18,8 +17,8 @@ const Login = props => {
 
   return (
     <div>
-      <div className="login-headline">Mini Spotify Wrap</div>
-      <div className="login-sub-headline">generate your own Spotify collage</div>
+      <div className="login-headline">Mini Wrap for Spotify</div>
+      <div className="login-sub-headline">✨ generate your own collage ✨</div>
 
       <div className="login-button">
         <SpotifyLogin clientId="0ab0f042b3e44b3086e978dacb7cee47"
@@ -34,7 +33,7 @@ const Login = props => {
                       onFailure={onFailure}/>
       </div>
 
-      <div className="sample-collages">
+      <div className="sample-collage">
         <img src="/sample_collage.png" alt="sample_tracks_collage"/>
       </div>
       <div>

@@ -18,7 +18,7 @@ const SaveButton = props => {
            id={props.id}
            onClick={props.onClick}
            visible={props.isVisible}>
-        <span><FaDownload/> download image</span>
+        <span><FaDownload/> download collage</span>
       </div>
     </div>
   );
