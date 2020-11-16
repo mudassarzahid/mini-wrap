@@ -87,21 +87,31 @@ class Spotify():
         happiness = 0
         number_tracks = 0
 
-        for i, audio_data in enumerate(audio_data['audio_features']):
-            danceability += audio_data['danceability']
-            duration_min += audio_data['duration_ms']
-            energy += audio_data['energy']
-            tempo += audio_data['tempo']
-            happiness += audio_data['valence']
-            number_tracks += 1
+        if audio_data['audio_features'] == [None]:
+            audio_features_list = {
+                'danceability': danceability,
+                'duration_min': duration_min,
+                'energy': energy,
+                'tempo': tempo,
+                'happiness': happiness
+            }
 
-        audio_features_list = {
-            'danceability': '{:.1f}'.format(round((danceability / number_tracks) * 10, 1)),
-            'duration_min': '{:.1f}'.format(round((duration_min / number_tracks) / 60000, 1)),
-            'energy': '{:.1f}'.format(round((energy / number_tracks) * 10, 1)),
-            'tempo': '{:.1f}'.format(round(tempo / number_tracks, 1)),
-            'happiness': '{:.1f}'.format(round((happiness / number_tracks) * 10, 1))
-        }
+        else:
+            for i, audio_data in enumerate(audio_data['audio_features']):
+                danceability += audio_data['danceability']
+                duration_min += audio_data['duration_ms']
+                energy += audio_data['energy']
+                tempo += audio_data['tempo']
+                happiness += audio_data['valence']
+                number_tracks += 1
+
+            audio_features_list = {
+                'danceability': '{:.1f}'.format(round((danceability / number_tracks) * 10, 1)),
+                'duration_min': '{:.1f}'.format(round((duration_min / number_tracks) / 60000, 1)),
+                'energy': '{:.1f}'.format(round((energy / number_tracks) * 10, 1)),
+                'tempo': '{:.1f}'.format(round(tempo / number_tracks, 1)),
+                'happiness': '{:.1f}'.format(round((happiness / number_tracks) * 10, 1))
+            }
 
         return audio_features_list
 
