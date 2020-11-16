@@ -13,7 +13,7 @@ const Login = props => {
   if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     url = "http://localhost:3001"
   } else {
-    url = "http://wrapped.mudi.me"
+    url = "https://wrapped.mudi.me"
   }
 
   return (

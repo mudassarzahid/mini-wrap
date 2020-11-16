@@ -57,7 +57,7 @@ class App extends React.Component {
     if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
       url = "http://localhost:3000"
     } else {
-      url = "http://api.wrapped.mudi.me"
+      url = "https://api.wrapped.mudi.me"
     }
 
     this.setState({isLoading: true});

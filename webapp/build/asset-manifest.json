@@ -22,9 +22,14 @@
 >>>>>>> 8a9da26... Set scope
 =======
     "main.css": "/static/css/main.63375e27.chunk.css",
+<<<<<<< HEAD
     "main.js": "/static/js/main.a867ccdb.chunk.js",
     "main.js.map": "/static/js/main.a867ccdb.chunk.js.map",
 >>>>>>> f9b4b01... Add sample collage
+=======
+    "main.js": "/static/js/main.b8ccdd4c.chunk.js",
+    "main.js.map": "/static/js/main.b8ccdd4c.chunk.js.map",
+>>>>>>> 00ccd03... SSL Certificate
     "runtime-main.js": "/static/js/runtime-main.094cec7e.js",
     "runtime-main.js.map": "/static/js/runtime-main.094cec7e.js.map",
     "static/js/2.f380b03d.chunk.js": "/static/js/2.f380b03d.chunk.js",
@@ -61,7 +66,11 @@
 =======
     "static/js/2.241ad423.chunk.js",
     "static/css/main.63375e27.chunk.css",
+<<<<<<< HEAD
     "static/js/main.a867ccdb.chunk.js"
 >>>>>>> f9b4b01... Add sample collage
+=======
+    "static/js/main.b8ccdd4c.chunk.js"
+>>>>>>> 00ccd03... SSL Certificate
   ]
 }

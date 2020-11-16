@@ -22,15 +22,7 @@ const Collage = props => {
       <Gallery images={props.images}
                enableLightbox={false}
                enableImageSelection={false}
-<<<<<<< HEAD
-<<<<<<< HEAD
                onClickThumbnail={(index) => {window.open(props.images[index].url, '_blank')}}/>
-=======
-               onClickThumbnail={(index) => {window.open(props.images[index].url, '_blank', 'noreferrer')}}/>
->>>>>>> 7957c8b... Update backend
-=======
-               onClickThumbnail={(index) => {window.open(props.images[index].url, '_blank')}}/>
->>>>>>> 222e31f... Update gitignore
 
       <div className="collage-subtext">
         <span className="website-name">https://wrapped.mudi.me/</span>
