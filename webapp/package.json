@@ -11,6 +11,7 @@
     "react": "^17.0.1",
     "react-custom-share": "^0.4.8",
     "react-dom": "^17.0.1",
+    "react-github-corner": "^2.5.0",
     "react-grid-gallery": "^0.5.5",
     "react-icons": "^3.11.0",
     "react-router-dom": "^5.2.0",

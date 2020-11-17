@@ -8,6 +8,7 @@ import TopButton from "./Button/TopButton";
 import TermButton from "./Button/TermButton";
 import SaveButton from "./Button/SaveButton";
 import ShowAllButton from "./Button/ShowAllButton";
+import GithubCorner from 'react-github-corner';
 //import ShareComponent from "./Button/ShareComponent";
 import Card from "./Card/Card";
 import Popularity from "./Textfield/Popularity";
@@ -358,6 +359,8 @@ class App extends React.Component {
 
     return (
       <div className="App">
+
+        <GithubCorner href="https://github.com/mudassarzahid/miniwrap" />
 
         <div id="wrapper">
           <div className="container">
