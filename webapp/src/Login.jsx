@@ -2,6 +2,7 @@ import React from "react";
 import './Login.css';
 import SpotifyLogin from 'react-spotify-login';
 import {useHistory} from "react-router-dom";
+import GithubCorner from "react-github-corner";
 
 
 const onFailure = response => console.error(response);
@@ -17,6 +18,7 @@ const Login = props => {
 
   return (
     <div>
+      <GithubCorner href="https://github.com/mudassarzahid/miniwrap" />
       <div className="login-headline">Mini Wrap for Spotify</div>
       <div className="login-sub-headline">✨ generate your own collage ✨</div>
 
