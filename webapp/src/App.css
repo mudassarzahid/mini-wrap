@@ -5,6 +5,24 @@
     text-transform: lowercase;
 }
 
+
+.built-by {
+    color: black;
+    text-transform: none !important;
+}
+
+.built-by > a {
+    transition: all .15s ease-in-out;
+    padding-bottom: 2px;
+    border-bottom: 2px solid #a3a3a3;
+    text-decoration: none;
+    color: currentColor;
+}
+
+.built-by > a:hover {
+    color: #a3a3a3;
+}
+
 .save-and-share {
     display: inline-flex;
 }

@@ -317,7 +317,7 @@ class App extends React.Component {
                     isVisible={this.state.topVisible === 'top tracks'}/>
         <SaveButton onClick={this.artistsToCanvas}
                     isVisible={this.state.topVisible === 'top artists'}/>
-{/*
+        {/*
         <ShareComponent/>
 */}
       </div>
@@ -361,6 +361,9 @@ class App extends React.Component {
 
         <div id="wrapper">
           <div className="container">
+
+            <div className="built-by">built by <a href="https://twitter.com/mudassar_z" target="_blank"
+                                                  rel="noreferrer">Mudi</a></div>
 
             <Headline username={this.state.user_data}
                       emoji={this.state.headlineEmoji}/>

@@ -36,7 +36,7 @@ const Login = props => {
       <div className="sample-collage">
         <img src="/sample_collage.png" alt="sample_tracks_collage"/>
       </div>
-      <div>
+      <div className="built-by">
         built by <a href="https://twitter.com/mudassar_z" target="_blank" rel="noreferrer">Mudi</a>
       </div>
 
