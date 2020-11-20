@@ -26,12 +26,12 @@ python app.py
 ```
 cd webapp
 ```
-#### Install required modules and run the frontend
+##### Install required modules and run the frontend
 ```
 yarn install
 yarn start
 ```
-In case you have problems starting the frontend, try: 
+##### In case you have problems starting the frontend, try: 
 ```
 rm -rf build
 rm -rf node_modules
