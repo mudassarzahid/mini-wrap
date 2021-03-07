@@ -26,7 +26,7 @@ class Spotify():
 
         return response.json()['display_name']
 
-    def audio_features(self, tracks_data, limit=50, time_range='medium_term', offset=0):
+    def audio_features(self, tracks_data):
 
         id_list = []
         for i, track_data in enumerate(self.filter_top_tracks(tracks_data)):
@@ -176,8 +176,14 @@ class Spotify():
                 'thumbnailWidth': 320,
                 'thumbnailHeight': 320,
                 'tags': [
-                    {'value': track_name, 'title': "track_name"},
-                    {'value': ', '.join(track_artists), 'title': "track_artists"},
+                    {
+                        'value': track_name,
+                        'title': "track_name"
+                    },
+                    {
+                        'value': ', '.join(track_artists),
+                        'title': "track_artists"
+                    },
                 ]
             })
 
@@ -275,7 +281,12 @@ class Spotify():
                 'thumbnail': artist_medium_image,
                 'thumbnailWidth': 320,
                 'thumbnailHeight': 320,
-                'tags': [{'value': artist_name, 'title': "artist_name"}]
+                'tags': [
+                    {
+                        'value': artist_name,
+                        'title': "artist_name"
+                    }
+                ]
             })
 
         return artist_images

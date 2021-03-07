@@ -18,7 +18,7 @@ def get_top():
     spotify = Spotify(cookie)
     requested_tracks_data = spotify.top_tracks(50, term, 0)
     requested_artists_data = spotify.top_artists(50, term, 0)
-    requested_audio_features_data = spotify.audio_features(requested_tracks_data, 50, term, 0)
+    requested_audio_features_data = spotify.audio_features(requested_tracks_data)
 
     tracks_data = spotify.filter_top_tracks(requested_tracks_data)
     tracks_popularity = spotify.filter_tracks_popularity(requested_tracks_data)
