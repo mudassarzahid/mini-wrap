@@ -1,6 +1,7 @@
 import React from 'react';
 import Gallery from 'react-grid-gallery';
 import './Collage.css';
+import TodaysDate from "../Pure/TodaysDate";
 
 const Collage = props => {
   let style = {}
@@ -26,7 +27,7 @@ const Collage = props => {
 
       <div className="collage-subtext">
         <span className="website-name">https://wrapped.mudi.me/</span>
-        <span className="date-textfield">{props.date}</span>
+        <TodaysDate/>
       </div>
     </div>
   );
