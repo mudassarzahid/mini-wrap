@@ -155,13 +155,12 @@ const App = () => {
       let valueRange = tempoEmoji[i][0];
       let begin = valueRange[0];
       let end = valueRange[1];
+
       if (tempo >= begin && tempo <= end) {
         setTempoEmoji(tempoEmoji[i][1]);
       }
     }
   }
-
-
 
   const toCanvas = () => {
     let category;
@@ -188,10 +187,10 @@ const App = () => {
   }
 
   const toggleCardsButton = () => {
-    if (showText === true) {
+    if (showText) {
       setShowTextMessage("show all");
     }
-    if (showText === false) {
+    else {
       setShowTextMessage("hide all");
     }
   }
