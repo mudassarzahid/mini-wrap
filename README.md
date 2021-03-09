@@ -1,11 +1,8 @@
-<!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  
   <h3 align="center">Mini Wrap for Spotify</h3>
-
   <p align="center">
-    A [web application](https://wrapped.mudi.me/) that uses Spotify's Web API to generate a collage for your top tracks & top artists and display audio features.
+    A <a title="wrapped.mudi.me" href="https://wrapped.mudi.me/" target="_blank" rel="noreferrer">web application</a> that uses Spotify's Web API to generate a collage for your top tracks & top artists and display audio features (see example below)
     <br />
 </p>
 
@@ -53,7 +50,6 @@ To get a local copy up and running follow these simple steps.
    ```
 
 
-<!-- USAGE EXAMPLES -->
 ## Usage example
 
 <img src="webapp/public/example.png" alt="example">
