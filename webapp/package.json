@@ -18,6 +18,7 @@
     "react-scripts": "4.0.0",
     "react-spotify-login": "^0.9.1",
     "recompose": "^0.30.0",
+    "redux": "^4.0.5",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
@@ -45,6 +46,7 @@
     ]
   },
   "devDependencies": {
-    "font-awesome": "^4.7.0"
+    "font-awesome": "^4.7.0",
+    "react-redux": "^7.2.2"
   }
 }
