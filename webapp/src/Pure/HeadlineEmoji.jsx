@@ -1,6 +1,5 @@
-import React from "react";
+import React, {useState} from "react";
 import './HeadlineEmoji.css';
-import {pure} from 'recompose';
 
 const headlineEmoji = () => {
   let emoji = ['✌😗', '😤🗣💯', '👁️👄👁️', '🦔🐾', '🤘😎'];
@@ -9,11 +8,12 @@ const headlineEmoji = () => {
 }
 
 const HeadlineEmoji = () => {
+  const [emoji] = useState(headlineEmoji);
   return (
     <>
-      {headlineEmoji()}
+      {emoji}
     </>
   )
 };
 
-export default pure(HeadlineEmoji);
+export default HeadlineEmoji;

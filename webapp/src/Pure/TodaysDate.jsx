@@ -1,6 +1,5 @@
-import React from "react";
+import React, {useState} from "react";
 import './TodaysDate.css';
-import {pure} from 'recompose';
 
 const getDate = () => {
   let today = new Date();
@@ -11,12 +10,13 @@ const getDate = () => {
   return (mm + '/' + dd + '/' + yyyy)
 };
 
-const TodaysDate = props => {
+const TodaysDate = () => {
+  const [date] = useState(getDate);
   return (
     <span className="date-textfield">
-      {getDate()}
+      {date}
     </span>
   )
 };
 
-export default pure(TodaysDate);
+export default TodaysDate;
