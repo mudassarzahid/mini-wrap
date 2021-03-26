@@ -31,8 +31,8 @@ const Collage = (props) => {
               <img
                 src={item.thumbnail}
                 alt={item.tags[0].value}
-                width={item.thumbnailWidth}
-                height={item.thumbnailWidth}/>
+                width={180}
+                height={180}/>
               <div className="gallery-text">
                 {item.tags[0].value}
               </div>
