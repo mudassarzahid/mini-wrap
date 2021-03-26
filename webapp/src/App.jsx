@@ -74,7 +74,7 @@ const App = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const accessToken = urlParams.get('access_token');
 
-    axios.get(`${url}/api/top/?term=${term}&spotify_token=${accessToken}`)
+    axios.get(`${url}/api/top/?term=${term}&spotify_token=${accessToken}`, {timeout: 5000})
       .then(
         res => {
           let audio = res.data.audio_features;
