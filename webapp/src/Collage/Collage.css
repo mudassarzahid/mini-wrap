@@ -32,26 +32,32 @@
     border-radius: 3px;
 }
 
-.ReactGridGallery_tile-bottom-bar {
-    padding-bottom: 10px !important;
-}
-
-.ReactGridGallery_tile-bottom-bar > div {
-    display: flow-root !important;
+.gallery-container {
+    position: relative;
     text-align: center;
-    overflow: hidden !important;
-    white-space: nowrap !important;
-    text-overflow: ellipsis !important;
-    color: black !important;
+    color: white;
+    margin-left: 2px;
+    margin-right: 2px
 }
 
-.ReactGridGallery_tile-bottom-bar > div > span {
-    color: black !important;
-    background: rgba(255, 255, 255, 0.8) !important;
-    padding: 0 0.6em 0.25em !important;
-    font-variant: small-caps;
-    border-radius: 0 !important;
-    font-size: 80% !important;
+.gallery-text {
+    position: absolute;
+    bottom: 100%;
+    left: 15%;
+    right: 15%;
+    color: black;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0.25em;
+    font-variant: all-small-caps;
+    font-size: 80%;
+    font-weight: 600;
+    border-radius: 1px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
 }
+
 
 

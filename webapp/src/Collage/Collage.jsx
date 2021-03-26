@@ -1,29 +1,45 @@
 import React from 'react';
-import Gallery from 'react-grid-gallery';
 import './Collage.css';
 import TodaysDate from "../Pure/TodaysDate";
 
-const Collage = props => {
-  let style = {}
+const Collage = (props) => {
+  let galleryStyle = {}
 
   if (props.isVisible) {
-    style.display = 'block';
+    galleryStyle.display = 'block';
   } else {
-    style.display = 'none';
+    galleryStyle.display = 'none';
   }
+
+  let category = props.category;
+  let term = props.term;
 
   return (
     <div className="gallery"
          id={props.id}
-         style={style}>
+         style={galleryStyle}>
       <div className="collage-headline">
-        my top {props.category} {props.term}
+        my top {category} {term}
       </div>
 
-      <Gallery images={props.images}
-               enableLightbox={false}
-               enableImageSelection={false}
-               onClickThumbnail={(index) => {window.open(props.images[index].url, '_blank')}}/>
+      {React.Children.toArray(
+        props.images.map((item) => (
+          <a href={item.url}
+             target="_blank"
+             rel="noreferrer">
+          <span className="gallery-container">
+              <img
+                src={item.thumbnail}
+                alt={item.tags[0].value}
+                width={item.thumbnailWidth}
+                height={item.thumbnailWidth}/>
+              <div className="gallery-text">
+                {item.tags[0].value}
+              </div>
+            </span>
+          </a>
+        ))
+      )}
 
       <div className="collage-subtext">
         <span className="website-name">https://wrapped.mudi.me/</span>
