@@ -173,8 +173,8 @@ class Spotify():
                 'url': track_url,
                 'src': track_large_image,
                 'thumbnail': track_medium_image,
-                'thumbnailWidth': 320,
-                'thumbnailHeight': 320,
+                'thumbnailWidth': 180,
+                'thumbnailHeight': 180,
                 'tags': [
                     {
                         'value': track_name,
@@ -279,8 +279,8 @@ class Spotify():
                 'url': artist_url,
                 'src': artist_large_image,
                 'thumbnail': artist_medium_image,
-                'thumbnailWidth': 320,
-                'thumbnailHeight': 320,
+                'thumbnailWidth': 180,
+                'thumbnailHeight': 180,
                 'tags': [
                     {
                         'value': artist_name,
