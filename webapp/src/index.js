@@ -2,18 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
 import Login from "./Login";
+import reportWebVitals from './reportWebVitals';
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import {createBrowserHistory} from 'history'
 
+const history = createBrowserHistory()
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
+    <Router history={history}>
       <Switch>
 
         <Route exact path="/">

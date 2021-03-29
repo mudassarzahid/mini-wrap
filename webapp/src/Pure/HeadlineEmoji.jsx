@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 
+
 const headlineEmoji = () => {
   let emoji = ['✌😗', '😤🗣💯', '👁️👄👁️', '🦔🐾', '🤘😎'];
   const randomNumber = Math.round(Math.random() * 4);
