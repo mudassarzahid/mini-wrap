@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import './TodaysDate.css';
 
 const getDate = () => {
   let today = new Date();
@@ -13,7 +12,7 @@ const getDate = () => {
 const TodaysDate = () => {
   const [date] = useState(getDate);
   return (
-    <span className="date-textfield">
+    <span style={{"float": "right", "paddingTop": "3px"}}>
       {date}
     </span>
   )

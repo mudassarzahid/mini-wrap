@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import './HeadlineEmoji.css';
 
 const headlineEmoji = () => {
   let emoji = ['✌😗', '😤🗣💯', '👁️👄👁️', '🦔🐾', '🤘😎'];
@@ -10,9 +9,9 @@ const headlineEmoji = () => {
 const HeadlineEmoji = () => {
   const [emoji] = useState(headlineEmoji);
   return (
-    <>
+    <span style={{"white-space": "nowrap"}}>
       {emoji}
-    </>
+    </span>
   )
 };
 
