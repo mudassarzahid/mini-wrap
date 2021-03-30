@@ -14,13 +14,11 @@ ReactDOM.render(
     <Router history={history}>
       <Switch>
 
-        <Route exact path="/">
-          <Login/>
-        </Route>
+        <Route exact path="/"
+               component={Login}/>
 
-        <Route path="/app">
-          <App/>
-        </Route>
+        <Route path="/app"
+               component={App}/>
 
       </Switch>
     </Router>
