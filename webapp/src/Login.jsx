@@ -1,7 +1,7 @@
 import React from "react";
 import './Login.css';
 import SpotifyLogin from 'react-spotify-login';
-import {useHistory} from "react-router-dom";
+import {useHistory, withRouter} from 'react-router-dom';
 import GithubCorner from "react-github-corner";
 
 let url;
@@ -48,6 +48,6 @@ const Login = () => {
     </>)
 };
 
-export default Login;
+export default withRouter(Login);
 
 
