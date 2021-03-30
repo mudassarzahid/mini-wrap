@@ -9,7 +9,7 @@ const headlineEmoji = () => {
 const HeadlineEmoji = () => {
   const [emoji] = useState(headlineEmoji);
   return (
-    <span style={{"white-space": "nowrap"}}>
+    <span style={{"whiteSpace": "nowrap"}}>
       {emoji}
     </span>
   )
