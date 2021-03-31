@@ -11,13 +11,12 @@ ReactDOM.render(
   <React.StrictMode>
     <Router forceRefresh={true}>
       <Switch>
-
-        <Route exact path="/"
-               component={Login}/>
-
-        <Route path="/app"
-               component={App}/>
-
+        <Route exact path="/">
+          <Login/>
+        </Route>
+        <Route path="/app">
+          <App/>
+        </Route>
       </Switch>
     </Router>
   </React.StrictMode>,
