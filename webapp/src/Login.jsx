@@ -11,6 +11,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   url = "https://wrapped.mudi.me"
 }
 
+
 const Login = () => {
   const history = useHistory();
   const onFailure = res => {
@@ -21,7 +22,11 @@ const Login = () => {
     console.log('response: ', res);
     let access_token = res.access_token
     console.log('access token: ', res.access_token);
-    history.push(`/app?access_token=${access_token}`)
+    let redirectURL = `/app?access_token=${access_token}`
+    history.push(redirectURL)
+    while ((window.location.href).includes('#')) {
+      history.push(redirectURL)
+    }
   }
 
   const clientID = '0ab0f042b3e44b3086e978dacb7cee47';

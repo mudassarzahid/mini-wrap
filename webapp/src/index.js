@@ -9,7 +9,7 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router forceRefresh={true}>
+    <Router>
       <Switch>
         <Route exact path="/">
           <Login/>
