@@ -105,10 +105,12 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-
-###IPythonNotebook###
-
 # Temporary data
 .ipynb_checkpoints/
 .DS_Store
 .idea
+
+# Server
+access.txt
+error.txt
+run.sh
