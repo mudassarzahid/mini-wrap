@@ -37,7 +37,7 @@ const Login = () => {
     <>
       <GithubCorner href="https://github.com/mudassarzahid/miniwrap"/>
       <div className="login-headline">Mini Wrap for Spotify</div>
-      <div className="login-sub-headline">✨ generate your own collage ✨</div>
+      <div className="login-sub-headline">generate your own collage</div>
 
       <div className="login-button">
         <SpotifyLogin clientId={clientID}
