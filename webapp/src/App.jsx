@@ -81,6 +81,7 @@ const App = () => {
     axios.get(`${url}/api/top/?term=${term}&spotify_token=${accessToken}`, {timeout: 5000})
       .then(res => {
         console.log(res)
+        console.log(`${url}/api/top/?term=${term}&spotify_token=${accessToken}`)
         let audio = res.data.audio_features;
         let tracks = res.data.tracks_popularity;
         let artists = res.data.artists_popularity;
