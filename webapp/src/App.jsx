@@ -80,6 +80,7 @@ const App = () => {
 
     axios.get(`${url}/api/top/?term=${term}&spotify_token=${accessToken}`, {timeout: 5000})
       .then(res => {
+        console.log(res)
         let audio = res.data.audio_features;
         let tracks = res.data.tracks_popularity;
         let artists = res.data.artists_popularity;
@@ -98,6 +99,7 @@ const App = () => {
         generateCollageText();
       })
       .catch(function (error) {
+        console.log(audioFeatures)
         console.log(error);
         if (error.response.status === 400) {
           navigate('/')
@@ -184,6 +186,7 @@ const App = () => {
     setShowText(false);
     setShowTextMessage('show all');
   }
+  console.log(audioFeatures)
 
   const application = <>
     <div className="audio-feature-texfield">
