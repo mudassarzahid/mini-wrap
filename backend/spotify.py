@@ -7,7 +7,6 @@ class Spotify():
     API_URL = 'https://api.spotify.com/v1'
 
     def __init__(self, token):
-
         self.token = token
 
         self.headers = {
@@ -17,7 +16,6 @@ class Spotify():
         }
 
     def user_data(self):
-
         response = requests.get(
             self.API_URL + '/me',
             headers=self.headers)
@@ -27,7 +25,6 @@ class Spotify():
         return response.json()['display_name']
 
     def audio_features(self, tracks_data):
-
         id_list = []
         for i, track_data in enumerate(self.filter_top_tracks(tracks_data)):
             id_list.append(track_data['track_id'])
@@ -45,7 +42,6 @@ class Spotify():
         return response.json()
 
     def top_tracks(self, limit=50, time_range='medium_term', offset=0):
-
         check_limit(limit)
 
         response = requests.get(
@@ -62,7 +58,6 @@ class Spotify():
         return response.json()
 
     def top_artists(self, limit=50, time_range='medium_term', offset=0):
-
         check_limit(limit)
 
         response = requests.get(
@@ -79,7 +74,6 @@ class Spotify():
         return response.json()
 
     def filter_audio_features(self, audio_data):
-
         danceability = 0
         duration_min = 0
         energy = 0
@@ -116,7 +110,6 @@ class Spotify():
         return audio_features_list
 
     def filter_top_tracks(self, top_tracks):
-
         all_track_data = []
 
         for i, track_data in enumerate(top_tracks['items']):
@@ -130,7 +123,6 @@ class Spotify():
                 track_background = ''
 
             track_name = track_data['name']
-
             track_url = track_data['external_urls']['spotify']
 
             track_artists = []
@@ -150,7 +142,6 @@ class Spotify():
         return all_track_data
 
     def filter_top_tracks_collage(self, top_tracks):
-
         track_images = []
 
         for i, track_data in enumerate(islice(top_tracks['items'], 9)):
@@ -190,7 +181,6 @@ class Spotify():
         return track_images
 
     def filter_tracks_popularity(self, top_tracks):
-
         average_popularity = 0
         number_tracks = top_tracks['total']
         least_mainstream_track_score = 100
@@ -226,12 +216,10 @@ class Spotify():
         return tracks_popularity_data
 
     def filter_top_artists(self, top_artists):
-
         all_artist_data = []
 
         for i, artist_data in enumerate(top_artists['items']):
             artist_rank = str(i + 1) + ". "
-
             artist_id = artist_data['id']
 
             if len(artist_data['images']) > 0:
@@ -240,11 +228,8 @@ class Spotify():
                 artist_background = ''
 
             artist_name = artist_data['name']
-
             artist_url = artist_data['external_urls']['spotify']
-
             artist_followers = '{:,}'.format(artist_data['followers']['total']) + ' followers'
-
             artist_popularity = artist_data['popularity']
 
             all_artist_data.append({
@@ -260,7 +245,6 @@ class Spotify():
         return all_artist_data
 
     def filter_top_artists_collage(self, top_artists):
-
         artist_images = []
 
         for i, artist_data in enumerate(islice(top_artists['items'], 9)):
@@ -292,7 +276,6 @@ class Spotify():
         return artist_images
 
     def filter_artists_popularity(self, top_artists):
-
         average_popularity = 0
         number_artists = top_artists['total']
         least_mainstream_artist_score = 100
