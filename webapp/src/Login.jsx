@@ -1,37 +1,17 @@
-import React from "react";
 import './Login.css';
-import SpotifyLogin from 'react-spotify-login';
-import {useHistory, withRouter} from 'react-router-dom';
-import GithubCorner from "react-github-corner";
+import 'react-spotify-auth/dist/index.css';
 
-let url;
-if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  url = "http://localhost:3001"
-} else {
-  url = "https://wrapped.mudi.me"
-}
+import React from "react";
+import GithubCorner from "react-github-corner";
+import {Scopes,SpotifyAuth} from 'react-spotify-auth';
+
+const url = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? "http://localhost:3001" : "https://wrapped.mudi.me";
 
 
 const Login = () => {
-  const history = useHistory();
-  const onFailure = res => {
-    console.error(res);
-    history.push('/');
-  }
-  const onSuccess = res => {
-    console.log('response: ', res);
-    let access_token = res.access_token
-    console.log('access token: ', res.access_token);
-    let redirectURL = `/app?access_token=${access_token}`
-    history.push(redirectURL)
-    while ((window.location.href).includes('#')) {
-      history.push(redirectURL)
-    }
-  }
-
   const clientID = '0ab0f042b3e44b3086e978dacb7cee47';
   const redirectUri = `${url}/app`;
-  const scope = 'user-top-read user-read-private user-read-email'
+  const scope = [Scopes.userTopRead, Scopes.userReadPrivate, Scopes.userReadEmail]
 
   return (
     <>
@@ -40,19 +20,19 @@ const Login = () => {
       <div className="login-sub-headline">generate your own collage</div>
 
       <div className="login-button">
-        <SpotifyLogin clientId={clientID}
-                      redirectUri={redirectUri}
-                      scope={scope}
-                      onSuccess={onSuccess}
-                      onFailure={onFailure}/>
+        <SpotifyAuth
+          redirectUri={redirectUri}
+          clientID={clientID}
+          scopes={scope}
+        />
       </div>
 
       <div className="built-by">
-        built by <a href="https://twitter.com/mudassar_z" target="_blank" rel="noreferrer">Mudi</a>
+        built by <a href="https://www.linkedin.com/in/mudassarzahid/" target="_blank" rel="noreferrer">Mudi</a>
       </div>
     </>)
 };
 
-export default withRouter(Login);
+export default Login;
 
 

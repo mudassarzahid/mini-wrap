@@ -1,6 +1,8 @@
-import React from "react";
 import './SaveButton.css';
-import { FaDownload } from 'react-icons/fa';
+
+import PropTypes from "prop-types";
+import React from "react";
+import {FaDownload} from 'react-icons/fa';
 
 
 const SaveButton = props => {
@@ -16,12 +18,18 @@ const SaveButton = props => {
     <div style={style}>
       <div className="save-button"
            id={props.id}
-           onClick={props.onClick}
-           visible={props.isVisible}>
+           onClick={props.onClick}>
         <span><FaDownload/> download collage</span>
       </div>
     </div>
   );
+};
+
+SaveButton.propTypes = {
+  isVisible: PropTypes.bool,
+  id: PropTypes.string,
+  onClick: PropTypes.func,
+  visible: PropTypes.bool
 };
 
 export default SaveButton;

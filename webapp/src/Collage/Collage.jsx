@@ -1,5 +1,8 @@
-import React from 'react';
 import './Collage.css';
+
+import PropTypes from "prop-types";
+import React from 'react';
+
 import TodaysDate from "../Pure/TodaysDate";
 
 const Collage = (props) => {
@@ -47,6 +50,18 @@ const Collage = (props) => {
       </div>
     </div>
   );
+}
+
+Collage.propTypes = {
+  id: PropTypes.string,
+  isVisible: PropTypes.bool,
+  category: PropTypes.string,
+  term: PropTypes.string,
+  images: PropTypes.arrayOf(PropTypes.shape({
+    url: PropTypes.string,
+    thumbnail: PropTypes.string,
+    tags: PropTypes.array
+  }))
 }
 
 export default Collage;

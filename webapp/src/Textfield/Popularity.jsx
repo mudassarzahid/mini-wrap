@@ -1,5 +1,8 @@
-import React from "react";
 import './Popularity.css';
+
+import PropTypes from "prop-types";
+import React from "react";
+
 
 const Popularity = props => {
   let style = {};
@@ -28,7 +31,15 @@ const Popularity = props => {
         </div>
       </div>
     </div>);
+};
 
+Popularity.propTypes = {
+  isVisible: PropTypes.bool,
+  popularityEmoji: PropTypes.string,
+  averagePopularity: PropTypes.string,
+  leastMainstreamEmoji: PropTypes.string,
+  link: PropTypes.string,
+  name: PropTypes.string,
 };
 
 export default Popularity;

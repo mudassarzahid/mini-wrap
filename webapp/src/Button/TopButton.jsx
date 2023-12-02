@@ -1,5 +1,7 @@
-import React from "react";
 import './TopButton.css';
+
+import PropTypes from "prop-types";
+import React from "react";
 
 const TopButton = props => {
   let style = {};
@@ -14,6 +16,12 @@ const TopButton = props => {
          className="button">
       <span>top {props.category}</span>
     </div>);
+};
+
+TopButton.propTypes = {
+  onClick: PropTypes.func,
+  category: PropTypes.string,
+  isSelected: PropTypes.bool
 };
 
 export default TopButton;

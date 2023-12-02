@@ -1,5 +1,7 @@
-import React from "react";
 import './Card.css';
+
+import PropTypes from "prop-types";
+import React from "react";
 
 const Card = props => {
   let cardStyle = {
@@ -36,6 +38,15 @@ const Card = props => {
       </a>
     </div>
   );
+};
+
+Card.propTypes = {
+  areCardsVisible: PropTypes.bool,
+  isCardVisible: PropTypes.bool,
+  backgroundUrl: PropTypes.string,
+  link: PropTypes.string,
+  subtext: PropTypes.string,
+  text: PropTypes.string
 };
 
 export default Card;

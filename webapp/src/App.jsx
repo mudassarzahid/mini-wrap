@@ -1,22 +1,23 @@
 import './App.css';
 import './Spinner.css';
-import React, {useState, useEffect} from "react";
+
 import axios from 'axios';
 import html2canvas from "html2canvas";
-import {useHistory, withRouter} from 'react-router-dom';
-import TopButton from "./Button/TopButton";
-import TermButton from "./Button/TermButton";
+import React, {useEffect, useState} from "react";
+import GithubCorner from 'react-github-corner';
+import {useNavigate} from 'react-router-dom';
+
 import SaveButton from "./Button/SaveButton";
 import ShowAllButton from "./Button/ShowAllButton";
-import GithubCorner from 'react-github-corner';
+import TermButton from "./Button/TermButton";
+import TopButton from "./Button/TopButton";
 import Card from "./Card/Card";
-import Popularity from "./Textfield/Popularity";
-import Headline from "./Textfield/Headline";
-import AudioFeature from "./Textfield/AudioFeature";
 import Collage from "./Collage/Collage";
+import AudioFeature from "./Textfield/AudioFeature";
+import Headline from "./Textfield/Headline";
+import Popularity from "./Textfield/Popularity";
 
 const App = () => {
-
   const leastMainstreamEmoji = '🎧'
   const [audioFeatures, setAudioFeatures] = useState([]);
   const [energyEmoji, setEnergyEmoji] = useState('')
@@ -37,12 +38,13 @@ const App = () => {
 
   const [artistsData, setArtistsData] = useState([]);
   const [tracksData, setTracksData] = useState([]);
-  const [userData, setUserData] = useState(['my']);
+  const [userData, setUserData] = useState('my');
   const [tracksPopularity, setTracksPopularity] = useState([]);
   const [artistsPopularity, setArtistsPopularity] = useState([]);
   const [tracksCollage, setTracksCollage] = useState([]);
   const [artistsCollage, setArtistsCollage] = useState([]);
-  const history = useHistory();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const generateCollageText = () => {
@@ -64,43 +66,45 @@ const App = () => {
       }
     }
 
-    let url;
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-      url = "http://localhost:3000"
-    } else {
-      url = "https://api.wrapped.mudi.me"
-    }
+    const url = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? "http://localhost:3000" : "https://wrapped.mudi.me";
     setIsLoading(true);
-    const urlParams = new URLSearchParams(window.location.search);
-    const accessToken = urlParams.get('access_token');
+
+    const urlParams = new URLSearchParams(window.location.href);
+    const accessTokenParam = urlParams.get('access_token');
+
+    const fragmentWithoutHash = window.location.hash.slice(1);
+    const fragmentParams = new URLSearchParams(fragmentWithoutHash);
+    const accessTokenFragment = fragmentParams.get('access_token');
+
+    const accessToken = accessTokenParam || accessTokenFragment;
+
 
     axios.get(`${url}/api/top/?term=${term}&spotify_token=${accessToken}`, {timeout: 5000})
-      .then(
-        res => {
-          let audio = res.data.audio_features;
-          let tracks = res.data.tracks_popularity;
-          let artists = res.data.artists_popularity;
+      .then(res => {
+        let audio = res.data.audio_features;
+        let tracks = res.data.tracks_popularity;
+        let artists = res.data.artists_popularity;
 
-          setUserData(`${res.data.user_data}'s`)
-          setArtistsData(res.data.artists_data);
-          setTracksData(res.data.tracks_data);
-          setTracksCollage(res.data.tracks_collage);
-          setArtistsCollage(res.data.artists_collage);
-          setIsLoading(false)
-          setAudioFeatures(audio)
-          setTracksPopularity(tracks);
-          setArtistsPopularity(artists);
+        setUserData(`${res.data.user_data}'s`)
+        setArtistsData(res.data.artists_data);
+        setTracksData(res.data.tracks_data);
+        setTracksCollage(res.data.tracks_collage);
+        setArtistsCollage(res.data.artists_collage);
+        setIsLoading(false)
+        setAudioFeatures(audio)
+        setTracksPopularity(tracks);
+        setArtistsPopularity(artists);
 
-          generateAudioEmoji(audio, tracks, artists);
-          generateCollageText();
-        })
+        generateAudioEmoji(audio, tracks, artists);
+        generateCollageText();
+      })
       .catch(function (error) {
         console.log(error);
         if (error.response.status === 400) {
-          history.push('/')
+          navigate('/')
         }
       });
-  }, [history, term, termSelected])
+  }, [navigate, term, termSelected])
 
 
   const generateAudioEmoji = (audio, tracks, artists) => {
@@ -111,23 +115,8 @@ const App = () => {
     let tracks_popularity = tracks.average_popularity;
     let artists_popularity = artists.average_popularity;
 
-    const emojiList = [
-      [[0, 1.7], '🧍🧍🧍', '💤💤💤', '😫😫😫', '👤👤👤'],
-      [[1.7, 3.3], '🧍🧍', '💤💤', '😫😫', '👤👤'],
-      [[3.3, 5.0], '🧍', '💤', '😫', '👤'],
-      [[5.0, 6.7], '💃', '⚡', '😆', '🔥'],
-      [[6.7, 8.4], '💃💃', '⚡⚡', '😆😆', '🔥🔥'],
-      [[8.4, 10.0], '💃💃💃', '⚡⚡⚡', '😆😆😆', '🔥🔥🔥']
-    ]
-
-    const tempoEmoji = [
-      [[0, 40], '🐌🐌🐌'],
-      [[40, 66], '🐌🐌'],
-      [[66, 76], '🐌'],
-      [[76, 120], '🚀'],
-      [[120, 168], '🚀🚀'],
-      [[168, Number.MAX_VALUE], '🚀🚀🚀']
-    ]
+    const emojiList = [[[0, 1.7], '🧍🧍🧍', '💤💤💤', '😫😫😫', '👤👤👤'], [[1.7, 3.3], '🧍🧍', '💤💤', '😫😫', '👤👤'], [[3.3, 5.0], '🧍', '💤', '😫', '👤'], [[5.0, 6.7], '💃', '⚡', '😆', '🔥'], [[6.7, 8.4], '💃💃', '⚡⚡', '😆😆', '🔥🔥'], [[8.4, 10.0], '💃💃💃', '⚡⚡⚡', '😆😆😆', '🔥🔥🔥']]
+    const tempoEmoji = [[[0, 40], '🐌🐌🐌'], [[40, 66], '🐌🐌'], [[66, 76], '🐌'], [[76, 120], '🚀'], [[120, 168], '🚀🚀'], [[168, Number.MAX_VALUE], '🚀🚀🚀']]
 
     for (let i = 0; i < 6; i++) {
       let valueRange = emojiList[i][0];
@@ -162,35 +151,31 @@ const App = () => {
     }
   }
 
-  const toCanvas = () => {
-    let category;
-    if (topVisible === 'top tracks') {
-      category = '#tracks_img'
-    }
-    if (topVisible === 'top artists') {
-      category = '#artists_img'
-    }
+  const handleDownloadImage = async () => {
+    const category = topVisible === 'top tracks' ? 'tracks_img' : 'artists_img';
+    const element = document.getElementById(category);
 
     window.scrollTo(0, 0);
-    html2canvas(document.querySelector(category), {
-      useCORS: true,
-      allowTaint: true
+    html2canvas(element, {
+      useCORS: true, allowTaint: true
     }).then(canvas => {
       let a = document.createElement('a');
-      a.download = "artists_collage.png";
+      a.download = `${category}.png`;
       a.href = canvas.toDataURL();
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       a = null;
+      element.style.position = 'static';
+      element.style.left = "0";
+      element.style.top = "0";
     });
   }
 
   const toggleCardsButton = () => {
     if (showText) {
       setShowTextMessage("show all");
-    }
-    else {
+    } else {
       setShowTextMessage("hide all");
     }
   }
@@ -282,34 +267,27 @@ const App = () => {
     </div>
 
     <div className="save-and-share">
-      <SaveButton onClick={toCanvas}
+      <SaveButton onClick={handleDownloadImage}
                   isVisible={topVisible === 'top tracks'}/>
-      <SaveButton onClick={toCanvas}
+      <SaveButton onClick={handleDownloadImage}
                   isVisible={topVisible === 'top artists'}/>
     </div>
 
     <div className="all-cards">
-      {React.Children.toArray(
-        tracksData.map((track_data) => (
-          <Card
-            areCardsVisible={areCardsVisible}
-            backgroundUrl={track_data.track_background}
-            link={track_data.track_url}
-            text={`${track_data.track_rank} ${track_data.track_name}`}
-            subtext={track_data.track_artists}
-            isCardVisible={topVisible === 'top tracks'}/>
-        )))}
+      {React.Children.toArray(tracksData.map((track_data) => (<Card
+          areCardsVisible={areCardsVisible}
+          backgroundUrl={track_data.track_background}
+          link={track_data.track_url}
+          text={`${track_data.track_rank} ${track_data.track_name}`}
+          subtext={track_data.track_artists}
+          isCardVisible={topVisible === 'top tracks'}/>)))}
 
-      {React.Children.toArray(
-        artistsData.map((artist_data) => (
-          <Card
-            areCardsVisible={areCardsVisible}
-            backgroundUrl={artist_data.artist_background}
-            link={artist_data.artist_url}
-            text={`${artist_data.artist_rank} ${artist_data.artist_name}`}
-            subtext={artist_data.artist_followers}
-            isCardVisible={topVisible === 'top artists'}/>
-        )))}
+      {React.Children.toArray(artistsData.map((artist_data) => (<Card
+          areCardsVisible={areCardsVisible}
+          backgroundUrl={artist_data.artist_background}
+          link={artist_data.artist_url}
+          text={`${artist_data.artist_rank} ${artist_data.artist_name}`}
+          isCardVisible={topVisible === 'top artists'}/>)))}
     </div>
 
     <ShowAllButton
@@ -320,15 +298,14 @@ const App = () => {
       }}
       show={showTextMessage + ' ' + topVisible}/></>;
 
-  return (
-    <div className="App">
+  return (<div className="App">
 
       <GithubCorner href="https://github.com/mudassarzahid/miniwrap"/>
 
       <div id="wrapper">
         <div className="container">
 
-          <div className="built-by">built by <a href="https://twitter.com/mudassar_z" target="_blank"
+          <div className="built-by">built by <a href="https://www.linkedin.com/in/mudassarzahid/" target="_blank"
                                                 rel="noreferrer">Mudi</a></div>
 
           <Headline username={userData}/>
@@ -342,7 +319,7 @@ const App = () => {
                 resetCardsButton();
               }}
               value="short_term"
-              termdesc="4 weeks"
+              termDesc="4 weeks"
               isSelected={termSelected === 'short_term'}/>
 
             <TermButton
@@ -353,7 +330,7 @@ const App = () => {
                 resetCardsButton();
               }}
               value="medium_term"
-              termdesc="6 months"
+              termDesc="6 months"
               isSelected={termSelected === 'medium_term'}/>
 
             <TermButton
@@ -364,7 +341,7 @@ const App = () => {
                 resetCardsButton();
               }}
               value="long_term"
-              termdesc="all time"
+              termDesc="all time"
               isSelected={termSelected === 'long_term'}/>
           </div>
 
@@ -380,8 +357,7 @@ const App = () => {
 
         </div>
       </div>
-    </div>
-  );
+    </div>);
 }
 
-export default withRouter(App);
+export default App;
