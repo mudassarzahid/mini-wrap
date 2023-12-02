@@ -1,29 +1,31 @@
 {
-  "name": "spotify-wrapped",
+  "name": "mini-wrap",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.5",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "axios": "^0.21.0",
-    "html2canvas": "^1.0.0-rc.7",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.6.2",
+    "eslint": "^8.55.0",
+    "html2canvas": "^1.4.1",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-component-export-image": "^1.0.6",
+    "react-dom": "^18.2.0",
     "react-github-corner": "^2.5.0",
-    "react-icons": "^3.11.0",
-    "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.0",
-    "react-spotify-login": "^0.9.1",
-    "redux": "^4.0.5",
-    "web-vitals": "^0.2.4"
+    "react-icons": "^4.12.0",
+    "react-router-dom": "^6.20.1",
+    "react-scripts": "5.0.1",
+    "react-spotify-auth": "^1.4.3",
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "PORT=3001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --fix 'src/**/*.jsx'"
   },
   "eslintConfig": {
     "extends": [
@@ -44,8 +46,11 @@
     ]
   },
   "devDependencies": {
-    "font-awesome": "^4.7.0",
-    "history": "^5.0.0",
-    "react-redux": "^7.2.2"
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-simple-import-sort": "^10.0.0"
   }
 }
