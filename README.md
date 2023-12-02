@@ -10,10 +10,8 @@
 
 * [Spotify Web API](https://developer.spotify.com/)
 * [React](https://github.com/facebook/react)
-* [Redux (update soon)](https://github.com/reduxjs/redux)
 * [Flask](https://github.com/pallets/flask)
 * [Axios](https://github.com/axios/axios)
-* [React Grid Gallery](https://github.com/benhowell/react-grid-gallery)
 * [html2canvas](https://github.com/niklasvh/html2canvas)
 
 
