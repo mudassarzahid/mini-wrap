@@ -69,7 +69,7 @@ const App = () => {
     const url = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? "http://localhost:3000" : "https://wrapped.mudi.me";
     setIsLoading(true);
 
-    const urlParams = new URLSearchParams(window.location.href);
+    const urlParams = new URLSearchParams(window.location.search);
     const accessTokenParam = urlParams.get('access_token');
 
     const fragmentWithoutHash = window.location.hash.slice(1);
@@ -77,7 +77,6 @@ const App = () => {
     const accessTokenFragment = fragmentParams.get('access_token');
 
     const accessToken = accessTokenParam || accessTokenFragment;
-
 
     axios.get(`${url}/api/top/?term=${term}&spotify_token=${accessToken}`, {timeout: 5000})
       .then(res => {
