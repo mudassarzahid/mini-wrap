@@ -66,7 +66,7 @@ const App = () => {
       }
     }
 
-    const url = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? "http://localhost:3000" : "https://wrapped.mudi.me";
+    const url = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? "http://localhost:3000" : "https://api.wrapped.mudi.me";
     setIsLoading(true);
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -278,19 +278,19 @@ const App = () => {
 
     <div className="all-cards">
       {React.Children.toArray(tracksData.map((track_data) => (<Card
-          areCardsVisible={areCardsVisible}
-          backgroundUrl={track_data.track_background}
-          link={track_data.track_url}
-          text={`${track_data.track_rank} ${track_data.track_name}`}
-          subtext={track_data.track_artists}
-          isCardVisible={topVisible === 'top tracks'}/>)))}
+        areCardsVisible={areCardsVisible}
+        backgroundUrl={track_data.track_background}
+        link={track_data.track_url}
+        text={`${track_data.track_rank} ${track_data.track_name}`}
+        subtext={track_data.track_artists}
+        isCardVisible={topVisible === 'top tracks'}/>)))}
 
       {React.Children.toArray(artistsData.map((artist_data) => (<Card
-          areCardsVisible={areCardsVisible}
-          backgroundUrl={artist_data.artist_background}
-          link={artist_data.artist_url}
-          text={`${artist_data.artist_rank} ${artist_data.artist_name}`}
-          isCardVisible={topVisible === 'top artists'}/>)))}
+        areCardsVisible={areCardsVisible}
+        backgroundUrl={artist_data.artist_background}
+        link={artist_data.artist_url}
+        text={`${artist_data.artist_rank} ${artist_data.artist_name}`}
+        isCardVisible={topVisible === 'top artists'}/>)))}
     </div>
 
     <ShowAllButton
@@ -303,64 +303,64 @@ const App = () => {
 
   return (<div className="App">
 
-      <GithubCorner href="https://github.com/mudassarzahid/miniwrap"/>
+    <GithubCorner href="https://github.com/mudassarzahid/miniwrap"/>
 
-      <div id="wrapper">
-        <div className="container">
+    <div id="wrapper">
+      <div className="container">
 
-          <div className="built-by">built by <a href="https://www.linkedin.com/in/mudassarzahid/" target="_blank"
-                                                rel="noreferrer">Mudi</a></div>
+        <div className="built-by">built by <a href="https://www.linkedin.com/in/mudassarzahid/" target="_blank"
+                                              rel="noreferrer">Mudi</a></div>
 
-          <Headline username={userData}/>
+        <Headline username={userData}/>
 
-          <div className="term-buttons">
-            <TermButton
-              onClick={() => {
-                setTermSelected('short_term');
-                setTerm('short_term')
-                setAreCardsVisible(false);
-                resetCardsButton();
-              }}
-              value="short_term"
-              termDesc="4 weeks"
-              isSelected={termSelected === 'short_term'}/>
+        <div className="term-buttons">
+          <TermButton
+            onClick={() => {
+              setTermSelected('short_term');
+              setTerm('short_term')
+              setAreCardsVisible(false);
+              resetCardsButton();
+            }}
+            value="short_term"
+            termDesc="4 weeks"
+            isSelected={termSelected === 'short_term'}/>
 
-            <TermButton
-              onClick={() => {
-                setTermSelected('medium_term');
-                setTerm('medium_term')
-                setAreCardsVisible(false);
-                resetCardsButton();
-              }}
-              value="medium_term"
-              termDesc="6 months"
-              isSelected={termSelected === 'medium_term'}/>
+          <TermButton
+            onClick={() => {
+              setTermSelected('medium_term');
+              setTerm('medium_term')
+              setAreCardsVisible(false);
+              resetCardsButton();
+            }}
+            value="medium_term"
+            termDesc="6 months"
+            isSelected={termSelected === 'medium_term'}/>
 
-            <TermButton
-              onClick={() => {
-                setTermSelected('long_term');
-                setTerm('long_term')
-                setAreCardsVisible(false);
-                resetCardsButton();
-              }}
-              value="long_term"
-              termDesc="all time"
-              isSelected={termSelected === 'long_term'}/>
-          </div>
-
-          {isLoading && <div className="spinner">
-            <div className="rect1"/>
-            <div className="rect2"/>
-            <div className="rect3"/>
-            <div className="rect4"/>
-            <div className="rect5"/>
-          </div>}
-
-          {!isLoading && application}
-
+          <TermButton
+            onClick={() => {
+              setTermSelected('long_term');
+              setTerm('long_term')
+              setAreCardsVisible(false);
+              resetCardsButton();
+            }}
+            value="long_term"
+            termDesc="all time"
+            isSelected={termSelected === 'long_term'}/>
         </div>
+
+        {isLoading && <div className="spinner">
+          <div className="rect1"/>
+          <div className="rect2"/>
+          <div className="rect3"/>
+          <div className="rect4"/>
+          <div className="rect5"/>
+        </div>}
+
+        {!isLoading && application}
+
       </div>
-    </div>);
+    </div>
+  </div>);
 }
 
 export default App;
