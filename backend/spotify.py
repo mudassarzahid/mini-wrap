@@ -60,7 +60,6 @@ class Spotify:
 
         check_status(response)
 
-        print(response.json())
         return response.json()
 
     def top_artists(self, limit=LIMIT, time_range="medium_term", offset=0):
@@ -199,7 +198,7 @@ class Spotify:
     @staticmethod
     def filter_tracks_popularity(top_tracks):
         average_popularity = 0
-        number_tracks = len(top_tracks)
+        number_tracks = len(top_tracks["items"])
         least_mainstream_track_score = 100
         least_mainstream_track_name = ""
         least_mainstream_track_url = ""
@@ -302,7 +301,7 @@ class Spotify:
     @staticmethod
     def filter_artists_popularity(top_artists):
         average_popularity = 0
-        number_artists = len(top_artists)
+        number_artists = len(top_artists["items"])
         least_mainstream_artist_score = 100
         least_mainstream_artist_name = ""
         least_mainstream_artist_url = ""
