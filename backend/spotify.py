@@ -302,7 +302,7 @@ class Spotify:
     @staticmethod
     def filter_artists_popularity(top_artists):
         average_popularity = 0
-        number_artists = top_artists["total"]
+        number_artists = LIMIT  # TODO: top_artists["total"] ?
         least_mainstream_artist_score = 100
         least_mainstream_artist_name = ""
         least_mainstream_artist_url = ""
