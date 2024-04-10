@@ -50,17 +50,17 @@ const App = () => {
     const generateCollageText = () => {
       switch (termSelected) {
         case 'short_term': {
-          setTermText('this month')
+          setTermText('for the past 4 weeks')
           break;
         }
 
         case 'long_term': {
-          setTermText('of all time')
+          setTermText('for the past 12 months')
           break;
         }
 
         default: {
-          setTermText('this year')
+          setTermText('for the past 6 months')
           break;
         }
       }
@@ -340,7 +340,7 @@ const App = () => {
               resetCardsButton();
             }}
             value="long_term"
-            termDesc="all time"
+            termDesc="12 months"
             isSelected={termSelected === 'long_term'}/>
         </div>
 
