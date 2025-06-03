@@ -1,63 +1,60 @@
 .collage {
-    padding: 10px;
+  padding: 10px;
 }
 
 .collage-headline {
-    margin-bottom: 10px;
-    color: black;
+  margin-bottom: 10px;
+  color: black;
 }
 
 .collage-subtext {
-    padding: 5px;
-    color: black;
+  padding: 5px;
+  color: black;
 }
 
 .website-name {
-    float: left;
-    padding-top: 3px;
+  float: left;
+  padding-top: 3px;
 }
 
 .date-textfield {
-    float: right;
-    padding-top: 3px;
+  float: right;
+  padding-top: 3px;
 }
 
 .gallery {
-    width: 552px;
-    padding: 20px;
-    display: block;
-    min-height: 1px;
-    overflow: auto;
-    border: 1px solid rgb(227, 227, 227);
-    border-radius: 3px;
+  width: 552px;
+  padding: 20px;
+  display: block;
+  min-height: 1px;
+  overflow: auto;
+  border: 1px solid rgb(227, 227, 227);
+  border-radius: 3px;
 }
 
 .gallery-container {
-    position: relative;
-    text-align: center;
-    color: white;
-    margin-left: 2px;
-    margin-right: 2px
+  position: relative;
+  text-align: center;
+  color: white;
+  margin-left: 2px;
+  margin-right: 2px;
 }
 
 .gallery-text {
-    position: absolute;
-    bottom: 100%;
-    left: 15%;
-    right: 15%;
-    color: black;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 0.25em;
-    font-variant: all-small-caps;
-    font-size: 80%;
-    font-weight: 600;
-    border-radius: 1px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
+  position: absolute;
+  bottom: 100%;
+  left: 15%;
+  right: 15%;
+  color: black;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 0.25em;
+  font-variant: all-small-caps;
+  font-size: 80%;
+  font-weight: 600;
+  border-radius: 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
 }
-
-
-

@@ -3,27 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^6.1.5",
-    "@testing-library/react": "^14.1.2",
-    "@testing-library/user-event": "^14.5.1",
-    "axios": "^1.6.2",
-    "eslint": "^8.55.0",
-    "express": "4.19.2",
-    "follow-redirects": "1.15.6",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "axios": "^1.9.0",
+    "express": "5.1.0",
+    "follow-redirects": "1.15.9",
     "html2canvas": "^1.4.1",
-    "nth-check": "2.0.1",
-    "postcss": "8.4.31",
+    "nth-check": "2.1.1",
+    "postcss": "8.5.4",
     "prop-types": "^15.8.1",
-    "react": "^18.2.0",
+    "react": "^19.1.0",
     "react-component-export-image": "^1.0.6",
-    "react-dom": "^18.2.0",
+    "react-dom": "^19.1.0",
     "react-github-corner": "^2.5.0",
-    "react-icons": "^4.12.0",
-    "react-router-dom": "^6.21.0",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^7.6.1",
     "react-scripts": "5.0.1",
     "react-spotify-auth": "^1.4.3",
-    "serve": "^14.2.1",
-    "web-vitals": "^3.5.0"
+    "serve": "^14.2.4",
+    "web-vitals": "^5.0.2"
   },
   "scripts": {
     "start": "PORT=3001 react-scripts start",
@@ -34,8 +33,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "browserslist": {
@@ -51,11 +49,15 @@
     ]
   },
   "devDependencies": {
-    "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-n": "^16.4.0",
-    "eslint-plugin-promise": "^6.0.0",
-    "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-simple-import-sort": "^10.0.0"
+    "@eslint/css": "^0.8.1",
+    "@eslint/js": "^9.28.0",
+    "@eslint/json": "^0.12.0",
+    "@eslint/markdown": "^6.4.0",
+    "eslint": "^9.28.0",
+    "eslint-config-react": "^1.1.7",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^16.2.0",
+    "prettier": "3.5.3"
   }
 }

@@ -1,11 +1,11 @@
 .username {
-    font-style: italic;
+  font-style: italic;
 }
 
 .headline {
-    color: black;
+  color: black;
 }
 
 .headline > h1 > span {
-    white-space: nowrap;
+  white-space: nowrap;
 }

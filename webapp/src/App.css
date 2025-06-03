@@ -1,74 +1,71 @@
 #wrapper {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    text-transform: lowercase;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  text-transform: lowercase;
 }
 
-
 .built-by {
-    color: black;
-    text-transform: none !important;
+  color: black;
+  text-transform: none !important;
 }
 
 .built-by > a {
-    transition: all .15s ease-in-out;
-    padding-bottom: 2px;
-    border-bottom: 2px solid #a3a3a3;
-    text-decoration: none;
-    color: currentColor;
+  transition: all 0.15s ease-in-out;
+  padding-bottom: 2px;
+  border-bottom: 2px solid #a3a3a3;
+  text-decoration: none;
+  color: currentColor;
 }
 
 .built-by > a:hover {
-    color: #a3a3a3;
+  color: #a3a3a3;
 }
 
 .save-and-share {
-    display: inline-flex;
+  display: inline-flex;
 }
 
 .container {
-    position: relative;
-    text-align: -webkit-center;
-    color: white;
+  position: relative;
+  text-align: -webkit-center;
+  color: white;
 }
 
 .term-buttons {
-    display: inline-flex;
+  display: inline-flex;
 }
 
 .top-buttons {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
-.audio-feature-texfield, .popularity-textfield {
-    width: 100%;
-    gap: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    flex-flow: row wrap;
-    line-height: 26px;
+.audio-feature-texfield,
+.popularity-textfield {
+  width: 100%;
+  gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-flow: row wrap;
+  line-height: 26px;
 }
 
 .audio-feature-texfield {
-    margin-top: 10px;
-    margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 @media screen and (max-width: 600px) {
-    .container {
-        width: 100%;
-        margin: 4px;
-    }
+  .container {
+    width: 100%;
+    margin: 4px;
+  }
 
-    .save-and-share {
-        display: block;
-    }
+  .save-and-share {
+    display: block;
+  }
 }
-
-
-

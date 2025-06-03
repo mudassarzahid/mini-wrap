@@ -1,16 +1,15 @@
-import './Popularity.css';
+import "./Popularity.css";
 
 import PropTypes from "prop-types";
 import React from "react";
 
-
-const Popularity = props => {
+const Popularity = (props) => {
   let style = {};
 
   if (props.isVisible) {
-    style.display = 'block';
+    style.display = "block";
   } else {
-    style.display = 'none';
+    style.display = "none";
   }
 
   return (
@@ -24,13 +23,19 @@ const Popularity = props => {
 
         <div className="popularity-element">
           <div> {props.leastMainstreamEmoji} </div>
-          <a className="popularity-link" href={props.link} target="_blank" rel="noreferrer">
+          <a
+            className="popularity-link"
+            href={props.link}
+            target="_blank"
+            rel="noreferrer"
+          >
             <div className="name">{props.name}</div>
           </a>
           <div className="description">least mainstream</div>
         </div>
       </div>
-    </div>);
+    </div>
+  );
 };
 
 Popularity.propTypes = {

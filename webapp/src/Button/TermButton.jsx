@@ -1,10 +1,9 @@
-import './TermButton.css';
+import "./TermButton.css";
 
 import PropTypes from "prop-types";
 import React from "react";
 
-
-const TermButton = props => {
+const TermButton = (props) => {
   let style = {};
 
   if (props.isSelected) {

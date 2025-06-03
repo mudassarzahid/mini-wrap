@@ -1,60 +1,60 @@
 .card-subtext {
-    text-align: right;
-    padding: 20px 0px;
+  text-align: right;
+  padding: 20px 0px;
 }
 
 .card-link {
-    color: white;
-    text-decoration: none;
-    target-new: tab;
+  color: white;
+  text-decoration: none;
+  target-new: tab;
 }
 
 .followers {
-    text-align: right;
-    padding-top: 20px;
+  text-align: right;
+  padding-top: 20px;
 }
 
 .card-ranking {
-    -webkit-font-smoothing: antialiased;
-    background-position: center !important;
-    background-size: cover !important;
-    border-radius: 8px;
-    font-weight: bold;
-    height: 60px;
-    text-align: left;
-    text-overflow: ellipsis;
-    margin-top: 16px;
-    overflow: hidden;
-    padding: 14px 10px;
-    white-space: nowrap;
-    width: 420px;
+  -webkit-font-smoothing: antialiased;
+  background-position: center !important;
+  background-size: cover !important;
+  border-radius: 8px;
+  font-weight: bold;
+  height: 60px;
+  text-align: left;
+  text-overflow: ellipsis;
+  margin-top: 16px;
+  overflow: hidden;
+  padding: 14px 10px;
+  white-space: nowrap;
+  width: 420px;
 }
 
 .card-ranking:hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-    cursor: pointer;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 .card-ranking span {
-    padding: 4px;
-    background-color: rgba(0, 0, 0, 0.6);
+  padding: 4px;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 @media screen and (max-width: 600px) {
-    .card-ranking {
-        width: 343px;
-    }
+  .card-ranking {
+    width: 343px;
+  }
 }
 
 @media screen and (max-width: 409px) {
-    .card-ranking {
-        width: 307px;
-    }
+  .card-ranking {
+    width: 307px;
+  }
 }
 
 @media screen and (max-width: 367px) {
-    .card-ranking {
-        font-size: 15px;
-        width: 252px;
-    }
+  .card-ranking {
+    font-size: 15px;
+    width: 252px;
+  }
 }

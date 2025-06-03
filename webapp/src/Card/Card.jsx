@@ -1,35 +1,36 @@
-import './Card.css';
+import "./Card.css";
 
 import PropTypes from "prop-types";
 import React from "react";
 
-const Card = props => {
+const Card = (props) => {
   let cardStyle = {
     background: `url(${props.backgroundUrl})`,
   };
 
-  let allCardsStyle = {}
+  let allCardsStyle = {};
 
   if (props.isCardVisible) {
-    cardStyle.display = 'block';
+    cardStyle.display = "block";
   } else {
-    cardStyle.display = 'none';
+    cardStyle.display = "none";
   }
 
   if (props.areCardsVisible) {
-    allCardsStyle.display = 'block';
+    allCardsStyle.display = "block";
   } else {
-    allCardsStyle.display = 'none';
+    allCardsStyle.display = "none";
   }
 
   return (
     <div style={allCardsStyle}>
-      <a className="card-link"
-         href={props.link}
-         target="_blank"
-         rel="noreferrer">
-        <div className="card-ranking"
-             style={cardStyle}>
+      <a
+        className="card-link"
+        href={props.link}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <div className="card-ranking" style={cardStyle}>
           <span>{props.text}</span>
           <div className="card-subtext">
             <span>{props.subtext}</span>
@@ -46,7 +47,7 @@ Card.propTypes = {
   backgroundUrl: PropTypes.string,
   link: PropTypes.string,
   subtext: PropTypes.string,
-  text: PropTypes.string
+  text: PropTypes.string,
 };
 
 export default Card;

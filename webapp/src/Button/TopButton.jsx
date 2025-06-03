@@ -1,9 +1,9 @@
-import './TopButton.css';
+import "./TopButton.css";
 
 import PropTypes from "prop-types";
 import React from "react";
 
-const TopButton = props => {
+const TopButton = (props) => {
   let style = {};
 
   if (props.isSelected) {
@@ -11,17 +11,16 @@ const TopButton = props => {
   }
 
   return (
-    <div onClick={props.onClick}
-         style={style}
-         className="button">
+    <div onClick={props.onClick} style={style} className="button">
       <span>top {props.category}</span>
-    </div>);
+    </div>
+  );
 };
 
 TopButton.propTypes = {
   onClick: PropTypes.func,
   category: PropTypes.string,
-  isSelected: PropTypes.bool
+  isSelected: PropTypes.bool,
 };
 
 export default TopButton;
