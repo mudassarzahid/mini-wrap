@@ -51,12 +51,3 @@ To get a local copy up and running follow these simple steps.
 <span align="center">
 <img src="webapp/public/example.png" alt="example">
 </span>
-
-
-<!-- CONTACT -->
-## Contact
-
-Mudassar Zahid - [@mudassar_z](https://twitter.com/mudassar_z) - mudassar.ahmad.zahid@gmail.com
-
-Project Link: [https://github.com/mudassarzahid/miniwrap](https://github.com/mudassarzahid/miniwrap)
-
